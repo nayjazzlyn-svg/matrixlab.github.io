@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MatriXLab — Pembelajaran Matriks Interaktif</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+tailwind.config={theme:{extend:{fontFamily:{sans:['Poppins','sans-serif'],mono:['JetBrains Mono','monospace']}}}}
+</script>
+<style>
+:root{
+  --bg-primary:#0B1120;--bg-secondary:#131B2E;--bg-tertiary:#1A2540;
+  --bg-card:#152035;--bg-input:#0E1729;--text-primary:#E8EDF5;
+  --text-secondary:#8B9AB8;--text-muted:#4A5A78;
+  --accent:#14B8A6;--accent-dim:#0D9488;--accent-glow:rgba(20,184,166,0.2);
+  --amber:#F59E0B;--amber-dim:#D97706;--amber-glow:rgba(245,158,11,0.15);
+  --rose:#F43F5E;--rose-glow:rgba(244,63,94,0.15);
+  --violet:#8B5CF6;--violet-glow:rgba(139,92,246,0.15);
+  --border:#1E2D4A;--border-focus:#14B8A6;
+  --success:#10B981;--error:#EF4444;--warning:#F59E0B;
+  --sidebar-bg:#080D1A;--sidebar-active:rgba(20,184,166,0.1);
+  --shadow:0 4px 24px rgba(0,0,0,0.4);--radius:12px;
+}
+[data-theme="light"]{
+  --bg-primary:#F1F5F9;--bg-secondary:#FFFFFF;--bg-tertiary:#E2E8F0;
+  --bg-card:#FFFFFF;--bg-input:#F8FAFC;--text-primary:#1E293B;
+  --text-secondary:#64748B;--text-muted:#94A3B8;
+  --accent:#0D9488;--accent-dim:#0F766E;--accent-glow:rgba(13,148,136,0.1);
+  --amber:#D97706;--amber-dim:#B45309;--amber-glow:rgba(217,119,6,0.1);
+  --rose:#E11D48;--rose-glow:rgba(225,29,72,0.1);
+  --violet:#7C3AED;--violet-glow:rgba(124,58,237,0.1);
+  --border:#CBD5E1;--border-focus:#0D9488;
+  --sidebar-bg:#FFFFFF;--sidebar-active:rgba(13,148,136,0.06);
+  --shadow:0 4px 24px rgba(0,0,0,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Poppins',sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh;overflow-x:hidden;transition:background .4s,color .4s}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg-tertiary)}
+::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text-secondary)}
+
+#sidebar{position:fixed;top:0;left:0;bottom:0;width:256px;background:var(--sidebar-bg);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;transition:transform .35s cubic-bezier(.4,0,.2,1),background .4s}
+.logo-area{padding:22px 18px;display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--border)}
+.logo-icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--amber));display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;font-weight:700;font-family:'JetBrains Mono',monospace;box-shadow:0 4px 16px var(--accent-glow)}
+.logo-text{font-weight:700;font-size:18px;letter-spacing:-.5px}.logo-text span{color:var(--accent)}
+#sidebar nav{flex:1;padding:10px 8px;overflow-y:auto}
+#sidebar nav a{display:flex;align-items:center;gap:11px;padding:10px 14px;margin:2px 0;border-radius:9px;color:var(--text-secondary);font-size:13.5px;font-weight:500;cursor:pointer;transition:all .2s;text-decoration:none}
+#sidebar nav a i{width:18px;text-align:center;font-size:14px}
+#sidebar nav a:hover{color:var(--text-primary);background:var(--sidebar-active)}
+#sidebar nav a.active{color:var(--accent);background:var(--sidebar-active);font-weight:600;box-shadow:inset 3px 0 0 var(--accent)}
+.sidebar-footer{padding:14px 16px;border-top:1px solid var(--border)}
+.theme-btn{display:flex;align-items:center;gap:9px;width:100%;padding:9px 13px;border-radius:9px;border:1px solid var(--border);background:var(--bg-tertiary);color:var(--text-secondary);cursor:pointer;font-size:12.5px;font-family:inherit;font-weight:500;transition:all .2s}
+.theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+#mobile-header{display:none;position:fixed;top:0;left:0;right:0;height:54px;background:var(--sidebar-bg);border-bottom:1px solid var(--border);z-index:99;padding:0 14px;align-items:center;gap:10px}
+.hamburger{width:38px;height:38px;border:none;background:none;color:var(--text-primary);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:8px}
+.hamburger:hover{background:var(--sidebar-active)}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;opacity:0;transition:opacity .3s}
+.sidebar-overlay.show{display:block;opacity:1}
+
+#main-content{margin-left:256px;min-height:100vh;padding:28px;transition:margin .35s}
+.page-section{display:none;animation:fadeIn .4s ease}.page-section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:all .3s}
+.card-title{font-size:17px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:9px}
+.card-title i{color:var(--accent)}
+
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:9px;border:none;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .25s;white-space:nowrap}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-dim));color:#fff;box-shadow:0 4px 16px var(--accent-glow)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 24px var(--accent-glow)}
+.btn-secondary{background:var(--bg-tertiary);color:var(--text-primary);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.btn-amber{background:linear-gradient(135deg,var(--amber),var(--amber-dim));color:#fff;box-shadow:0 4px 16px var(--amber-glow)}
+.btn-amber:hover{transform:translateY(-2px)}
+.btn-danger{background:var(--error);color:#fff}
+.btn-sm{padding:6px 13px;font-size:11.5px;border-radius:8px}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-secondary)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-glow)}
+
+.input-field{padding:9px 13px;border-radius:9px;border:1px solid var(--border);background:var(--bg-input);color:var(--text-primary);font-family:inherit;font-size:13.5px;transition:all .2s;width:100%}
+.input-field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.input-field::placeholder{color:var(--text-muted)}
+textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono',monospace;font-size:13px}
+
+.mx{display:inline-flex;align-items:stretch;margin:8px 0;font-family:'JetBrains Mono',monospace}
+.mx .bl,.mx .br{width:7px;border:2.5px solid var(--accent);flex-shrink:0}
+.mx .bl{border-right:none;border-radius:5px 0 0 5px}
+.mx .br{border-left:none;border-radius:0 5px 5px 0}
+.mx table{border-collapse:collapse}
+.mx td{padding:5px 12px;text-align:center;font-size:14px;font-weight:500;color:var(--text-primary);min-width:36px}
+.mx.amber .bl,.mx.amber .br{border-color:var(--amber)}
+.mx td.sep{border-left:2px dashed var(--amber);padding-left:10px}
+.mx.sm td{padding:3px 8px;font-size:12px;min-width:28px}
+.mx.xs td{padding:2px 6px;font-size:11px;min-width:24px}
+.mx.rose .bl,.mx.rose .br{border-color:var(--rose)}
+.mx.violet .bl,.mx.violet .br{border-color:var(--violet)}
+
+.mg-wrap{overflow:auto;max-width:100%;max-height:400px;border:1px solid var(--border);border-radius:9px;padding:10px;background:var(--bg-input)}
+.mg-wrap table{border-collapse:collapse;margin:auto}
+.mg-wrap td{padding:2px}
+.mc{width:52px;height:36px;text-align:center;border:1px solid var(--border);border-radius:6px;background:var(--bg-card);color:var(--text-primary);font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:500;transition:all .2s}
+.mc:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-glow)}
+.mc.sm{width:42px;height:30px;font-size:11px}
+.mc.xs{width:34px;height:26px;font-size:10px}
+
+#toast-container{position:fixed;top:18px;right:18px;z-index:9999;display:flex;flex-direction:column;gap:7px}
+.toast{display:flex;align-items:center;gap:9px;padding:11px 16px;border-radius:9px;font-size:12.5px;font-weight:500;color:#fff;box-shadow:0 8px 28px rgba(0,0,0,.3);animation:toastIn .35s ease;min-width:240px;max-width:380px}
+.toast.removing{animation:toastOut .3s ease forwards}
+.toast-success{background:#059669}.toast-error{background:#DC2626}.toast-warning{background:#D97706}.toast-info{background:#0284C7}
+@keyframes toastIn{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastOut{to{opacity:0;transform:translateX(60px)}}
+
+.hero-bg{position:relative;overflow:hidden;border-radius:14px;background:linear-gradient(135deg,#0D2137,#0B1120 50%,#162035);padding:44px 36px;margin-bottom:28px}
+.hero-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,var(--accent-glow),transparent 60%),radial-gradient(ellipse at 80% 20%,var(--amber-glow),transparent 50%)}
+.hero-content{position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:18px;font-size:11px;font-weight:600;background:var(--accent-glow);color:var(--accent);border:1px solid rgba(20,184,166,.3);margin-bottom:14px}
+.hero-title{font-size:clamp(24px,3.5vw,40px);font-weight:900;line-height:1.15;margin-bottom:12px;letter-spacing:-.8px}
+.hero-title .ac{color:var(--accent)}.hero-title .am{color:var(--amber)}
+.hero-sub{font-size:14.5px;color:var(--text-secondary);max-width:500px;line-height:1.6;margin-bottom:22px}
+.float-s{position:absolute;border-radius:50%;opacity:.06;pointer-events:none}
+.float-s.s1{width:180px;height:180px;background:var(--accent);top:-30px;right:50px;animation:fl1 8s ease-in-out infinite}
+.float-s.s2{width:100px;height:100px;background:var(--amber);bottom:-15px;right:180px;animation:fl2 10s ease-in-out infinite}
+@keyframes fl1{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+@keyframes fl2{0%,100%{transform:translateY(0)}50%{transform:translateY(12px)}}
+
+.feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px;transition:all .3s;cursor:default}
+.feature-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 28px var(--accent-glow)}
+.feat-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px}
+.feat-icon.teal{background:var(--accent-glow);color:var(--accent)}.feat-icon.amber{background:var(--amber-glow);color:var(--amber)}
+.feat-icon.rose{background:var(--rose-glow);color:var(--rose)}.feat-icon.violet{background:var(--violet-glow);color:var(--violet)}
+.feature-card h3{font-size:15px;font-weight:700;margin-bottom:7px}
+.feature-card p{font-size:12.5px;color:var(--text-secondary);line-height:1.6}
+
+.op-btn-grid{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0}
+.op-btn{padding:8px 15px;border-radius:9px;border:1px solid var(--border);background:var(--bg-tertiary);color:var(--text-secondary);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:5px}
+.op-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-glow)}
+.op-btn.active{border-color:var(--accent);color:#fff;background:var(--accent)}
+
+.result-area{background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-top:14px;min-height:50px;position:relative}
+.result-label{font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px}
+.result-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
+
+.materi-layout{display:flex;gap:22px}
+.materi-sidebar{position:sticky;top:20px;min-width:220px;max-width:240px;display:flex;flex-direction:column;gap:2px}
+.materi-nav-item{display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:8px;font-size:12.5px;font-weight:500;color:var(--text-secondary);cursor:pointer;transition:all .2s;margin:1px 0}
+.materi-nav-item:hover{color:var(--text-primary);background:var(--sidebar-active)}
+.materi-nav-item.active{color:var(--accent);background:var(--sidebar-active);font-weight:600}
+.materi-nav-item i{width:16px;text-align:center;font-size:12px}
+.materi-nav-section{font-size:10.5px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;padding:14px 13px 4px;cursor:default}
+
+.topic-section{display:none;animation:fadeIn .35s ease}.topic-section.active{display:block}
+
+.learn-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:18px;transition:border-color .3s}
+.learn-card:hover{border-color:rgba(20,184,166,.3)}
+.learn-card h3{font-size:16px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.learn-card h3 i{color:var(--accent);font-size:14px}
+
+.type-card{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;padding:16px;transition:all .3s}
+.type-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.type-card h4{font-size:14px;font-weight:700;margin-bottom:6px;color:var(--accent)}
+.type-card p{font-size:12.5px;color:var(--text-secondary);line-height:1.55}
+
+.step-box{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.step-box:last-child{border-bottom:none}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
+.step-text{font-size:13.5px;color:var(--text-secondary);line-height:1.65;flex:1}
+.step-text strong{color:var(--text-primary)}
+
+.formula-box{background:var(--bg-input);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 18px;margin:12px 0;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text-primary);line-height:1.7}
+.formula-box.amber{border-left-color:var(--amber)}
+.formula-box.rose{border-left-color:var(--rose)}
+.formula-box.violet{border-left-color:var(--violet)}
+
+.example-box{background:var(--bg-input);border:1px solid var(--border);border-radius:10px;padding:18px;margin:14px 0}
+.example-box .ex-label{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+
+.try-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:8px;border:1px dashed var(--accent);background:var(--accent-glow);color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.try-btn:hover{background:var(--accent);color:#fff;border-style:solid}
+
+.sim-section{background:var(--bg-input);border:1px solid var(--border);border-radius:10px;padding:18px;margin:14px 0}
+.sim-section .sim-title{font-size:13px;font-weight:700;color:var(--amber);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+
+.quiz-option{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;margin:5px 0;cursor:pointer;transition:all .2s;font-size:13px}
+.quiz-option:hover{border-color:var(--accent);background:var(--accent-glow)}
+.quiz-option.correct{border-color:var(--success);background:rgba(16,185,129,.1);color:var(--success)}
+.quiz-option.wrong{border-color:var(--error);background:rgba(239,68,68,.1);color:var(--error)}
+.quiz-option .opt-marker{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;transition:all .2s}
+.quiz-option.correct .opt-marker{border-color:var(--success);background:var(--success);color:#fff}
+.quiz-option.wrong .opt-marker{border-color:var(--error);background:var(--error);color:#fff}
+
+.history-item{background:var(--bg-card);border:1px solid var(--border);border-radius:9px;padding:14px 18px;margin-bottom:7px;transition:all .2s;cursor:default}
+.history-item:hover{border-color:var(--accent)}
+.h-type{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-glow);padding:2px 9px;border-radius:5px;margin-bottom:4px}
+.h-time{font-size:10.5px;color:var(--text-muted);float:right}
+.h-desc{font-size:12.5px;color:var(--text-secondary);line-height:1.5}
+.h-result{font-size:11px;color:var(--text-muted);margin-top:5px;font-family:'JetBrains Mono',monospace}
+
+@media(max-width:1100px){
+  #sidebar{transform:translateX(-100%)}#sidebar.open{transform:translateX(0)}
+  #main-content{margin-left:0}#mobile-header{display:flex}#main-content{padding:68px 14px 20px}
+  .materi-layout{flex-direction:column!important}
+  .materi-sidebar{position:static!important;min-width:100%!important;max-width:100%!important;flex-direction:row!important;flex-wrap:wrap!important;gap:4px!important}
+  .materi-nav-section{width:100%}
+  .materi-nav-item{font-size:11.5px;padding:7px 10px}
+}
+@media(max-width:768px){
+  .spl-grid,.mat-grid{grid-template-columns:1fr!important}
+  .hero-bg{padding:28px 18px}
+  .card{padding:16px}
+  .mc{width:40px;height:30px;font-size:10.5px}
+}
+@media(max-width:480px){
+  .mc{width:34px;height:26px;font-size:9.5px}
+  .btn{padding:7px 12px;font-size:11.5px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<aside id="sidebar">
+  <div class="logo-area">
+    <div class="logo-icon">Mx</div>
+    <div class="logo-text">Matri<span>X</span>Lab</div>
+  </div>
+  <nav id="sidebar-nav">
+    <a data-page="home" class="active"><i class="fa-solid fa-house"></i>Beranda</a>
+    <a data-page="materi"><i class="fa-solid fa-book-open"></i>Materi Pembelajaran</a>
+    <a data-page="spl"><i class="fa-solid fa-square-root-variable"></i>SPL ke Matriks</a>
+    <a data-page="matrix"><i class="fa-solid fa-table-cells"></i>Operasi Matriks</a>
+    <a data-page="history"><i class="fa-solid fa-clock-rotate-left"></i>Riwayat</a>
+    <a data-page="about"><i class="fa-solid fa-circle-info"></i>Tentang</a>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="theme-btn" id="theme-toggle" aria-label="Ganti tema"><i class="fa-solid fa-moon"></i><span>Mode Gelap</span></button>
+  </div>
+</aside>
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+<header id="mobile-header">
+  <button class="hamburger" id="hamburger-btn" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+  <div style="font-weight:700;font-size:15px;">Matri<span style="color:var(--accent)">X</span>Lab</div>
+</header>
+
+<main id="main-content">
+
+<!-- BERANDA -->
+<section id="page-home" class="page-section active">
+  <div class="hero-bg">
+    <div class="float-s s1"></div><div class="float-s s2"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fa-solid fa-wand-magic-sparkles"></i>Platform Pembelajaran Interaktif</div>
+      <h1 class="hero-title">Kuasai <span class="ac">Matriks</span> dengan<br>Cara yang <span class="am">Menyenangkan</span></h1>
+      <p class="hero-sub">Pelajari konsep matriks dari nol hingga mahir. Materi disajikan dengan bahasa sederhana, contoh visual, dan simulasi interaktif.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="navigateTo('materi')"><i class="fa-solid fa-book-open"></i>Belajar Sekarang</button>
+        <button class="btn btn-amber" onclick="navigateTo('matrix')"><i class="fa-solid fa-table-cells"></i>Coba Kalkulator</button>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:28px;">
+    <div class="feature-card" onclick="navigateTo('materi')"><div class="feat-icon teal"><i class="fa-solid fa-graduation-cap"></i></div><h3>Materi Lengkap</h3><p>Dari pengertian dasar hingga metode penyelesaian SPL, semua dijelaskan dengan bahasa sederhana.</p></div>
+    <div class="feature-card" onclick="navigateTo('spl')"><div class="feat-icon amber"><i class="fa-solid fa-arrow-right-arrow-left"></i></div><h3>SPL ke Matriks</h3><p>Konversikan sistem persamaan linear menjadi matriks augmented secara otomatis.</p></div>
+    <div class="feature-card" onclick="navigateTo('matrix')"><div class="feat-icon rose"><i class="fa-solid fa-calculator"></i></div><h3>Operasi Matriks</h3><p>Penjumlahan, perkalian, transpose, determinan, dan invers matriks ukuran besar.</p></div>
+    <div class="feature-card" onclick="navigateTo('history')"><div class="feat-icon violet"><i class="fa-solid fa-clock-rotate-left"></i></div><h3>Riwayat Otomatis</h3><p>Semua perhitungan tersimpan. Tinjau kembali kapan saja tanpa kehilangan data.</p></div>
+  </div>
+</section>
+
+<!-- MATERI PEMBELAJARAN -->
+<section id="page-materi" class="page-section">
+  <div style="margin-bottom:22px;">
+    <h2 style="font-size:22px;font-weight:800;margin-bottom:5px;">Materi Pembelajaran Matriks</h2>
+    <p style="color:var(--text-secondary);font-size:13.5px;">Belajar matriks dari dasar dengan bahasa sederhana, contoh visual, dan simulasi interaktif.</p>
+  </div>
+  <div class="materi-layout">
+    <div class="materi-sidebar">
+      <div class="materi-nav-section">Dasar-Dasar</div>
+      <div class="materi-nav-item active" data-topic="m-intro"><i class="fa-solid fa-circle-question"></i>Apa Itu Matriks?</div>
+      <div class="materi-nav-item" data-topic="m-elements"><i class="fa-solid fa-border-all"></i>Elemen & Ordo</div>
+      <div class="materi-nav-item" data-topic="m-types"><i class="fa-solid fa-layer-group"></i>Jenis-Jenis Matriks</div>
+      <div class="materi-nav-item" data-topic="m-uses"><i class="fa-solid fa-lightbulb"></i>Kegunaan Matriks</div>
+      <div class="materi-nav-section">Operasi Matriks</div>
+      <div class="materi-nav-item" data-topic="m-add"><i class="fa-solid fa-plus"></i>Penjumlahan</div>
+      <div class="materi-nav-item" data-topic="m-sub"><i class="fa-solid fa-minus"></i>Pengurangan</div>
+      <div class="materi-nav-item" data-topic="m-mul"><i class="fa-solid fa-xmark"></i>Perkalian</div>
+      <div class="materi-nav-item" data-topic="m-transpose"><i class="fa-solid fa-rotate"></i>Transpose</div>
+      <div class="materi-nav-item" data-topic="m-det"><i class="fa-solid fa-d"></i>Determinan</div>
+      <div class="materi-nav-item" data-topic="m-inverse"><i class="fa-solid fa-arrow-turn-up"></i>Invers</div>
+      <div class="materi-nav-section">Metode SPL</div>
+      <div class="materi-nav-item" data-topic="m-gauss"><i class="fa-solid fa-stairs"></i>Eliminasi Gauss</div>
+      <div class="materi-nav-item" data-topic="m-gaussjordan"><i class="fa-solid fa-stairs"></i>Gauss-Jordan</div>
+      <div class="materi-nav-item" data-topic="m-invmethod"><i class="fa-solid fa-arrow-right-arrow-left"></i>Matriks Balikan</div>
+      <div class="materi-nav-item" data-topic="m-detmethod"><i class="fa-solid fa-d"></i>Metode Determinan</div>
+      <div class="materi-nav-item" data-topic="m-cramer"><i class="fa-solid fa-gavel"></i>Aturan Cramer</div>
+    </div>
+    <div style="flex:1;min-width:0;" id="materi-content">
+
+      <!-- APA ITU MATRIKS -->
+      <div class="topic-section active" id="m-intro">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-circle-question"></i>Apa Itu Matriks?</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Bayangkan kamu punya sekumpulan angka yang tersusun rapi dalam <strong style="color:var(--text-primary)">baris dan kolom</strong>, seperti tabel. Nah, susunan angka itulah yang disebut <strong style="color:var(--accent)">matriks</strong>.</p>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Matriks itu seperti <strong style="color:var(--text-primary)">tabel Excel</strong> — setiap angka punya "alamat" berdasarkan baris ke berapa dan kolom ke berapa. Kita biasanya menulis matriks di dalam kurung siku besar.</p>
+          <div class="formula-box">Contoh matriks 2x3:<br><br><div class="mx"><div class="bl"></div><table><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>4</td><td>5</td><td>6</td></tr></table><div class="br"></div></div><br><br>Matriks di atas punya <strong>2 baris</strong> dan <strong>3 kolom</strong>.</div>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;">Jadi, matriks itu bukan sesuatu yang menakutkan. Dia cuma <strong style="color:var(--accent)">kumpulan angka yang tersusun rapi</strong> — itulah kenapa matriks sangat berguna untuk mengorganisir data dan menyelesaikan masalah matematika.</p>
+        </div>
+      </div>
+
+      <!-- ELEMEN & ORDO -->
+      <div class="topic-section" id="m-elements">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-border-all"></i>Elemen, Ordo, Baris, dan Kolom</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Sebelum bermain-main dengan matriks, kita perlu kenal beberapa istilah dasar:</p>
+          <div style="display:grid;gap:10px;margin-bottom:16px;">
+            <div style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:14px;"><strong style="color:var(--accent);font-size:13px;">Baris</strong><p style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Baris adalah susunan angka yang membentuk <strong style="color:var(--text-primary)">ke samping (horizontal)</strong>.</p></div>
+            <div style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:14px;"><strong style="color:var(--amber);font-size:13px;">Kolom</strong><p style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Kolom adalah susunan angka yang membentuk <strong style="color:var(--text-primary)">ke bawah (vertikal)</strong>.</p></div>
+            <div style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:14px;"><strong style="color:var(--rose);font-size:13px;">Ordo (Ukuran)</strong><p style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Ordo menyatakan ukuran matriks, ditulis <strong style="color:var(--text-primary)">m x n</strong> di mana m = jumlah baris, n = jumlah kolom.</p></div>
+            <div style="background:var(--bg-tertiary);border:1px solid var(--border);border-radius:8px;padding:14px;"><strong style="color:var(--violet);font-size:13px;">Elemen</strong><p style="font-size:13px;color:var(--text-secondary);margin-top:4px;">Setiap angka dalam matriks disebut <strong style="color:var(--text-primary)">elemen</strong>. Elemen pada baris ke-i dan kolom ke-j ditulis a<sub>ij</sub>. Contoh: a<sub>12</sub> = 2 (baris 1, kolom 2).</p></div>
+          </div>
+          <div class="example-box">
+            <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Visual</div>
+            <div class="mx amber"><div class="bl"></div><table><tr><td style="color:var(--accent)">a1,1=1</td><td style="color:var(--amber)">a1,2=2</td><td style="color:var(--rose)">a1,3=3</td></tr><tr><td style="color:var(--violet)">a2,1=4</td><td>a2,2=5</td><td>a2,3=6</td></tr></table><div class="br"></div></div>
+            <p style="font-size:12.5px;color:var(--text-muted);margin-top:10px;">Baris 1: [1, 2, 3] | Baris 2: [4, 5, 6]<br>Kolom 1: [1, 4] | Kolom 2: [2, 5] | Kolom 3: [3, 6]</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- JENIS-JENIS MATRIKS -->
+      <div class="topic-section" id="m-types">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-layer-group"></i>Jenis-Jenis Matriks</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:16px;">Matriks punya beberapa "karakter" khusus berdasarkan bentuk dan isinya. Yuk, kenali satu per satu:</p>
+        </div>
+        <div style="display:grid;gap:14px;">
+          <div class="type-card"><h4>Matriks Baris</h4><p style="margin-bottom:10px;">Matriks yang hanya punya <strong>satu baris</strong>. Ordonya 1 x n.</p><div class="mx sm"><div class="bl"></div><table><tr><td>3</td><td>7</td><td>1</td><td>9</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Matriks baris 1x4</p></div>
+          <div class="type-card"><h4>Matriks Kolom</h4><p style="margin-bottom:10px;">Matriks yang hanya punya <strong>satu kolom</strong>. Ordonya m x 1.</p><div class="mx sm"><div class="bl"></div><table><tr><td>5</td></tr><tr><td>2</td></tr><tr><td>8</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Matriks kolom 3x1</p></div>
+          <div class="type-card"><h4>Matriks Persegi</h4><p style="margin-bottom:10px;">Matriks yang jumlah barisnya <strong>sama dengan</strong> jumlah kolomnya. Ordonya n x n.</p><div class="mx sm"><div class="bl"></div><table><tr><td>2</td><td>5</td></tr><tr><td>1</td><td>3</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Matriks persegi 2x2</p></div>
+          <div class="type-card"><h4>Matriks Identitas (I)</h4><p style="margin-bottom:10px;">Matriks persegi yang diagonal utamanya berisi <strong>1</strong> dan sisanya <strong>0</strong>. Seperti "angka 1" dalam perkalian matriks.</p><div class="mx sm amber"><div class="bl"></div><table><tr><td style="color:var(--amber)">1</td><td>0</td><td>0</td></tr><tr><td>0</td><td style="color:var(--amber)">1</td><td>0</td></tr><tr><td>0</td><td>0</td><td style="color:var(--amber)">1</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Matriks identitas I3</p></div>
+          <div class="type-card"><h4>Matriks Diagonal</h4><p style="margin-bottom:10px;">Matriks persegi yang elemen di luar diagonal utamanya semuanya <strong>0</strong>. Diagonal utamanya boleh berapa saja.</p><div class="mx sm"><div class="bl"></div><table><tr><td style="color:var(--accent)">4</td><td>0</td><td>0</td></tr><tr><td>0</td><td style="color:var(--accent)">7</td><td>0</td></tr><tr><td>0</td><td>0</td><td style="color:var(--accent)">2</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Catatan: Matriks identitas adalah kasus khusus dari matriks diagonal</p></div>
+          <div class="type-card"><h4>Matriks Nol (O)</h4><p style="margin-bottom:10px;">Matriks yang <strong>semua elemennya bernilai 0</strong>. Seperti "angka 0" dalam operasi matriks.</p><div class="mx sm"><div class="bl"></div><table><tr><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Matriks nol 3x2</p></div>
+        </div>
+      </div>
+
+      <!-- KEGUNAAN MATRIKS -->
+      <div class="topic-section" id="m-uses">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-lightbulb"></i>Kegunaan Matriks dalam Kehidupan Nyata</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:16px;">Matriks bukan cuma teori di buku paket. Di dunia nyata, matriks ada di mana-mana:</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
+          <div class="type-card"><h4><i class="fa-solid fa-gamepad" style="margin-right:4px;"></i>Game & Grafik 3D</h4><p>Komputer menggunakan matriks untuk menggerakkan, memutar, dan mengubah ukuran objek 3D di game.</p></div>
+          <div class="type-card"><h4><i class="fa-solid fa-magnifying-glass" style="margin-right:4px;"></i>Google & Pencarian</h4><p>Algoritma PageRank Google menggunakan matriks raksasa untuk menentukan halaman mana yang paling relevan.</p></div>
+          <div class="type-card"><h4><i class="fa-solid fa-chart-line" style="margin-right:4px;"></i>Ekonomi & Bisnis</h4><p>Model input-output Leontief menggunakan matriks untuk menganalisis hubungan antar sektor ekonomi.</p></div>
+          <div class="type-card"><h4><i class="fa-solid fa-shield-halved" style="margin-right:4px;"></i>Keamanan Data</h4><p>Sistem enkripsi seperti Hill Cipher menggunakan perkalian matriks untuk mengenkripsi pesan.</p></div>
+          <div class="type-card"><h4><i class="fa-solid fa-robot" style="margin-right:4px;"></i>AI & Machine Learning</h4><p>Neural network pada dasarnya adalah operasi matriks berulang: perkalian bobot dengan input ditambah bias.</p></div>
+          <div class="type-card"><h4><i class="fa-solid fa-image" style="margin-right:4px;"></i>Pengolahan Gambar</h4><p>Gambar digital adalah matriks piksel. Filter Instagram dan kompresi JPEG menggunakan operasi matriks.</p></div>
+        </div>
+      </div>
+
+      <!-- PENJUMLAHAN -->
+      <div class="topic-section" id="m-add">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-plus"></i>Penjumlahan Matriks</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Menjumlahkan matriks itu <strong style="color:var(--text-primary)">sangat mudah</strong> — tinggal jumlahkan elemen yang posisinya sama! Syaratnya: <strong style="color:var(--accent)">kedua matriks harus punya ordo yang sama</strong>.</p>
+          <div class="formula-box">Jika A dan B berordo sama, maka C = A + B di mana c<sub>ij</sub> = a<sub>ij</sub> + b<sub>ij</sub></div>
+          <div class="example-box">
+            <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <div class="mx sm"><div class="bl"></div><table><tr><td>2</td><td>1</td></tr><tr><td>3</td><td>4</td></tr></table><div class="br"></div></div>
+              <span style="font-size:20px;font-weight:300;color:var(--text-muted);">+</span>
+              <div class="mx sm"><div class="bl"></div><table><tr><td>5</td><td>3</td></tr><tr><td>1</td><td>2</td></tr></table><div class="br"></div></div>
+              <span style="font-size:20px;font-weight:300;color:var(--text-muted);">=</span>
+              <div class="mx sm amber"><div class="bl"></div><table><tr><td style="color:var(--amber)">7</td><td style="color:var(--amber)">4</td></tr><tr><td style="color:var(--amber)">4</td><td style="color:var(--amber)">6</td></tr></table><div class="br"></div></div>
+            </div>
+          </div>
+          <div style="margin-top:14px;"><p style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Langkah Penyelesaian:</p>
+            <div class="step-box"><div class="step-num">1</div><div class="step-text">Pastikan kedua matriks punya ordo sama. Keduanya 2x2 — <strong style="color:var(--accent)">bisa dijumlahkan</strong>.</div></div>
+            <div class="step-box"><div class="step-num">2</div><div class="step-text">Jumlahkan elemen yang posisinya sama: <strong style="color:var(--accent)">2+5=7</strong>, <strong style="color:var(--accent)">1+3=4</strong>, <strong style="color:var(--accent)">3+1=4</strong>, <strong style="color:var(--accent)">4+2=6</strong>.</div></div>
+            <div class="step-box"><div class="step-num">3</div><div class="step-text">Tulis hasilnya sebagai matriks baru.</div></div>
+          </div>
+        </div>
+        <div class="sim-section"><div class="sim-title"><i class="fa-solid fa-flask"></i>Simulasi Penjumlahan</div>
+          <div style="display:flex;gap:12px;align-items:end;flex-wrap:wrap;margin-bottom:12px;">
+            <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Baris</label><input type="number" id="sim-add-r" class="input-field" value="2" min="1" max="5" style="width:60px;"></div>
+            <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Kolom</label><input type="number" id="sim-add-c" class="input-field" value="2" min="1" max="5" style="width:60px;"></div>
+            <button class="btn btn-primary btn-sm" onclick="simAddition()"><i class="fa-solid fa-play"></i>Jumlahkan</button>
+            <button class="btn btn-ghost btn-sm" onclick="simAddRandom()"><i class="fa-solid fa-dice"></i>Random</button>
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;" id="sim-add-grids"></div>
+          <div id="sim-add-result" style="margin-top:12px;"></div>
+        </div>
+        <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
+      </div>
+
+      <!-- PENGURANGAN -->
+      <div class="topic-section" id="m-sub">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-minus"></i>Pengurangan Matriks</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Pengurangan matriks <strong style="color:var(--text-primary)">sama seperti penjumlahan</strong>, cuma tanda operasinya diganti kurang. Syaratnya tetap sama: <strong style="color:var(--accent)">ordo harus sama</strong>.</p>
+          <div class="formula-box">C = A - B di mana c<sub>ij</sub> = a<sub>ij</sub> - b<sub>ij</sub></div>
+          <div class="example-box">
+            <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <div class="mx sm"><div class="bl"></div><table><tr><td>5</td><td>8</td></tr><tr><td>3</td><td>2</td></tr></table><div class="br"></div></div>
+              <span style="font-size:20px;font-weight:300;color:var(--text-muted);">-</span>
+              <div class="mx sm"><div class="bl"></div><table><tr><td>2</td><td>3</td></tr><tr><td>1</td><td>4</td></tr></table><div class="br"></div></div>
+              <span style="font-size:20px;font-weight:300;color:var(--text-muted);">=</span>
+              <div class="mx sm amber"><div class="bl"></div><table><tr><td style="color:var(--amber)">3</td><td style="color:var(--amber)">5</td></tr><tr><td style="color:var(--amber)">2</td><td style="color:var(--amber)">-2</td></tr></table><div class="br"></div></div>
+            </div>
+          </div>
+          <div style="margin-top:14px;"><p style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Langkah Penyelesaian:</p>
+            <div class="step-box"><div class="step-num">1</div><div class="step-text">Pastikan ordo sama (keduanya 2x2).</div></div>
+            <div class="step-box"><div class="step-num">2</div><div class="step-text">Kurangkan elemen yang posisinya sama: <strong style="color:var(--accent)">5-2=3</strong>, <strong style="color:var(--accent)">8-3=5</strong>, <strong style="color:var(--accent)">3-1=2</strong>, <strong style="color:var(--accent)">2-4=-2</strong>.</div></div>
+          </div>
+        </div>
+        <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
+      </div>
+
+      <!-- PERKALIAN -->
+      <div class="topic-section" id="m-mul">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-xmark"></i>Perkalian Matriks</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Perkalian matriks <strong style="color:var(--text-primary)">berbeda</strong> dengan penjumlahan. Kita tidak mengalikan elemen satu per satu. Cara kerjanya: <strong style="color:var(--accent)">baris dikali kolom</strong>, lalu hasilnya dijumlahkan.</p>
+          <div class="formula-box amber">Syarat: Jumlah kolom A = jumlah baris B<br><br>Hasilnya: matriks berordo (baris A) x (kolom B)<br><br>c<sub>ij</sub> = a<sub>i1</sub>.b<sub>1j</sub> + a<sub>i2</sub>.b<sub>2j</sub> + ... + a<sub>in</sub>.b<sub>nj</sub></div>
+          <div class="example-box">
+            <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+              <div class="mx sm"><div class="bl"></div><table><tr><td>2</td><td>3</td></tr><tr><td>1</td><td>4</td></tr></table><div class="br"></div></div>
+              <span style="font-size:18px;font-weight:300;color:var(--text-muted);">x</span>
+              <div class="mx sm"><div class="bl"></div><table><tr><td>5</td><td>1</td></tr><tr><td>2</td><td>3</td></tr></table><div class="br"></div></div>
+            </div>
+            <div class="step-box"><div class="step-num">1</div><div class="step-text">Baris 1 x Kolom 1: <strong style="color:var(--accent)">(2x5) + (3x2) = 10 + 6 = 16</strong></div></div>
+            <div class="step-box"><div class="step-num">2</div><div class="step-text">Baris 1 x Kolom 2: <strong style="color:var(--accent)">(2x1) + (3x3) = 2 + 9 = 11</strong></div></div>
+            <div class="step-box"><div class="step-num">3</div><div class="step-text">Baris 2 x Kolom 1: <strong style="color:var(--accent)">(1x5) + (4x2) = 5 + 8 = 13</strong></div></div>
+            <div class="step-box"><div class="step-num">4</div><div class="step-text">Baris 2 x Kolom 2: <strong style="color:var(--accent)">(1x1) + (4x3) = 1 + 12 = 13</strong></div></div>
+            <p style="font-size:13px;font-weight:600;color:var(--text-primary);margin-top:8px;">Hasil:</p>
+            <div class="mx sm amber"><div class="bl"></div><table><tr><td style="color:var(--amber)">16</td><td style="color:var(--amber)">11</td></tr><tr><td style="color:var(--amber)">13</td><td style="color:var(--amber)">13</td></tr></table><div class="br"></div></div>
+          </div>
+          <div class="formula-box rose" style="margin-top:14px;"><strong style="color:var(--rose)">Perhatian:</strong> Perkalian matriks <strong>tidak komutatif</strong>! A x B tidak sama dengan B x A (umumnya).</div>
+        </div>
+        <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
+      </div>
+
+      <!-- TRANSPOSE -->
+      <div class="topic-section" id="m-transpose">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-rotate"></i>Transpose Matriks</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Transpose itu seperti <strong style="color:var(--text-primary)">membalik matriks secara diagonal</strong> — baris jadi kolom, kolom jadi baris. Ditulis A<sup>T</sup>.</p>
+          <div class="formula-box">Jika A berordo m x n, maka A<sup>T</sup> berordo n x m, dan (A<sup>T</sup>)<sub>ij</sub> = a<sub>ji</sub></div>
+          <div class="example-box">
+            <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <div class="mx sm"><div class="bl"></div><table><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>4</td><td>5</td><td>6</td></tr></table><div class="br"></div></div>
+              <span style="font-size:13px;color:var(--text-muted);">-> A<sup>T</sup> =</span>
+              <div class="mx sm amber"><div class="bl"></div><table><tr><td style="color:var(--amber)">1</td><td style="color:var(--amber)">4</td></tr><tr><td style="color:var(--amber)">2</td><td style="color:var(--amber)">5</td></tr><tr><td style="color:var(--amber)">3</td><td style="color:var(--amber)">6</td></tr></table><div class="br"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="sim-section"><div class="sim-title"><i class="fa-solid fa-flask"></i>Simulasi Transpose</div>
+          <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin-bottom:10px;">
+            <button class="btn btn-primary btn-sm" onclick="simTranspose()"><i class="fa-solid fa-play"></i>Transpose</button>
+            <button class="btn btn-ghost btn-sm" onclick="simTransRandom()"><i class="fa-solid fa-dice"></i>Random</button>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;" id="sim-trans-grids"></div>
+          <div id="sim-trans-result" style="margin-top:10px;"></div>
+        </div>
+        <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
+      </div>
+
+      <!-- DETERMINAN -->
+      <div class="topic-section" id="m-det">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-d"></i>Determinan Matriks</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Determinan adalah <strong style="color:var(--accent)">satu angka</strong> yang dihitung dari matriks persegi. Kalau determinan = 0, matriks itu <strong style="color:var(--rose)">tidak punya invers</strong>.</p>
+          <div class="formula-box amber"><strong>Matriks 2x2:</strong><br>det(A) = ad - bc<br><br>untuk A = [[a, b], [c, d]]</div>
+          <div class="example-box">
+            <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal 2x2</div>
+            <div class="mx sm"><div class="bl"></div><table><tr><td>3</td><td>8</td></tr><tr><td>4</td><td>6</td></tr></table><div class="br"></div></div>
+            <p style="font-size:13px;color:var(--text-secondary);margin:8px 0;">det = (3x6) - (8x4) = <strong style="color:var(--amber)">18 - 32 = -14</strong></p>
+          </div>
+          <div class="formula-box" style="margin-top:14px;"><strong>Matriks 3x3 (Aturan Sarrus):</strong><br>det = a11.a22.a33 + a12.a23.a31 + a13.a21.a32<br>&nbsp;&nbsp;&nbsp;&nbsp; - a13.a22.a31 - a11.a23.a32 - a12.a21.a33</div>
+        </div>
+        <div class="sim-section"><div class="sim-title"><i class="fa-solid fa-flask"></i>Simulasi Determinan</div>
+          <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin-bottom:10px;">
+            <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Ukuran</label><select id="sim-det-n" class="input-field" style="width:70px;"><option>2</option><option>3</option><option>4</option></select></div>
+            <button class="btn btn-primary btn-sm" onclick="simDeterminant()"><i class="fa-solid fa-play"></i>Hitung</button>
+            <button class="btn btn-ghost btn-sm" onclick="simDetRandom()"><i class="fa-solid fa-dice"></i>Random</button>
+          </div>
+          <div id="sim-det-grid"></div>
+          <div id="sim-det-result" style="margin-top:10px;"></div>
+        </div>
+        <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
+      </div>
+
+      <!-- INVERS -->
+      <div class="topic-section" id="m-inverse">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-arrow-turn-up"></i>Invers Matriks</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Invers matriks itu seperti <strong style="color:var(--text-primary)">kebalikan dari suatu matriks</strong>. Kalau A x A<sup>-1</sup> = I (matriks identitas), maka A<sup>-1</sup> adalah invers dari A.</p>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Syaratnya: <strong style="color:var(--rose)">determinan tidak boleh nol</strong>. Kalau det(A) = 0, matriks tidak punya invers.</p>
+          <div class="formula-box violet"><strong>Invers 2x2:</strong><br><br>Jika A = [[a, b], [c, d]], maka:<br><br>A<sup>-1</sup> = (1/det) x [[d, -b], [-c, a]]</div>
+          <div class="example-box">
+            <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
+            <div class="mx sm"><div class="bl"></div><table><tr><td>3</td><td>1</td></tr><tr><td>2</td><td>1</td></tr></table><div class="br"></div></div>
+            <div style="margin-top:10px;">
+              <div class="step-box"><div class="step-num">1</div><div class="step-text">Hitung determinan: <strong style="color:var(--accent)">det = 3x1 - 1x2 = 1</strong></div></div>
+              <div class="step-box"><div class="step-num">2</div><div class="step-text">Tukar a dan d, ubah tanda b dan c: [[1, -1], [-2, 3]]</div></div>
+              <div class="step-box"><div class="step-num">3</div><div class="step-text">Bagi dengan determinan (1): hasilnya sama</div></div>
+            </div>
+            <p style="font-size:13px;font-weight:600;color:var(--text-primary);margin-top:8px;">A<sup>-1</sup> =</p>
+            <div class="mx sm violet"><div class="bl"></div><table><tr><td style="color:var(--violet)">1</td><td style="color:var(--violet)">-1</td></tr><tr><td style="color:var(--violet)">-2</td><td style="color:var(--violet)">3</td></tr></table><div class="br"></div></div>
+          </div>
+        </div>
+        <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
+      </div>
+
+      <!-- ELIMINASI GAUSS -->
+      <div class="topic-section" id="m-gauss">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-stairs"></i>Metode Eliminasi Gauss</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Eliminasi Gauss adalah cara menyelesaikan SPL dengan <strong style="color:var(--accent)">mengubah matriks augmented menjadi bentuk eselon baris</strong> (segitiga atas), lalu menghitung variabel dari bawah ke atas (substitusi balik).</p>
+          <div class="formula-box">Tujuan: Ubah matriks augmented menjadi bentuk segitiga atas, lalu substitusi balik.</div>
+          <div class="example-box">
+            <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Selesaikan: x + y + z = 6, 2x - y + z = 3, x + y - z = 2</p>
+            <div class="step-box"><div class="step-num">1</div><div class="step-text">B2 - 2B1 -> B2: <strong style="color:var(--accent)">[0, -3, -1 | -9]</strong></div></div>
+            <div class="step-box"><div class="step-num">2</div><div class="step-text">B3 - B1 -> B3: <strong style="color:var(--accent)">[0, 0, -2 | -4]</strong></div></div>
+            <div class="step-box"><div class="step-num">3</div><div class="step-text">Bentuk eselon baris tercapai. Substitusi balik:</div></div>
+            <div class="step-box"><div class="step-num">4</div><div class="step-text">Dari baris 3: -2z = -4 -> <strong style="color:var(--amber)">z = 2</strong></div></div>
+            <div class="step-box"><div class="step-num">5</div><div class="step-text">Dari baris 2: -3y - 1(2) = -9 -> <strong style="color:var(--amber)">y = 7/3</strong></div></div>
+            <div class="step-box"><div class="step-num">6</div><div class="step-text">Dari baris 1: x + 7/3 + 2 = 6 -> <strong style="color:var(--amber)">x = 5/3</strong></div></div>
+          </div>
+        </div>
+        <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('spl')"><i class="fa-solid fa-hand-pointer"></i>Coba SPL ke Matriks</button></div>
+      </div>
+
+      <!-- GAUSS-JORDAN -->
+      <div class="topic-section" id="m-gaussjordan">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-stairs"></i>Metode Gauss-Jordan</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Kelanjutan dari Eliminasi Gauss. Setelah mendapat bentuk eselon baris, kita <strong style="color:var(--accent)">melanjutkan eliminasi ke atas</strong> hingga mendapat matriks identitas di sisi kiri. Hasilnya: solusi langsung terbaca!</p>
+          <div class="formula-box amber">Tujuan: Ubah matriks augmented menjadi [[I | solusi]], sehingga jawaban langsung terbaca tanpa substitusi balik.</div>
+          <div class="example-box">
+            <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Selesaikan: x + 2y = 5, 3x - y = 1</p>
+            <div class="step-box"><div class="step-num">1</div><div class="step-text">Matriks augmented: [[1, 2 | 5], [3, -1 | 1]]</div></div>
+            <div class="step-box"><div class="step-num">2</div><div class="step-text">B2 - 3B1 -> B2: [[1, 2 | 5], [0, -7 | -14]]</div></div>
+            <div class="step-box"><div class="step-num">3</div><div class="step-text">B2 / (-7): [[1, 2 | 5], [0, 1 | 2]]</div></div>
+            <div class="step-box"><div class="step-num">4</div><div class="step-text">B1 - 2B2 -> B1: [[1, 0 | 1], [0, 1 | 2]]</div></div>
+            <div class="step-box"><div class="step-num">5</div><div class="step-text">Langsung terbaca: <strong style="color:var(--amber)">x = 1, y = 2</strong></div></div>
+          </div>
+        </div>
+        <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('spl')"><i class="fa-solid fa-hand-pointer"></i>Coba SPL ke Matriks</button></div>
+      </div>
+
+      <!-- MATRIKS BALIKAN -->
+      <div class="topic-section" id="m-invmethod">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-arrow-right-arrow-left"></i>Metode Matriks Balikan</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Kalau SPL ditulis dalam bentuk AX = B, maka solusinya bisa dicari dengan <strong style="color:var(--accent)">mengalikan kedua ruas dengan invers A</strong>:</p>
+          <div class="formula-box violet">AX = B<br>A<sup>-1</sup>AX = A<sup>-1</sup>B<br>IX = A<sup>-1</sup>B<br><strong>X = A<sup>-1</sup>B</strong></div>
+          <div class="example-box">
+            <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Selesaikan: x + 2y = 5, 3x - y = 1</p>
+            <div class="step-box"><div class="step-num">1</div><div class="step-text">Tulis dalam bentuk AX = B:<br>A = [[1,2],[3,-1]], X = [[x],[y]], B = [[5],[1]]</div></div>
+            <div class="step-box"><div class="step-num">2</div><div class="step-text">Hitung A<sup>-1</sup>: det = -7, A<sup>-1</sup> = (1/-7) x [[-1,-2],[-3,1]] = [[1/7, 2/7],[3/7, -1/7]]</div></div>
+            <div class="step-box"><div class="step-num">3</div><div class="step-text">X = A<sup>-1</sup>B = [[1/7 x 5 + 2/7 x 1],[3/7 x 5 + (-1/7) x 1]] = <strong style="color:var(--amber)">[[1],[2]]</strong></div></div>
+            <div class="step-box"><div class="step-num">4</div><div class="step-text">Jadi: <strong style="color:var(--amber)">x = 1, y = 2</strong></div></div>
+          </div>
+        </div>
+        <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Invers di Kalkulator</button></div>
+      </div>
+
+      <!-- METODE DETERMINAN -->
+      <div class="topic-section" id="m-detmethod">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-d"></i>Metode Determinan</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Metode ini menggunakan sifat determinan untuk menyelesaikan SPL. Intinya, kita <strong style="color:var(--accent)">mengganti kolom matriks koefisien dengan vektor konstanta</strong> untuk mencari nilai tiap variabel.</p>
+          <div class="formula-box">Prinsip: x<sub>i</sub> = det(A<sub>i</sub>) / det(A)<br>di mana A<sub>i</sub> = matriks A dengan kolom ke-i diganti oleh vektor konstanta B</div>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-top:14px;">Metode ini sering disebut juga sebagai <strong style="color:var(--amber)">Aturan Cramer</strong>. Lihat halaman Aturan Cramer untuk penjelasan lengkap.</p>
+        </div>
+        <div style="margin-top:14px;"><button class="try-btn" onclick="switchTopic('m-cramer')"><i class="fa-solid fa-arrow-right"></i>Lihat Aturan Cramer</button></div>
+      </div>
+
+      <!-- ATURAN CRAMER -->
+      <div class="topic-section" id="m-cramer">
+        <div class="learn-card">
+          <h3><i class="fa-solid fa-gavel"></i>Aturan Cramer</h3>
+          <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Aturan Cramer adalah cara elegan menyelesaikan SPL menggunakan determinan. <strong style="color:var(--accent)">Setiap variabel dihitung satu per satu</strong> dengan mengganti kolom yang sesuai.</p>
+          <div class="formula-box violet">Jika AX = B dan det(A) tidak sama dengan 0, maka:<br><br>x1 = det(A1)/det(A)<br>x2 = det(A2)/det(A)<br>...<br>xn = det(An)/det(A)<br><br>A<sub>i</sub> = matriks A dengan kolom ke-i diganti vektor B</div>
+          <div class="example-box">
+            <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Selesaikan: 2x + y = 5, x + 3y = 10</p>
+            <div class="step-box"><div class="step-num">1</div><div class="step-text">A = [[2,1],[1,3]], B = [[5],[10]]<br>det(A) = 2x3 - 1x1 = <strong style="color:var(--accent)">5</strong></div></div>
+            <div class="step-box"><div class="step-num">2</div><div class="step-text">A1 (ganti kolom 1 dengan B) = [[5,1],[10,3]]<br>det(A1) = 5x3 - 1x10 = <strong style="color:var(--accent)">5</strong></div></div>
+            <div class="step-box"><div class="step-num">3</div><div class="step-text">A2 (ganti kolom 2 dengan B) = [[2,5],[1,10]]<br>det(A2) = 2x10 - 5x1 = <strong style="color:var(--accent)">15</strong></div></div>
+            <div class="step-box"><div class="step-num">4</div><div class="step-text">x = det(A1)/det(A) = 5/5 = <strong style="color:var(--amber)">1</strong></div></div>
+            <div class="step-box"><div class="step-num">5</div><div class="step-text">y = det(A2)/det(A) = 15/5 = <strong style="color:var(--amber)">3</strong></div></div>
+          </div>
+        </div>
+        <div class="sim-section"><div class="sim-title"><i class="fa-solid fa-flask"></i>Simulasi Aturan Cramer</div>
+          <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin-bottom:10px;">
+            <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Ukuran</label><select id="sim-cramer-n" class="input-field" style="width:70px;"><option>2</option><option>3</option></select></div>
+            <button class="btn btn-primary btn-sm" onclick="simCramer()"><i class="fa-solid fa-play"></i>Hitung Cramer</button>
+            <button class="btn btn-ghost btn-sm" onclick="simCramerRandom()"><i class="fa-solid fa-dice"></i>Random</button>
+          </div>
+          <div id="sim-cramer-grid"></div>
+          <div id="sim-cramer-result" style="margin-top:10px;"></div>
+        </div>
+        <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="try-btn" onclick="navigateTo('spl')"><i class="fa-solid fa-hand-pointer"></i>Coba SPL ke Matriks</button>
+          <button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Determinan di Kalkulator</button>
+        </div>
+      </div>
+
+      <!-- QUIZ -->
+      <div class="learn-card" style="margin-top:20px;border-left:3px solid var(--amber);">
+        <h3><i class="fa-solid fa-brain" style="color:var(--amber)"></i>Uji Pemahaman</h3>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:14px;">Jawab pertanyaan berikut untuk menguji pemahamanmu:</p>
+        <div id="quiz-container"></div>
+        <button class="btn btn-amber btn-sm" onclick="loadQuiz()" style="margin-top:12px;"><i class="fa-solid fa-rotate"></i>Soal Baru</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SPL KE MATRIKS -->
+<section id="page-spl" class="page-section">
+  <div style="margin-bottom:22px;"><h2 style="font-size:22px;font-weight:800;margin-bottom:5px;">Sistem Persamaan Linear ke Matriks</h2><p style="color:var(--text-secondary);font-size:13.5px;">Ketik persamaan linear dan ubah menjadi bentuk matriks augmented.</p></div>
+  <div class="spl-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:22px;">
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-keyboard"></i>Input Persamaan</div>
+      <div style="margin-bottom:12px;"><label style="font-size:12px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:5px;">Jumlah Persamaan</label><div style="display:flex;gap:7px;align-items:center;"><input type="number" id="spl-count" class="input-field" value="3" min="1" max="10" style="width:70px;"><button class="btn btn-secondary btn-sm" onclick="generateSPLInputs()"><i class="fa-solid fa-arrows-rotate"></i>Terapkan</button></div></div>
+      <div id="spl-equations" style="display:grid;gap:8px;margin-bottom:14px;"></div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;"><button class="btn btn-primary" onclick="convertSPL()"><i class="fa-solid fa-arrow-right"></i>Convert</button><button class="btn btn-secondary" onclick="resetSPL()"><i class="fa-solid fa-rotate-left"></i>Reset</button><button class="btn btn-amber" onclick="loadSPLExample()"><i class="fa-solid fa-book-open"></i>Contoh Soal</button></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-table"></i>Hasil Matriks Augmented</div>
+      <div id="spl-result" class="result-area"><p style="color:var(--text-muted);font-size:13px;">Masukkan persamaan dan tekan Convert.</p></div>
+      <div id="spl-result-actions" class="result-actions" style="display:none;"><button class="btn btn-secondary btn-sm" onclick="copyResult('spl-result')"><i class="fa-solid fa-copy"></i>Salin</button><button class="btn btn-secondary btn-sm" onclick="downloadResult('spl-result','SPL_Matriks')"><i class="fa-solid fa-download"></i>Unduh</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- OPERASI MATRIKS -->
+<section id="page-matrix" class="page-section">
+  <div style="margin-bottom:22px;"><h2 style="font-size:22px;font-weight:800;margin-bottom:5px;">Operasi Matriks</h2><p style="color:var(--text-secondary);font-size:13.5px;">Pilih ordo, isi matriks, dan lakukan operasi matematika.</p></div>
+  <div class="mat-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:22px;">
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-a" style="font-size:13px;width:18px;text-align:center;"></i>Matriks A</div>
+      <div style="display:flex;gap:8px;align-items:end;margin-bottom:12px;flex-wrap:wrap;">
+        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Baris</label><input type="number" id="mat-a-rows" class="input-field" value="3" min="1" max="20" style="width:65px;"></div>
+        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Kolom</label><input type="number" id="mat-a-cols" class="input-field" value="3" min="1" max="20" style="width:65px;"></div>
+        <button class="btn btn-secondary btn-sm" onclick="generateMatrixGrid('A')"><i class="fa-solid fa-check"></i>Terapkan</button>
+        <button class="btn btn-secondary btn-sm" onclick="randomMatrix('A')"><i class="fa-solid fa-dice"></i>Random</button>
+        <button class="btn btn-secondary btn-sm" onclick="clearMatrix('A')"><i class="fa-solid fa-eraser"></i>Bersihkan</button>
+      </div>
+      <div id="matrix-grid-a" class="mg-wrap"></div>
+    </div>
+    <div class="card" id="matrix-b-card">
+      <div class="card-title"><i class="fa-solid fa-b" style="font-size:13px;width:18px;text-align:center;"></i>Matriks B</div>
+      <div style="display:flex;gap:8px;align-items:end;margin-bottom:12px;flex-wrap:wrap;">
+        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Baris</label><input type="number" id="mat-b-rows" class="input-field" value="3" min="1" max="20" style="width:65px;"></div>
+        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Kolom</label><input type="number" id="mat-b-cols" class="input-field" value="3" min="1" max="20" style="width:65px;"></div>
+        <button class="btn btn-secondary btn-sm" onclick="generateMatrixGrid('B')"><i class="fa-solid fa-check"></i>Terapkan</button>
+        <button class="btn btn-secondary btn-sm" onclick="randomMatrix('B')"><i class="fa-solid fa-dice"></i>Random</button>
+        <button class="btn btn-secondary btn-sm" onclick="clearMatrix('B')"><i class="fa-solid fa-eraser"></i>Bersihkan</button>
+      </div>
+      <div id="matrix-grid-b" class="mg-wrap"></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:22px;">
+    <div class="card-title"><i class="fa-solid fa-gears"></i>Pilih Operasi</div>
+    <div class="op-btn-grid">
+      <button class="op-btn" data-op="add" onclick="selectOp(this,'add')"><i class="fa-solid fa-plus"></i>A + B</button>
+      <button class="op-btn" data-op="sub" onclick="selectOp(this,'sub')"><i class="fa-solid fa-minus"></i>A - B</button>
+      <button class="op-btn" data-op="mul" onclick="selectOp(this,'mul')"><i class="fa-solid fa-xmark"></i>A x B</button>
+      <button class="op-btn" data-op="transpose" onclick="selectOp(this,'transpose')"><i class="fa-solid fa-rotate"></i>Transpose A</button>
+      <button class="op-btn" data-op="determinant" onclick="selectOp(this,'determinant')"><i class="fa-solid fa-d"></i>det(A)</button>
+      <button class="op-btn" data-op="inverse" onclick="selectOp(this,'inverse')"><i class="fa-solid fa-arrow-turn-up"></i>A<sup>-1</sup></button>
+    </div>
+    <button class="btn btn-primary" onclick="executeOp()" style="margin-top:6px;"><i class="fa-solid fa-play"></i>Hitung</button>
+    <button class="btn btn-ghost btn-sm" onclick="navigateTo('materi');switchTopic('m-add')" style="margin-left:8px;"><i class="fa-solid fa-book-open"></i>Pelajari Materi</button>
+  </div>
+  <div class="card" style="margin-top:22px;">
+    <div class="card-title"><i class="fa-solid fa-equals"></i>Hasil</div>
+    <div id="matrix-result" class="result-area"><p style="color:var(--text-muted);font-size:13px;">Pilih operasi dan tekan Hitung.</p></div>
+    <div id="matrix-result-actions" class="result-actions" style="display:none;"><button class="btn btn-secondary btn-sm" onclick="copyResult('matrix-result')"><i class="fa-solid fa-copy"></i>Salin</button><button class="btn btn-secondary btn-sm" onclick="downloadResult('matrix-result','Operasi_Matriks')"><i class="fa-solid fa-download"></i>Unduh</button></div>
+  </div>
+</section>
+
+<!-- RIWAYAT -->
+<section id="page-history" class="page-section">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px;">
+    <div><h2 style="font-size:22px;font-weight:800;margin-bottom:5px;">Riwayat Perhitungan</h2><p style="color:var(--text-secondary);font-size:13.5px;">Semua perhitungan tersimpan otomatis.</p></div>
+    <button class="btn btn-danger btn-sm" onclick="clearHistory()"><i class="fa-solid fa-trash"></i>Hapus Semua</button>
+  </div>
+  <div id="history-list"></div>
+  <div id="history-empty" class="card" style="text-align:center;padding:44px;"><i class="fa-solid fa-clock-rotate-left" style="font-size:36px;color:var(--text-muted);margin-bottom:10px;"></i><p style="color:var(--text-muted);font-size:13px;">Belum ada riwayat perhitungan.</p></div>
+</section>
+
+<!-- TENTANG -->
+<section id="page-about" class="page-section">
+  <div style="margin-bottom:22px;"><h2 style="font-size:22px;font-weight:800;margin-bottom:5px;">Tentang Aplikasi</h2></div>
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
+      <div style="width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--amber));display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;font-weight:800;font-family:'JetBrains Mono',monospace;">Mx</div>
+      <div><div style="font-size:18px;font-weight:800;">MatriXLab</div><div style="font-size:12px;color:var(--text-secondary);">v1.0.0 — Platform Pembelajaran Matriks Interaktif</div></div>
+    </div>
+    <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Aplikasi pembelajaran matriks modern untuk pelajar dan mahasiswa. Materi disajikan dengan bahasa sederhana, simulasi interaktif, dan kalkulator matriks lengkap.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Materi pembelajaran interaktif</span></div>
+      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Konversi SPL ke matriks</span></div>
+      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Operasi matriks hingga 20x20</span></div>
+      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Simulasi perhitungan langkah</span></div>
+      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Mode gelap dan terang</span></div>
+      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Responsif di semua perangkat</span></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div id="toast-container"></div>
+
+<script>
+/* ============================================================
+   MATRIXLAB — APLIKASI PEMBELAJARAN MATRIKS INTERAKTIF
+   ============================================================ */
+
+const App={currentPage:'home',darkMode:true,selectedOp:null,history:JSON.parse(localStorage.getItem('mxlab_hist')||'[]')};
+
+// ===== NAVIGASI =====
+function navigateTo(page){
+  App.currentPage=page;
+  document.querySelectorAll('.page-section').forEach(s=>s.classList.remove('active'));
+  const t=document.getElementById('page-'+page);if(t)t.classList.add('active');
+  document.querySelectorAll('#sidebar-nav a').forEach(a=>a.classList.toggle('active',a.dataset.page===page));
+  closeSidebar();
+  if(page==='spl')generateSPLInputs();
+  if(page==='matrix'){generateMatrixGrid('A');generateMatrixGrid('B');}
+  if(page==='history')renderHistory();
+  if(page==='materi')loadQuiz();
+}
+document.querySelectorAll('#sidebar-nav a').forEach(a=>a.addEventListener('click',()=>navigateTo(a.dataset.page)));
+
+// ===== SIDEBAR MOBILE =====
+const sidebar=document.getElementById('sidebar'),overlay=document.getElementById('sidebar-overlay'),hamburger=document.getElementById('hamburger-btn');
+hamburger.addEventListener('click',()=>{sidebar.classList.add('open');overlay.classList.add('show')});
+overlay.addEventListener('click',closeSidebar);
+function closeSidebar(){sidebar.classList.remove('open');overlay.classList.remove('show')}
+
+// ===== TEMA =====
+const themeBtn=document.getElementById('theme-toggle');
+themeBtn.addEventListener('click',toggleTheme);
+function toggleTheme(){
+  App.darkMode=!App.darkMode;
+  document.documentElement.setAttribute('data-theme',App.darkMode?'dark':'light');
+  themeBtn.innerHTML=App.darkMode?'<i class="fa-solid fa-moon"></i><span>Mode Gelap</span>':'<i class="fa-solid fa-sun"></i><span>Mode Terang</span>';
+}
+
+// ===== TOAST =====
+function showToast(msg,type='info'){
+  const c=document.getElementById('toast-container'),t=document.createElement('div');
+  t.className='toast toast-'+type;
+  const icons={success:'fa-check-circle',error:'fa-circle-xmark',warning:'fa-triangle-exclamation',info:'fa-circle-info'};
+  t.innerHTML='<i class="fa-solid '+(icons[type]||icons.info)+'"></i><span>'+msg+'</span>';
+  c.appendChild(t);setTimeout(()=>{t.classList.add('removing');setTimeout(()=>t.remove(),300)},3500);
+}
+
+// ===== RIWAYAT =====
+function addHistory(type,desc,res){
+  App.history.unshift({id:Date.now(),type:type,desc:desc,res:res,time:new Date().toLocaleString('id-ID')});
+  if(App.history.length>50)App.history.pop();
+  try{localStorage.setItem('mxlab_hist',JSON.stringify(App.history))}catch(e){}
+}
+function renderHistory(){
+  const list=document.getElementById('history-list'),empty=document.getElementById('history-empty');
+  list.innerHTML='';
+  if(!App.history.length){empty.style.display='block';return}
+  empty.style.display='none';
+  const labels={spl:'SPL ke Matriks',add:'Penjumlahan',sub:'Pengurangan',mul:'Perkalian',transpose:'Transpose',determinant:'Determinan',inverse:'Invers',cramer:'Cramer'};
+  const icons={spl:'fa-square-root-variable',add:'fa-plus',sub:'fa-minus',mul:'fa-xmark',transpose:'fa-rotate',determinant:'fa-d',inverse:'fa-arrow-turn-up',cramer:'fa-gavel'};
+  App.history.forEach(item=>{
+    const d=document.createElement('div');d.className='history-item';
+    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;"><span class="h-type"><i class="fa-solid '+(icons[item.type]||'fa-calculator')+'"></i>'+(labels[item.type]||item.type)+'</span><span class="h-time">'+item.time+'</span></div><div class="h-desc">'+item.desc+'</div><div class="h-result">'+(item.res||'').substring(0,100)+'</div>';
+    list.appendChild(d);
+  });
+}
+function clearHistory(){App.history=[];localStorage.removeItem('mxlab_hist');renderHistory();showToast('Riwayat dihapus','success')}
+
+// ===== COPY & DOWNLOAD =====
+function copyResult(id){navigator.clipboard.writeText(document.getElementById(id).innerText).then(()=>showToast('Disalin ke clipboard','success')).catch(()=>showToast('Gagal menyalin','error'))}
+function downloadResult(id,fn){
+  const el=document.getElementById(id);const bg=App.darkMode?'#131B2E':'#FFFFFF';
+  el.style.background=bg;el.style.padding='24px';
+  html2canvas(el,{backgroundColor:bg,scale:2}).then(canvas=>{
+    const a=document.createElement('a');a.download=fn+'.png';a.href=canvas.toDataURL();a.click();
+    el.style.background='';el.style.padding='';showToast('Gambar diunduh','success');
+  }).catch(()=>{el.style.background='';el.style.padding='';showToast('Gagal mengunduh','error')});
+}
+
+// ===== FORMAT & RENDER =====
+function fmt(n){if(Number.isInteger(n))return String(n);const r=parseFloat(n.toFixed(6));return r===-0?'0':String(r)}
+function renderMx(m,cls){
+  let h='<div class="mx '+(cls||'')+'"><div class="bl"></div><table>';
+  m.forEach(row=>{h+='<tr>';row.forEach(v=>{h+='<td>'+fmt(v)+'</td>'});h+='</tr>'});
+  return h+'</table><div class="br"></div></div>';
+}
+
+// ============================================================
+// SPL KE MATRIKS
+// ============================================================
+function generateSPLInputs(){
+  const n=Math.max(1,Math.min(10,parseInt(document.getElementById('spl-count').value)||3));
+  document.getElementById('spl-count').value=n;
+  const c=document.getElementById('spl-equations');c.innerHTML='';
+  for(let i=0;i<n;i++){
+    const d=document.createElement('div');d.style.cssText='display:flex;align-items:center;gap:7px;';
+    d.innerHTML='<span style="font-size:12px;font-weight:600;color:var(--text-muted);min-width:18px;">'+(i+1)+'.</span><input type="text" class="input-field spl-eq-input" placeholder="Contoh: 2x + y = 4" style="font-family:\'JetBrains Mono\',monospace;">';
+    c.appendChild(d);
+  }
+}
+function loadSPLExample(){
+  const ex=[['2x + y = 4','x - y = 1'],['x + y + z = 6','2x - y + z = 3','x + y - z = 2'],['2x + z = 5','3y - z = 1','x + y + 2z = 8']];
+  const e=ex[Math.floor(Math.random()*ex.length)];
+  document.getElementById('spl-count').value=e.length;generateSPLInputs();
+  document.querySelectorAll('.spl-eq-input').forEach((inp,i)=>{if(e[i])inp.value=e[i]});
+  showToast('Contoh soal dimuat','info');
+}
+function resetSPL(){
+  document.querySelectorAll('.spl-eq-input').forEach(i=>i.value='');
+  document.getElementById('spl-result').innerHTML='<p style="color:var(--text-muted);font-size:13px;">Masukkan persamaan dan tekan Convert.</p>';
+  document.getElementById('spl-result-actions').style.display='none';showToast('Input direset','info');
+}
+function extractTerms(side){
+  const terms=[];if(!side.trim())return terms;
+  let s=side.replace(/\s+/g,'');if(s[0]!=='+'&&s[0]!=='-')s='+'+s;
+  const vr=/([+-]\d*)([a-zA-Z])/g;let m;const vm=[];
+  while((m=vr.exec(s))!==null){
+    let c=m[1];if(c==='+'||c==='')c=1;else if(c==='-')c=-1;else c=parseFloat(c);
+    if(isNaN(c))c=0;terms.push({t:'v',c:c,n:m[2]});vm.push(m[0]);
+  }
+  let rem=s;vm.forEach(x=>{rem=rem.replace(x,'')});
+  if(rem){const cr=/([+-]?\d+\.?\d*)/g;let cm;while((cm=cr.exec(rem))!==null){if(cm[1]&&cm[1]!=='+'&&cm[1]!=='-')terms.push({t:'c',v:parseFloat(cm[1])})}}
+  return terms;
+}
+function parseEq(eq,allVars){
+  const e=eq.replace(/\s+/g,''),idx=e.indexOf('=');
+  if(idx===-1)throw new Error('Tanda "=" tidak ditemukan');
+  const lt=extractTerms(e.substring(0,idx)),rt=extractTerms(e.substring(idx+1));
+  const coef={};allVars.forEach(v=>coef[v]=0);let lc=0,rc=0;
+  lt.forEach(t=>{if(t.t==='v')coef[t.n]=(coef[t.n]||0)+t.c;else lc+=t.v});
+  rt.forEach(t=>{if(t.t==='v')coef[t.n]=(coef[t.n]||0)-t.c;else rc+=t.v});
+  return{coefficients:coef,constant:rc-lc};
+}
+function convertSPL(){
+  const inputs=document.querySelectorAll('.spl-eq-input'),eqs=[];
+  inputs.forEach(i=>{if(i.value.trim())eqs.push(i.value.trim())});
+  if(!eqs.length){showToast('Masukkan minimal satu persamaan','warning');return}
+  try{
+    const vs=new Set();eqs.forEach(eq=>{const m=eq.match(/[a-zA-Z]/g);if(m)m.forEach(v=>vs.add(v))});
+    const vl=Array.from(vs).sort();if(!vl.length){showToast('Tidak ada variabel','warning');return}
+    const matrix=[],consts=[];
+    eqs.forEach(eq=>{const r=parseEq(eq,vl);matrix.push(vl.map(v=>r.coefficients[v]));consts.push(r.constant)});
+    let html='<div class="result-label">Matriks Augmented</div>';
+    html+='<div class="mx amber sm"><div class="bl"></div><table>';
+    matrix.forEach((row,i)=>{html+='<tr>';row.forEach(v=>{html+='<td>'+fmt(v)+'</td>'});html+='<td class="sep">'+fmt(consts[i])+'</td>';html+='</tr>'});
+    html+='</table><div class="br"></div></div>';
+    html+='<div style="margin-top:8px;font-size:11.5px;color:var(--text-muted);">Variabel: '+vl.map(v=>'<span style="color:var(--accent);font-weight:600;">'+v+'</span>').join(', ')+'</div>';
+    document.getElementById('spl-result').innerHTML=html;
+    document.getElementById('spl-result-actions').style.display='flex';
+    addHistory('spl',eqs.length+' persamaan, '+vl.length+' variabel',matrix.map((r,i)=>[...r,consts[i]].map(fmt).join('\t')).join('\n'));
+    showToast('Konversi berhasil','success');
+  }catch(err){showToast('Error: '+err.message,'error')}
+}
+
+// ============================================================
+// OPERASI MATRIKS
+// ============================================================
+function generateMatrixGrid(w){
+  const ri=document.getElementById('mat-'+w.toLowerCase()+'-rows'),ci=document.getElementById('mat-'+w.toLowerCase()+'-cols');
+  const r=Math.max(1,Math.min(20,parseInt(ri.value)||3)),c=Math.max(1,Math.min(20,parseInt(ci.value)||3));
+  ri.value=r;ci.value=c;
+  const con=document.getElementById('matrix-grid-'+w.toLowerCase()),old={};
+  con.querySelectorAll('.mc').forEach(i=>{old[i.id]=i.value});
+  con.innerHTML='';const tbl=document.createElement('table');
+  let cc='';const mx=Math.max(r,c);if(mx>10)cc='xs';else if(mx>6)cc='sm';
+  for(let i=0;i<r;i++){const tr=document.createElement('tr');for(let j=0;j<c;j++){
+    const td=document.createElement('td'),inp=document.createElement('input');
+    inp.type='number';inp.id='mat-'+w.toLowerCase()+'-'+i+'-'+j;inp.className='mc '+cc;
+    inp.value=old[inp.id]||'0';inp.setAttribute('aria-label',w+'['+(i+1)+']['+(j+1)+']');
+    td.appendChild(inp);tr.appendChild(td);
+  }tbl.appendChild(tr)}con.appendChild(tbl);
+}
+function readMatrix(w){
+  const r=parseInt(document.getElementById('mat-'+w.toLowerCase()+'-rows').value)||3;
+  const c=parseInt(document.getElementById('mat-'+w.toLowerCase()+'-cols').value)||3;
+  const m=[];for(let i=0;i<r;i++){const row=[];for(let j=0;j<c;j++){
+    const inp=document.getElementById('mat-'+w.toLowerCase()+'-'+i+'-'+j);row.push(inp?parseFloat(inp.value)||0:0);
+  }m.push(row)}return m;
+}
+function randomMatrix(w){
+  const r=parseInt(document.getElementById('mat-'+w.toLowerCase()+'-rows').value)||3;
+  const c=parseInt(document.getElementById('mat-'+w.toLowerCase()+'-cols').value)||3;
+  for(let i=0;i<r;i++)for(let j=0;j<c;j++){const inp=document.getElementById('mat-'+w.toLowerCase()+'-'+i+'-'+j);if(inp)inp.value=Math.floor(Math.random()*19)-9}
+  showToast('Matriks '+w+' diisi acak','info');
+}
+function clearMatrix(w){
+  const r=parseInt(document.getElementById('mat-'+w.toLowerCase()+'-rows').value)||3;
+  const c=parseInt(document.getElementById('mat-'+w.toLowerCase()+'-cols').value)||3;
+  for(let i=0;i<r;i++)for(let j=0;j<c;j++){const inp=document.getElementById('mat-'+w.toLowerCase()+'-'+i+'-'+j);if(inp)inp.value='0'}
+  showToast('Matriks '+w+' dibersihkan','info');
+}
+function selectOp(btn,op){
+  App.selectedOp=op;document.querySelectorAll('.op-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  const bc=document.getElementById('matrix-b-card');
+  if(['transpose','determinant','inverse'].includes(op)){bc.style.opacity='.4';bc.style.pointerEvents='none'}
+  else{bc.style.opacity='1';bc.style.pointerEvents='auto'}
+}
+
+// Operasi inti
+function addM(A,B){return A.map((r,i)=>r.map((v,j)=>v+B[i][j]))}
+function subM(A,B){return A.map((r,i)=>r.map((v,j)=>v-B[i][j]))}
+function mulM(A,B){const m=A.length,n=A[0].length,p=B[0].length;const C=Array.from({length:m},()=>new Array(p).fill(0));
+  for(let i=0;i<m;i++)for(let j=0;j<p;j++)for(let k=0;k<n;k++)C[i][j]+=A[i][k]*B[k][j];return roundM(C)}
+function transM(A){return A[0].map((_,j)=>A.map(r=>r[j]))}
+function detM(matrix){
+  const n=matrix.length;if(n===1)return matrix[0][0];if(n===2)return matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0];
+  const m=matrix.map(r=>[...r]);let det=1;const eps=1e-12;
+  for(let i=0;i<n;i++){
+    let mr=i;for(let k=i+1;k<n;k++)if(Math.abs(m[k][i])>Math.abs(m[mr][i]))mr=k;
+    if(mr!==i){[m[i],m[mr]]=[m[mr],m[i]];det*=-1}
+    if(Math.abs(m[i][i])<eps)return 0;det*=m[i][i];
+    for(let k=i+1;k<n;k++){const f=m[k][i]/m[i][i];for(let j=i;j<n;j++)m[k][j]-=f*m[i][j]}
+  }return parseFloat(det.toFixed(10));
+}
+function invM(matrix){
+  const n=matrix.length;if(Math.abs(detM(matrix))<1e-10)return null;
+  const aug=matrix.map((r,i)=>{const id=new Array(n).fill(0);id[i]=1;return[...r,...id]});
+  const eps=1e-12;
+  for(let i=0;i<n;i++){
+    let mr=i;for(let k=i+1;k<n;k++)if(Math.abs(aug[k][i])>Math.abs(aug[mr][i]))mr=k;
+    [aug[i],aug[mr]]=[aug[mr],aug[i]];if(Math.abs(aug[i][i])<eps)return null;
+    const pv=aug[i][i];for(let j=0;j<2*n;j++)aug[i][j]/=pv;
+    for(let k=0;k<n;k++){if(k===i)continue;const f=aug[k][i];for(let j=0;j<2*n;j++)aug[k][j]-=f*aug[i][j]}
+  }return roundM(aug.map(r=>r.slice(n)));
+}
+function roundM(m,d=8){return m.map(r=>r.map(v=>{const x=parseFloat(v.toFixed(d));return x===-0?0:x}))}
+
+function executeOp(){
+  if(!App.selectedOp){showToast('Pilih operasi terlebih dahulu','warning');return}
+  const A=readMatrix('A'),op=App.selectedOp;let result,desc,resText;
+  try{
+    switch(op){
+      case'add':{const B=readMatrix('B');if(A.length!==B.length||A[0].length!==B[0].length){showToast('Ordo harus sama untuk penjumlahan','error');return}result=addM(A,B);desc='A+B ('+A.length+'x'+A[0].length+')';break}
+      case'sub':{const B=readMatrix('B');if(A.length!==B.length||A[0].length!==B[0].length){showToast('Ordo harus sama untuk pengurangan','error');return}result=subM(A,B);desc='A-B ('+A.length+'x'+A[0].length+')';break}
+      case'mul':{const B=readMatrix('B');if(A[0].length!==B.length){showToast('Kolom A ('+A[0].length+') harus sama dengan baris B ('+B.length+')','error');return}result=mulM(A,B);desc='A*B ('+A.length+'x'+A[0].length+'*'+B.length+'x'+B[0].length+')';break}
+      case'transpose':{result=transM(A);desc='Transpose A ('+A.length+'x'+A[0].length+')';break}
+      case'determinant':{if(A.length!==A[0].length){showToast('Determinan hanya untuk matriks persegi','error');return}const d=detM(A);result=d;desc='det(A) '+A.length+'x'+A.length;resText='det(A) = '+fmt(d);break}
+      case'inverse':{if(A.length!==A[0].length){showToast('Invers hanya untuk matriks persegi','error');return}const inv=invM(A);if(!inv){showToast('Matriks singular (det=0), invers tidak ada','error');return}result=inv;desc='Invers A ('+A.length+'x'+A.length+')';break}
+    }
+    let html='';
+    if(typeof result==='number'){html='<div class="result-label">Determinan</div><div style="font-family:\'JetBrains Mono\',monospace;font-size:26px;font-weight:700;color:var(--accent);">'+fmt(result)+'</div>';resText=fmt(result)}
+    else{html='<div class="result-label">Hasil ('+result.length+'x'+result[0].length+')</div>'+renderMx(result,'sm');resText=result.map(r=>r.map(fmt).join('\t')).join('\n')}
+    document.getElementById('matrix-result').innerHTML=html;
+    document.getElementById('matrix-result-actions').style.display='flex';
+    if(!resText&&result.map)resText=result.map(r=>r.map(fmt).join('\t')).join('\n');
+    addHistory(op,desc,resText||'');showToast('Perhitungan berhasil','success');
+  }catch(err){showToast('Error: '+err.message,'error')}
+}
+
+// ============================================================
+// MATERI — NAVIGASI TOPIK
+// ============================================================
+document.querySelectorAll('.materi-nav-item').forEach(item=>{
+  item.addEventListener('click',()=>switchTopic(item.dataset.topic));
+});
+function switchTopic(topic){
+  document.querySelectorAll('.topic-section').forEach(s=>s.classList.remove('active'));
+  const t=document.getElementById(topic);if(t)t.classList.add('active');
+  document.querySelectorAll('.materi-nav-item').forEach(i=>i.classList.toggle('active',i.dataset.topic===topic));
+  if(topic==='m-add')simAddInit();
+  if(topic==='m-transpose')simTransInit();
+  if(topic==='m-det')simDetInit();
+  if(topic==='m-cramer')simCramerInit();
+  // Scroll ke atas konten materi
+  document.getElementById('materi-content').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ===== SIMULASI HELPER =====
+function simCreateGrid(id,r,c,pfx){
+  const el=document.getElementById(id);if(!el)return;
+  let h='<table>';for(let i=0;i<r;i++){h+='<tr>';for(let j=0;j<c;j++){h+='<td><input type="number" id="'+pfx+'-'+i+'-'+j+'" class="mc sm" value="0" style="width:40px;height:28px;font-size:11px;"></td>'}h+='</tr>'}h+='</table>';el.innerHTML=h;
+}
+function simReadGrid(pfx,r,c){const m=[];for(let i=0;i<r;i++){const row=[];for(let j=0;j<c;j++){const inp=document.getElementById(pfx+'-'+i+'-'+j);row.push(inp?parseFloat(inp.value)||0:0)}m.push(row)}return m}
+
+// --- Simulasi Penjumlahan ---
+function simAddInit(){
+  const r=Math.max(1,Math.min(5,parseInt(document.getElementById('sim-add-r')?.value)||2));
+  const c=Math.max(1,Math.min(5,parseInt(document.getElementById('sim-add-c')?.value)||2));
+  const g=document.getElementById('sim-add-grids');
+  g.innerHTML='<div><div style="font-size:11px;font-weight:600;color:var(--accent);margin-bottom:4px;">Matriks A</div><div id="sim-add-a"></div></div><div style="font-size:20px;font-weight:300;color:var(--text-muted);align-self:center;">+</div><div><div style="font-size:11px;font-weight:600;color:var(--amber);margin-bottom:4px;">Matriks B</div><div id="sim-add-b"></div></div>';
+  simCreateGrid('sim-add-a',r,c,'sa');simCreateGrid('sim-add-b',r,c,'sb');
+  for(let i=0;i<r;i++)for(let j=0;j<c;j++){
+    const va=document.getElementById('sa-'+i+'-'+j),vb=document.getElementById('sb-'+i+'-'+j);
+    if(va)va.value=Math.floor(Math.random()*9)+1;if(vb)vb.value=Math.floor(Math.random()*9)+1;
+  }
+}
+function simAddRandom(){simAddInit();document.getElementById('sim-add-result').innerHTML=''}
+function simAddition(){
+  const r=parseInt(document.getElementById('sim-add-r').value)||2;
+  const c=parseInt(document.getElementById('sim-add-c').value)||2;
+  const A=simReadGrid('sa',r,c),B=simReadGrid('sb',r,c),C=addM(A,B);
+  document.getElementById('sim-add-result').innerHTML='<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">'+renderMx(A,'sm xs')+'<span style="color:var(--text-muted);">+</span>'+renderMx(B,'sm xs amber')+'<span style="color:var(--text-muted);">=</span>'+renderMx(C,'sm xs violet')+'</div>';
+}
+
+// --- Simulasi Transpose ---
+function simTransInit(){
+  const g=document.getElementById('sim-trans-grids');
+  g.innerHTML='<div><div style="font-size:11px;font-weight:600;color:var(--accent);margin-bottom:4px;">Matriks A</div><div id="sim-trans-a"></div></div>';
+  simCreateGrid('sim-trans-a',3,3,'st');
+  for(let i=0;i<3;i++)for(let j=0;j<3;j++){const inp=document.getElementById('st-'+i+'-'+j);if(inp)inp.value=Math.floor(Math.random()*9)+1}
+}
+function simTransRandom(){simTransInit();document.getElementById('sim-trans-result').innerHTML=''}
+function simTranspose(){
+  const A=simReadGrid('st',3,3),T=transM(A);
+  document.getElementById('sim-trans-result').innerHTML='<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">'+renderMx(A,'sm xs')+'<span style="font-size:13px;color:var(--text-muted);">-> A<sup>T</sup> =</span>'+renderMx(T,'sm xs amber')+'</div>';
+}
+
+// --- Simulasi Determinan ---
+function simDetInit(){
+  const n=parseInt(document.getElementById('sim-det-n')?.value)||2;
+  document.getElementById('sim-det-grid').innerHTML='<div id="sim-det-a"></div>';
+  simCreateGrid('sim-det-a',n,n,'sd');
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const inp=document.getElementById('sd-'+i+'-'+j);if(inp)inp.value=Math.floor(Math.random()*9)+1}
+}
+function simDetRandom(){simDetInit();document.getElementById('sim-det-result').innerHTML=''}
+function simDeterminant(){
+  const n=parseInt(document.getElementById('sim-det-n').value)||2;
+  const A=simReadGrid('sd',n,n),d=detM(A);
+  document.getElementById('sim-det-result').innerHTML='<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">'+renderMx(A,'sm xs')+'<span style="font-size:13px;color:var(--text-muted);">-> det =</span><span style="font-family:\'JetBrains Mono\',monospace;font-size:22px;font-weight:700;color:var(--amber);">'+fmt(d)+'</span></div>';
+}
+
+// --- Simulasi Cramer ---
+function simCramerInit(){
+  const n=parseInt(document.getElementById('sim-cramer-n')?.value)||2;
+  document.getElementById('sim-cramer-grid').innerHTML='<div style="display:flex;gap:20px;flex-wrap:wrap;"><div><div style="font-size:11px;font-weight:600;color:var(--accent);margin-bottom:4px;">Matriks Koefisien (A)</div><div id="sim-cramer-a"></div></div><div><div style="font-size:11px;font-weight:600;color:var(--amber);margin-bottom:4px;">Vektor B</div><div id="sim-cramer-b"></div></div></div>';
+  simCreateGrid('sim-cramer-a',n,n,'sca');simCreateGrid('sim-cramer-b',n,1,'scb');
+  for(let i=0;i<n;i++){for(let j=0;j<n;j++){const inp=document.getElementById('sca-'+i+'-'+j);if(inp)inp.value=Math.floor(Math.random()*9)+1}
+    const inp=document.getElementById('scb-'+i+'-0');if(inp)inp.value=Math.floor(Math.random()*19)-5}
+}
+function simCramerRandom(){simCramerInit();document.getElementById('sim-cramer-result').innerHTML=''}
+function simCramer(){
+  const n=parseInt(document.getElementById('sim-cramer-n').value)||2;
+  const A=simReadGrid('sca',n,n),B=simReadGrid('scb',n,1);
+  const detA=detM(A);
+  if(Math.abs(detA)<1e-10){document.getElementById('sim-cramer-result').innerHTML='<p style="color:var(--error);font-size:13px;">det(A) = 0, sistem tidak bisa diselesaikan dengan Cramer.</p>';return}
+  let html='<div class="formula-box violet" style="margin-bottom:10px;">det(A) = '+fmt(detA)+'</div>';
+  const solutions=[];
+  for(let col=0;col<n;col++){
+    const Ai=A.map((row,i)=>row.map((v,j)=>j===col?B[i][0]:v));
+    const detAi=detM(Ai);
+    html+='<div style="margin:6px 0;font-size:12.5px;color:var(--text-secondary);">A'+( col+1)+': ganti kolom '+(col+1)+' dengan B -> det = '+fmt(detAi)+'</div>';
+    solutions.push(detAi/detA);
+  }
+  html+='<div style="margin-top:10px;font-weight:700;color:var(--accent);font-size:14px;">Solusi: '+solutions.map((s,i)=>'x'+(i+1)+' = '+fmt(s)).join(', ')+'</div>';
+  document.getElementById('sim-cramer-result').innerHTML=html;
+  addHistory('cramer','Cramer '+n+'x'+n,solutions.map((s,i)=>'x'+(i+1)+'='+fmt(s)).join(', '));
+}
+
+// ============================================================
+// QUIZ
+// ============================================================
+const quizBank=[
+  {q:'Berapa ordo matriks yang memiliki 3 baris dan 4 kolom?',opts:['3x4','4x3','3x3','4x4'],ans:0},
+  {q:'Matriks identitas 3x3 memiliki elemen diagonal utama bernilai?',opts:['0','2','1','-1'],ans:2},
+  {q:'Syarat penjumlahan dua matriks adalah?',opts:['Ordo harus sama','Jumlah baris sama','Determinan tidak nol','Keduanya persegi'],ans:0},
+  {q:'Jika A = [[1,2],[3,4]], berapa determinannya?',opts:['-2','2','10','-10'],ans:0},
+  {q:'Transpose matriks 2x3 akan berordo?',opts:['3x2','2x3','2x2','3x3'],ans:0},
+  {q:'Matriks yang semua elemennya nol disebut?',opts:['Matriks identitas','Matriks nol','Matriks diagonal','Matriks singular'],ans:1},
+  {q:'Jika det(A) = 0, maka matriks A...',opts:['Punya invers','Tidak punya invers','Adalah identitas','Adalah transpose'],ans:1},
+  {q:'Dalam perkalian matriks A x B, syaratnya adalah?',opts:['Kolom A = Baris B','Baris A = Kolom B','Ordo sama','Keduanya persegi'],ans:0},
+  {q:'Metode yang mengubah matriks augmented menjadi [[I|solusi]] adalah?',opts:['Eliminasi Gauss','Gauss-Jordan','Aturan Cramer','Matriks Balikan'],ans:1},
+  {q:'Aturan Cramer menggunakan apa untuk mencari solusi?',opts:['Invers','Determinan','Transpose','Perkalian'],ans:1},
+  {q:'Elemen a2,3 berada di baris ke-... dan kolom ke-...?',opts:['Baris 2, Kolom 3','Baris 3, Kolom 2','Baris 2, Kolom 2','Baris 3, Kolom 3'],ans:0},
+  {q:'Matriks persegi memiliki ciri?',opts:['Baris = Kolom','Determinan tidak nol','Semua elemen sama','Punya invers'],ans:0},
+];
+let quizUsed=[];
+function loadQuiz(){
+  const c=document.getElementById('quiz-container');c.innerHTML='';
+  const pool=quizBank.filter((_,i)=>!quizUsed.includes(i));
+  if(pool.length<3)quizUsed=[];
+  const avail=quizBank.filter((_,i)=>!quizUsed.includes(i));
+  const chosen=[];const indices=[];
+  while(indices.length<3&&indices.length<avail.length){
+    const ri=Math.floor(Math.random()*avail.length);
+    if(!indices.includes(ri))indices.push(ri);
+  }
+  indices.forEach(ri=>{
+    const qi=quizBank.indexOf(avail[ri]);quizUsed.push(qi);
+    const q=avail[ri];
+    const div=document.createElement('div');
+    div.style.cssText='margin-bottom:14px;padding:14px;background:var(--bg-tertiary);border:1px solid var(--border);border-radius:10px;';
+    div.innerHTML='<p style="font-size:13.5px;font-weight:600;color:var(--text-primary);margin-bottom:10px;">'+q.q+'</p>';
+    q.opts.forEach((opt,oi)=>{
+      const odiv=document.createElement('div');odiv.className='quiz-option';
+      odiv.innerHTML='<span class="opt-marker">'+String.fromCharCode(65+oi)+'</span><span>'+opt+'</span>';
+      odiv.addEventListener('click',function(){
+        div.querySelectorAll('.quiz-option').forEach(o=>{o.style.pointerEvents='none'});
+        if(oi===q.ans){odiv.classList.add('correct');showToast('Jawaban benar!','success')}
+        else{odiv.classList.add('wrong');div.querySelectorAll('.quiz-option')[q.ans].classList.add('correct');showToast('Jawaban salah. Jawaban benar: '+String.fromCharCode(65+q.ans),'error')}
+      });
+      div.appendChild(odiv);
+    });
+    c.appendChild(div);
+  });
+}
+
+// ============================================================
+// LAYOUT RESPONSIF
+// ============================================================
+function adjustLayout(){
+  const w=window.innerWidth;
+  document.querySelectorAll('.spl-grid,.mat-grid').forEach(g=>{g.style.gridTemplateColumns=w<900?'1fr':'1fr 1fr'});
+}
+
+// ============================================================
+// INISIALISASI
+// ============================================================
+document.addEventListener('DOMContentLoaded',()=>{
+  generateSPLInputs();generateMatrixGrid('A');generateMatrixGrid('B');renderHistory();adjustLayout();
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar()});
+  window.addEventListener('resize',adjustLayout);
+
+  // Parallax hero
+  const hero=document.querySelector('.hero-bg');
+  if(hero){hero.addEventListener('mousemove',e=>{
+    const rect=hero.getBoundingClientRect(),x=(e.clientX-rect.left)/rect.width-.5,y=(e.clientY-rect.top)/rect.height-.5;
+    hero.querySelectorAll('.float-s').forEach((s,i)=>{s.style.transform='translate('+x*(i+1)*12+'px,'+y*(i+1)*12+'px)'});
+  })}
+
+  // Scroll reveal
+  const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.style.opacity='1';entry.target.style.transform='translateY(0)'}})},{threshold:0.1});
+  document.querySelectorAll('.learn-card,.type-card,.sim-section,.example-box,.formula-box').forEach(el=>{
+    el.style.opacity='0';el.style.transform='translateY(12px)';el.style.transition='opacity 0.5s ease, transform 0.5s ease';observer.observe(el);
+  });
+});
+
+// Simpan state sebelum unload
+window.addEventListener('beforeunload',()=>{try{localStorage.setItem('mxlab_hist',JSON.stringify(App.history))}catch(e){}});
+
+// Console branding
+console.log('%c MatriXLab %c v1.0.0 ','background:linear-gradient(135deg,#14B8A6,#F59E0B);color:#fff;font-size:16px;font-weight:700;padding:6px 10px;border-radius:6px 0 0 6px;','background:#1A2540;color:#8B9AB8;font-size:12px;padding:6px 10px;border-radius:0 6px 6px 0;');
+console.log('%cPlatform Pembelajaran Matriks Interaktif','color:#14B8A6;font-size:11px;');
+</script>
+</body>
+</html>
