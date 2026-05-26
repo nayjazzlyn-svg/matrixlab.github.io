@@ -6,7 +6,7 @@
 <title>MatriXLab — Pembelajaran Matriks Interaktif</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css2/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 tailwind.config={theme:{extend:{fontFamily:{sans:['Poppins','sans-serif'],mono:['JetBrains Mono','monospace']}}}}
@@ -101,13 +101,15 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
 .mx.rose .bl,.mx.rose .br{border-color:var(--rose)}
 .mx.violet .bl,.mx.violet .br{border-color:var(--violet)}
 
-.mg-wrap{overflow:auto;max-width:100%;max-height:400px;border:1px solid var(--border);border-radius:9px;padding:10px;background:var(--bg-input)}
-.mg-wrap table{border-collapse:collapse;margin:auto}
+.mg-wrap{overflow-x:auto;overflow-y:auto;max-width:100%;max-height:400px;border:1px solid var(--border);border-radius:9px;padding:10px;background:var(--bg-input);overscroll-behavior-x:contain}
+.mg-wrap table{border-collapse:collapse;margin:auto;width:max-content}
 .mg-wrap td{padding:2px}
 .mc{width:52px;height:36px;text-align:center;border:1px solid var(--border);border-radius:6px;background:var(--bg-card);color:var(--text-primary);font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:500;transition:all .2s}
 .mc:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-glow)}
 .mc.sm{width:42px;height:30px;font-size:11px}
 .mc.xs{width:34px;height:26px;font-size:10px}
+.mc.xxs{width:28px;height:22px;font-size:9px}
+.mc.tiny{width:22px;height:18px;font-size:7.5px;padding:0}
 
 #toast-container{position:fixed;top:18px;right:18px;z-index:9999;display:flex;flex-direction:column;gap:7px}
 .toast{display:flex;align-items:center;gap:9px;padding:11px 16px;border-radius:9px;font-size:12.5px;font-weight:500;color:#fff;box-shadow:0 8px 28px rgba(0,0,0,.3);animation:toastIn .35s ease;min-width:240px;max-width:380px}
@@ -142,7 +144,7 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
 .op-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-glow)}
 .op-btn.active{border-color:var(--accent);color:#fff;background:var(--accent)}
 
-.result-area{background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-top:14px;min-height:50px;position:relative}
+.result-area{background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-top:14px;min-height:50px;position:relative;overflow-x:auto;overscroll-behavior-x:contain}
 .result-label{font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px}
 .result-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap}
 
@@ -201,19 +203,57 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
 .h-desc{font-size:12.5px;color:var(--text-secondary);line-height:1.5}
 .h-result{font-size:11px;color:var(--text-muted);margin-top:5px;font-family:'JetBrains Mono',monospace}
 
+/* === STEPS CONTAINER === */
+.steps-container{margin-top:16px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.steps-header{padding:14px 18px;background:var(--bg-tertiary);font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border)}
+.steps-header i{color:var(--accent)}
+.step-item{display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.step-item:last-child{border-bottom:none}
+.step-badge{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px}
+.step-content{flex:1;min-width:0;overflow-x:auto}
+.step-title{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px}
+.step-desc{font-size:12.5px;color:var(--text-secondary);line-height:1.65}
+.step-desc strong{color:var(--text-primary)}
+.step-matrix{margin-top:8px;overflow-x:auto}
+
+/* === METHOD SELECTOR === */
+.method-selector{margin:14px 0;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.method-label{font-size:12px;font-weight:600;color:var(--text-secondary);white-space:nowrap}
+.method-buttons{display:flex;flex-wrap:wrap;gap:5px}
+.method-btn{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg-tertiary);color:var(--text-secondary);font-family:inherit;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.method-btn:hover{border-color:var(--accent);color:var(--accent)}
+.method-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
 @media(max-width:1100px){
   #sidebar{transform:translateX(-100%)}#sidebar.open{transform:translateX(0)}
   #main-content{margin-left:0}#mobile-header{display:flex}#main-content{padding:68px 14px 20px}
   .materi-layout{flex-direction:column!important}
-  .materi-sidebar{position:static!important;min-width:100%!important;max-width:100%!important;flex-direction:row!important;flex-wrap:wrap!important;gap:4px!important}
-  .materi-nav-section{width:100%}
-  .materi-nav-item{font-size:11.5px;padding:7px 10px}
+  .materi-sidebar{
+    position:static!important;min-width:100%!important;max-width:100%!important;
+    flex-direction:row!important;flex-wrap:nowrap!important;
+    gap:6px!important;overflow-x:auto!important;overflow-y:hidden!important;
+    padding:10px 4px!important;scrollbar-width:none!important;
+    -ms-overflow-style:none!important;
+  }
+  .materi-sidebar::-webkit-scrollbar{display:none!important}
+  .materi-nav-section{display:none!important}
+  .materi-nav-item{
+    flex-shrink:0!important;white-space:nowrap!important;
+    font-size:11.5px;padding:8px 14px;border-radius:20px;
+    border:1px solid var(--border);background:var(--bg-tertiary);
+  }
+  .materi-nav-item.active{
+    background:var(--accent)!important;color:#fff!important;
+    border-color:var(--accent)!important;font-weight:600;
+  }
 }
 @media(max-width:768px){
   .spl-grid,.mat-grid{grid-template-columns:1fr!important}
   .hero-bg{padding:28px 18px}
   .card{padding:16px}
   .mc{width:40px;height:30px;font-size:10.5px}
+  .method-buttons{gap:4px}
+  .method-btn{padding:6px 10px;font-size:10.5px}
 }
 @media(max-width:480px){
   .mc{width:34px;height:26px;font-size:9.5px}
@@ -267,8 +307,8 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:28px;">
     <div class="feature-card" onclick="navigateTo('materi')"><div class="feat-icon teal"><i class="fa-solid fa-graduation-cap"></i></div><h3>Materi Lengkap</h3><p>Dari pengertian dasar hingga metode penyelesaian SPL, semua dijelaskan dengan bahasa sederhana.</p></div>
-    <div class="feature-card" onclick="navigateTo('spl')"><div class="feat-icon amber"><i class="fa-solid fa-arrow-right-arrow-left"></i></div><h3>SPL ke Matriks</h3><p>Konversikan sistem persamaan linear menjadi matriks augmented secara otomatis.</p></div>
-    <div class="feature-card" onclick="navigateTo('matrix')"><div class="feat-icon rose"><i class="fa-solid fa-calculator"></i></div><h3>Operasi Matriks</h3><p>Penjumlahan, perkalian, transpose, determinan, dan invers matriks ukuran besar.</p></div>
+    <div class="feature-card" onclick="navigateTo('spl')"><div class="feat-icon amber"><i class="fa-solid fa-arrow-right-arrow-left"></i></div><h3>SPL ke Matriks</h3><p>Konversikan sistem persamaan linear menjadi matriks augmented dan selesaikan dengan metode pilihan.</p></div>
+    <div class="feature-card" onclick="navigateTo('matrix')"><div class="feat-icon rose"><i class="fa-solid fa-calculator"></i></div><h3>Operasi Matriks</h3><p>Penjumlahan, perkalian, transpose, determinan, dan invers matriks hingga ordo 100x100.</p></div>
     <div class="feature-card" onclick="navigateTo('history')"><div class="feat-icon violet"><i class="fa-solid fa-clock-rotate-left"></i></div><h3>Riwayat Otomatis</h3><p>Semua perhitungan tersimpan. Tinjau kembali kapan saja tanpa kehilangan data.</p></div>
   </div>
 </section>
@@ -302,7 +342,6 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
     </div>
     <div style="flex:1;min-width:0;" id="materi-content">
 
-      <!-- APA ITU MATRIKS -->
       <div class="topic-section active" id="m-intro">
         <div class="learn-card">
           <h3><i class="fa-solid fa-circle-question"></i>Apa Itu Matriks?</h3>
@@ -313,7 +352,6 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
         </div>
       </div>
 
-      <!-- ELEMEN & ORDO -->
       <div class="topic-section" id="m-elements">
         <div class="learn-card">
           <h3><i class="fa-solid fa-border-all"></i>Elemen, Ordo, Baris, dan Kolom</h3>
@@ -332,7 +370,6 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
         </div>
       </div>
 
-      <!-- JENIS-JENIS MATRIKS -->
       <div class="topic-section" id="m-types">
         <div class="learn-card">
           <h3><i class="fa-solid fa-layer-group"></i>Jenis-Jenis Matriks</h3>
@@ -343,12 +380,11 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
           <div class="type-card"><h4>Matriks Kolom</h4><p style="margin-bottom:10px;">Matriks yang hanya punya <strong>satu kolom</strong>. Ordonya m x 1.</p><div class="mx sm"><div class="bl"></div><table><tr><td>5</td></tr><tr><td>2</td></tr><tr><td>8</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Matriks kolom 3x1</p></div>
           <div class="type-card"><h4>Matriks Persegi</h4><p style="margin-bottom:10px;">Matriks yang jumlah barisnya <strong>sama dengan</strong> jumlah kolomnya. Ordonya n x n.</p><div class="mx sm"><div class="bl"></div><table><tr><td>2</td><td>5</td></tr><tr><td>1</td><td>3</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Matriks persegi 2x2</p></div>
           <div class="type-card"><h4>Matriks Identitas (I)</h4><p style="margin-bottom:10px;">Matriks persegi yang diagonal utamanya berisi <strong>1</strong> dan sisanya <strong>0</strong>. Seperti "angka 1" dalam perkalian matriks.</p><div class="mx sm amber"><div class="bl"></div><table><tr><td style="color:var(--amber)">1</td><td>0</td><td>0</td></tr><tr><td>0</td><td style="color:var(--amber)">1</td><td>0</td></tr><tr><td>0</td><td>0</td><td style="color:var(--amber)">1</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Matriks identitas I3</p></div>
-          <div class="type-card"><h4>Matriks Diagonal</h4><p style="margin-bottom:10px;">Matriks persegi yang elemen di luar diagonal utamanya semuanya <strong>0</strong>. Diagonal utamanya boleh berapa saja.</p><div class="mx sm"><div class="bl"></div><table><tr><td style="color:var(--accent)">4</td><td>0</td><td>0</td></tr><tr><td>0</td><td style="color:var(--accent)">7</td><td>0</td></tr><tr><td>0</td><td>0</td><td style="color:var(--accent)">2</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Catatan: Matriks identitas adalah kasus khusus dari matriks diagonal</p></div>
-          <div class="type-card"><h4>Matriks Nol (O)</h4><p style="margin-bottom:10px;">Matriks yang <strong>semua elemennya bernilai 0</strong>. Seperti "angka 0" dalam operasi matriks.</p><div class="mx sm"><div class="bl"></div><table><tr><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Matriks nol 3x2</p></div>
+          <div class="type-card"><h4>Matriks Diagonal</h4><p style="margin-bottom:10px;">Matriks persegi yang elemen di luar diagonal utamanya semuanya <strong>0</strong>.</p><div class="mx sm"><div class="bl"></div><table><tr><td style="color:var(--accent)">4</td><td>0</td><td>0</td></tr><tr><td>0</td><td style="color:var(--accent)">7</td><td>0</td></tr><tr><td>0</td><td>0</td><td style="color:var(--accent)">2</td></tr></table><div class="br"></div></div></div>
+          <div class="type-card"><h4>Matriks Nol (O)</h4><p style="margin-bottom:10px;">Matriks yang <strong>semua elemennya bernilai 0</strong>.</p><div class="mx sm"><div class="bl"></div><table><tr><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td></tr></table><div class="br"></div></div><p style="font-size:11.5px;color:var(--text-muted);margin-top:6px;">Matriks nol 3x2</p></div>
         </div>
       </div>
 
-      <!-- KEGUNAAN MATRIKS -->
       <div class="topic-section" id="m-uses">
         <div class="learn-card">
           <h3><i class="fa-solid fa-lightbulb"></i>Kegunaan Matriks dalam Kehidupan Nyata</h3>
@@ -364,7 +400,6 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
         </div>
       </div>
 
-      <!-- PENJUMLAHAN -->
       <div class="topic-section" id="m-add">
         <div class="learn-card">
           <h3><i class="fa-solid fa-plus"></i>Penjumlahan Matriks</h3>
@@ -399,7 +434,6 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
         <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
       </div>
 
-      <!-- PENGURANGAN -->
       <div class="topic-section" id="m-sub">
         <div class="learn-card">
           <h3><i class="fa-solid fa-minus"></i>Pengurangan Matriks</h3>
@@ -415,15 +449,10 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
               <div class="mx sm amber"><div class="bl"></div><table><tr><td style="color:var(--amber)">3</td><td style="color:var(--amber)">5</td></tr><tr><td style="color:var(--amber)">2</td><td style="color:var(--amber)">-2</td></tr></table><div class="br"></div></div>
             </div>
           </div>
-          <div style="margin-top:14px;"><p style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">Langkah Penyelesaian:</p>
-            <div class="step-box"><div class="step-num">1</div><div class="step-text">Pastikan ordo sama (keduanya 2x2).</div></div>
-            <div class="step-box"><div class="step-num">2</div><div class="step-text">Kurangkan elemen yang posisinya sama: <strong style="color:var(--accent)">5-2=3</strong>, <strong style="color:var(--accent)">8-3=5</strong>, <strong style="color:var(--accent)">3-1=2</strong>, <strong style="color:var(--accent)">2-4=-2</strong>.</div></div>
-          </div>
         </div>
         <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
       </div>
 
-      <!-- PERKALIAN -->
       <div class="topic-section" id="m-mul">
         <div class="learn-card">
           <h3><i class="fa-solid fa-xmark"></i>Perkalian Matriks</h3>
@@ -436,10 +465,10 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
               <span style="font-size:18px;font-weight:300;color:var(--text-muted);">x</span>
               <div class="mx sm"><div class="bl"></div><table><tr><td>5</td><td>1</td></tr><tr><td>2</td><td>3</td></tr></table><div class="br"></div></div>
             </div>
-            <div class="step-box"><div class="step-num">1</div><div class="step-text">Baris 1 x Kolom 1: <strong style="color:var(--accent)">(2x5) + (3x2) = 10 + 6 = 16</strong></div></div>
-            <div class="step-box"><div class="step-num">2</div><div class="step-text">Baris 1 x Kolom 2: <strong style="color:var(--accent)">(2x1) + (3x3) = 2 + 9 = 11</strong></div></div>
-            <div class="step-box"><div class="step-num">3</div><div class="step-text">Baris 2 x Kolom 1: <strong style="color:var(--accent)">(1x5) + (4x2) = 5 + 8 = 13</strong></div></div>
-            <div class="step-box"><div class="step-num">4</div><div class="step-text">Baris 2 x Kolom 2: <strong style="color:var(--accent)">(1x1) + (4x3) = 1 + 12 = 13</strong></div></div>
+            <div class="step-box"><div class="step-num">1</div><div class="step-text">Baris 1 x Kolom 1: <strong style="color:var(--accent)">(2x5) + (3x2) = 16</strong></div></div>
+            <div class="step-box"><div class="step-num">2</div><div class="step-text">Baris 1 x Kolom 2: <strong style="color:var(--accent)">(2x1) + (3x3) = 11</strong></div></div>
+            <div class="step-box"><div class="step-num">3</div><div class="step-text">Baris 2 x Kolom 1: <strong style="color:var(--accent)">(1x5) + (4x2) = 13</strong></div></div>
+            <div class="step-box"><div class="step-num">4</div><div class="step-text">Baris 2 x Kolom 2: <strong style="color:var(--accent)">(1x1) + (4x3) = 13</strong></div></div>
             <p style="font-size:13px;font-weight:600;color:var(--text-primary);margin-top:8px;">Hasil:</p>
             <div class="mx sm amber"><div class="bl"></div><table><tr><td style="color:var(--amber)">16</td><td style="color:var(--amber)">11</td></tr><tr><td style="color:var(--amber)">13</td><td style="color:var(--amber)">13</td></tr></table><div class="br"></div></div>
           </div>
@@ -448,7 +477,6 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
         <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
       </div>
 
-      <!-- TRANSPOSE -->
       <div class="topic-section" id="m-transpose">
         <div class="learn-card">
           <h3><i class="fa-solid fa-rotate"></i>Transpose Matriks</h3>
@@ -474,7 +502,6 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
         <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
       </div>
 
-      <!-- DETERMINAN -->
       <div class="topic-section" id="m-det">
         <div class="learn-card">
           <h3><i class="fa-solid fa-d"></i>Determinan Matriks</h3>
@@ -499,7 +526,6 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
         <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
       </div>
 
-      <!-- INVERS -->
       <div class="topic-section" id="m-inverse">
         <div class="learn-card">
           <h3><i class="fa-solid fa-arrow-turn-up"></i>Invers Matriks</h3>
@@ -521,7 +547,6 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
         <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Sendiri di Kalkulator</button></div>
       </div>
 
-      <!-- ELIMINASI GAUSS -->
       <div class="topic-section" id="m-gauss">
         <div class="learn-card">
           <h3><i class="fa-solid fa-stairs"></i>Metode Eliminasi Gauss</h3>
@@ -530,18 +555,14 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
           <div class="example-box">
             <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
             <p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Selesaikan: x + y + z = 6, 2x - y + z = 3, x + y - z = 2</p>
-            <div class="step-box"><div class="step-num">1</div><div class="step-text">B2 - 2B1 -> B2: <strong style="color:var(--accent)">[0, -3, -1 | -9]</strong></div></div>
-            <div class="step-box"><div class="step-num">2</div><div class="step-text">B3 - B1 -> B3: <strong style="color:var(--accent)">[0, 0, -2 | -4]</strong></div></div>
-            <div class="step-box"><div class="step-num">3</div><div class="step-text">Bentuk eselon baris tercapai. Substitusi balik:</div></div>
-            <div class="step-box"><div class="step-num">4</div><div class="step-text">Dari baris 3: -2z = -4 -> <strong style="color:var(--amber)">z = 2</strong></div></div>
-            <div class="step-box"><div class="step-num">5</div><div class="step-text">Dari baris 2: -3y - 1(2) = -9 -> <strong style="color:var(--amber)">y = 7/3</strong></div></div>
-            <div class="step-box"><div class="step-num">6</div><div class="step-text">Dari baris 1: x + 7/3 + 2 = 6 -> <strong style="color:var(--amber)">x = 5/3</strong></div></div>
+            <div class="step-box"><div class="step-num">1</div><div class="step-text">B2 - 2B1 → B2: <strong style="color:var(--accent)">[0, -3, -1 | -9]</strong></div></div>
+            <div class="step-box"><div class="step-num">2</div><div class="step-text">B3 - B1 → B3: <strong style="color:var(--accent)">[0, 0, -2 | -4]</strong></div></div>
+            <div class="step-box"><div class="step-num">3</div><div class="step-text">Substitusi balik: z = 2, y = 7/3, x = 5/3</div></div>
           </div>
         </div>
         <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('spl')"><i class="fa-solid fa-hand-pointer"></i>Coba SPL ke Matriks</button></div>
       </div>
 
-      <!-- GAUSS-JORDAN -->
       <div class="topic-section" id="m-gaussjordan">
         <div class="learn-card">
           <h3><i class="fa-solid fa-stairs"></i>Metode Gauss-Jordan</h3>
@@ -551,9 +572,9 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
             <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
             <p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Selesaikan: x + 2y = 5, 3x - y = 1</p>
             <div class="step-box"><div class="step-num">1</div><div class="step-text">Matriks augmented: [[1, 2 | 5], [3, -1 | 1]]</div></div>
-            <div class="step-box"><div class="step-num">2</div><div class="step-text">B2 - 3B1 -> B2: [[1, 2 | 5], [0, -7 | -14]]</div></div>
+            <div class="step-box"><div class="step-num">2</div><div class="step-text">B2 - 3B1 → B2: [[1, 2 | 5], [0, -7 | -14]]</div></div>
             <div class="step-box"><div class="step-num">3</div><div class="step-text">B2 / (-7): [[1, 2 | 5], [0, 1 | 2]]</div></div>
-            <div class="step-box"><div class="step-num">4</div><div class="step-text">B1 - 2B2 -> B1: [[1, 0 | 1], [0, 1 | 2]]</div></div>
+            <div class="step-box"><div class="step-num">4</div><div class="step-text">B1 - 2B2 → B1: [[1, 0 | 1], [0, 1 | 2]]</div></div>
             <div class="step-box"><div class="step-num">5</div><div class="step-text">Langsung terbaca: <strong style="color:var(--amber)">x = 1, y = 2</strong></div></div>
           </div>
         </div>
@@ -571,8 +592,7 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
             <p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Selesaikan: x + 2y = 5, 3x - y = 1</p>
             <div class="step-box"><div class="step-num">1</div><div class="step-text">Tulis dalam bentuk AX = B:<br>A = [[1,2],[3,-1]], X = [[x],[y]], B = [[5],[1]]</div></div>
             <div class="step-box"><div class="step-num">2</div><div class="step-text">Hitung A<sup>-1</sup>: det = -7, A<sup>-1</sup> = (1/-7) x [[-1,-2],[-3,1]] = [[1/7, 2/7],[3/7, -1/7]]</div></div>
-            <div class="step-box"><div class="step-num">3</div><div class="step-text">X = A<sup>-1</sup>B = [[1/7 x 5 + 2/7 x 1],[3/7 x 5 + (-1/7) x 1]] = <strong style="color:var(--amber)">[[1],[2]]</strong></div></div>
-            <div class="step-box"><div class="step-num">4</div><div class="step-text">Jadi: <strong style="color:var(--amber)">x = 1, y = 2</strong></div></div>
+            <div class="step-box"><div class="step-num">3</div><div class="step-text">X = A<sup>-1</sup>B = [[1],[2]]</div></div>
           </div>
         </div>
         <div style="margin-top:14px;"><button class="try-btn" onclick="navigateTo('matrix')"><i class="fa-solid fa-hand-pointer"></i>Coba Invers di Kalkulator</button></div>
@@ -594,7 +614,7 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
         <div class="learn-card">
           <h3><i class="fa-solid fa-gavel"></i>Aturan Cramer</h3>
           <p style="font-size:14px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Aturan Cramer adalah cara elegan menyelesaikan SPL menggunakan determinan. <strong style="color:var(--accent)">Setiap variabel dihitung satu per satu</strong> dengan mengganti kolom yang sesuai.</p>
-          <div class="formula-box violet">Jika AX = B dan det(A) tidak sama dengan 0, maka:<br><br>x1 = det(A1)/det(A)<br>x2 = det(A2)/det(A)<br>...<br>xn = det(An)/det(A)<br><br>A<sub>i</sub> = matriks A dengan kolom ke-i diganti vektor B</div>
+          <div class="formula-box violet">Jika AX = B dan det(A) ≠ 0, maka:<br><br>x1 = det(A1)/det(A)<br>x2 = det(A2)/det(A)<br>...<br>xn = det(An)/det(A)<br><br>A<sub>i</sub> = matriks A dengan kolom ke-i diganti vektor B</div>
           <div class="example-box">
             <div class="ex-label"><i class="fa-solid fa-pencil"></i>Contoh Soal</div>
             <p style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Selesaikan: 2x + y = 5, x + 3y = 10</p>
@@ -634,16 +654,28 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
 
 <!-- SPL KE MATRIKS -->
 <section id="page-spl" class="page-section">
-  <div style="margin-bottom:22px;"><h2 style="font-size:22px;font-weight:800;margin-bottom:5px;">Sistem Persamaan Linear ke Matriks</h2><p style="color:var(--text-secondary);font-size:13.5px;">Ketik persamaan linear dan ubah menjadi bentuk matriks augmented.</p></div>
+  <div style="margin-bottom:22px;"><h2 style="font-size:22px;font-weight:800;margin-bottom:5px;">Sistem Persamaan Linear ke Matriks</h2><p style="color:var(--text-secondary);font-size:13.5px;">Ketik persamaan linear dan ubah menjadi bentuk matriks augmented, lalu selesaikan dengan metode pilihan.</p></div>
   <div class="spl-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:22px;">
     <div class="card">
       <div class="card-title"><i class="fa-solid fa-keyboard"></i>Input Persamaan</div>
       <div style="margin-bottom:12px;"><label style="font-size:12px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:5px;">Jumlah Persamaan</label><div style="display:flex;gap:7px;align-items:center;"><input type="number" id="spl-count" class="input-field" value="3" min="1" max="10" style="width:70px;"><button class="btn btn-secondary btn-sm" onclick="generateSPLInputs()"><i class="fa-solid fa-arrows-rotate"></i>Terapkan</button></div></div>
       <div id="spl-equations" style="display:grid;gap:8px;margin-bottom:14px;"></div>
-      <div style="display:flex;gap:7px;flex-wrap:wrap;"><button class="btn btn-primary" onclick="convertSPL()"><i class="fa-solid fa-arrow-right"></i>Convert</button><button class="btn btn-secondary" onclick="resetSPL()"><i class="fa-solid fa-rotate-left"></i>Reset</button><button class="btn btn-amber" onclick="loadSPLExample()"><i class="fa-solid fa-book-open"></i>Contoh Soal</button></div>
+      
+      <!-- METHOD SELECTOR -->
+      <div class="method-selector" style="margin-bottom:14px;">
+        <span class="method-label"><i class="fa-solid fa-route" style="margin-right:4px;"></i>Pilih Metode Penyelesaian:</span>
+        <div class="method-buttons" id="spl-method-btns">
+          <button class="method-btn active" data-method="gauss" onclick="selectSPLMethod(this)">Eliminasi Gauss</button>
+          <button class="method-btn" data-method="gaussjordan" onclick="selectSPLMethod(this)">Gauss-Jordan</button>
+          <button class="method-btn" data-method="inverse" onclick="selectSPLMethod(this)">Matriks Balikan</button>
+          <button class="method-btn" data-method="cramer" onclick="selectSPLMethod(this)">Aturan Cramer</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:7px;flex-wrap:wrap;"><button class="btn btn-primary" onclick="convertSPL()"><i class="fa-solid fa-arrow-right"></i>Convert & Selesaikan</button><button class="btn btn-secondary" onclick="resetSPL()"><i class="fa-solid fa-rotate-left"></i>Reset</button><button class="btn btn-amber" onclick="loadSPLExample()"><i class="fa-solid fa-book-open"></i>Contoh Soal</button></div>
     </div>
     <div class="card">
-      <div class="card-title"><i class="fa-solid fa-table"></i>Hasil Matriks Augmented</div>
+      <div class="card-title"><i class="fa-solid fa-table"></i>Hasil Matriks & Pembahasan</div>
       <div id="spl-result" class="result-area"><p style="color:var(--text-muted);font-size:13px;">Masukkan persamaan dan tekan Convert.</p></div>
       <div id="spl-result-actions" class="result-actions" style="display:none;"><button class="btn btn-secondary btn-sm" onclick="copyResult('spl-result')"><i class="fa-solid fa-copy"></i>Salin</button><button class="btn btn-secondary btn-sm" onclick="downloadResult('spl-result','SPL_Matriks')"><i class="fa-solid fa-download"></i>Unduh</button></div>
     </div>
@@ -652,13 +684,13 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
 
 <!-- OPERASI MATRIKS -->
 <section id="page-matrix" class="page-section">
-  <div style="margin-bottom:22px;"><h2 style="font-size:22px;font-weight:800;margin-bottom:5px;">Operasi Matriks</h2><p style="color:var(--text-secondary);font-size:13.5px;">Pilih ordo, isi matriks, dan lakukan operasi matematika.</p></div>
+  <div style="margin-bottom:22px;"><h2 style="font-size:22px;font-weight:800;margin-bottom:5px;">Operasi Matriks</h2><p style="color:var(--text-secondary);font-size:13.5px;">Pilih ordo (hingga 100x100), isi matriks, dan lakukan operasi matematika dengan pembahasan langkah.</p></div>
   <div class="mat-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:22px;">
     <div class="card">
       <div class="card-title"><i class="fa-solid fa-a" style="font-size:13px;width:18px;text-align:center;"></i>Matriks A</div>
       <div style="display:flex;gap:8px;align-items:end;margin-bottom:12px;flex-wrap:wrap;">
-        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Baris</label><input type="number" id="mat-a-rows" class="input-field" value="3" min="1" max="20" style="width:65px;"></div>
-        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Kolom</label><input type="number" id="mat-a-cols" class="input-field" value="3" min="1" max="20" style="width:65px;"></div>
+        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Baris</label><input type="number" id="mat-a-rows" class="input-field" value="3" min="1" max="100" style="width:65px;"></div>
+        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Kolom</label><input type="number" id="mat-a-cols" class="input-field" value="3" min="1" max="100" style="width:65px;"></div>
         <button class="btn btn-secondary btn-sm" onclick="generateMatrixGrid('A')"><i class="fa-solid fa-check"></i>Terapkan</button>
         <button class="btn btn-secondary btn-sm" onclick="randomMatrix('A')"><i class="fa-solid fa-dice"></i>Random</button>
         <button class="btn btn-secondary btn-sm" onclick="clearMatrix('A')"><i class="fa-solid fa-eraser"></i>Bersihkan</button>
@@ -668,8 +700,8 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
     <div class="card" id="matrix-b-card">
       <div class="card-title"><i class="fa-solid fa-b" style="font-size:13px;width:18px;text-align:center;"></i>Matriks B</div>
       <div style="display:flex;gap:8px;align-items:end;margin-bottom:12px;flex-wrap:wrap;">
-        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Baris</label><input type="number" id="mat-b-rows" class="input-field" value="3" min="1" max="20" style="width:65px;"></div>
-        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Kolom</label><input type="number" id="mat-b-cols" class="input-field" value="3" min="1" max="20" style="width:65px;"></div>
+        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Baris</label><input type="number" id="mat-b-rows" class="input-field" value="3" min="1" max="100" style="width:65px;"></div>
+        <div><label style="font-size:11px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:3px;">Kolom</label><input type="number" id="mat-b-cols" class="input-field" value="3" min="1" max="100" style="width:65px;"></div>
         <button class="btn btn-secondary btn-sm" onclick="generateMatrixGrid('B')"><i class="fa-solid fa-check"></i>Terapkan</button>
         <button class="btn btn-secondary btn-sm" onclick="randomMatrix('B')"><i class="fa-solid fa-dice"></i>Random</button>
         <button class="btn btn-secondary btn-sm" onclick="clearMatrix('B')"><i class="fa-solid fa-eraser"></i>Bersihkan</button>
@@ -691,7 +723,7 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
     <button class="btn btn-ghost btn-sm" onclick="navigateTo('materi');switchTopic('m-add')" style="margin-left:8px;"><i class="fa-solid fa-book-open"></i>Pelajari Materi</button>
   </div>
   <div class="card" style="margin-top:22px;">
-    <div class="card-title"><i class="fa-solid fa-equals"></i>Hasil</div>
+    <div class="card-title"><i class="fa-solid fa-equals"></i>Hasil & Pembahasan</div>
     <div id="matrix-result" class="result-area"><p style="color:var(--text-muted);font-size:13px;">Pilih operasi dan tekan Hitung.</p></div>
     <div id="matrix-result-actions" class="result-actions" style="display:none;"><button class="btn btn-secondary btn-sm" onclick="copyResult('matrix-result')"><i class="fa-solid fa-copy"></i>Salin</button><button class="btn btn-secondary btn-sm" onclick="downloadResult('matrix-result','Operasi_Matriks')"><i class="fa-solid fa-download"></i>Unduh</button></div>
   </div>
@@ -713,15 +745,15 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
   <div class="card">
     <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;">
       <div style="width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--amber));display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;font-weight:800;font-family:'JetBrains Mono',monospace;">Mx</div>
-      <div><div style="font-size:18px;font-weight:800;">MatriXLab</div><div style="font-size:12px;color:var(--text-secondary);">v1.0.0 — Platform Pembelajaran Matriks Interaktif</div></div>
+      <div><div style="font-size:18px;font-weight:800;">MatriXLab</div><div style="font-size:12px;color:var(--text-secondary);">v2.0.0 — Platform Pembelajaran Matriks Interaktif</div></div>
     </div>
-    <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Aplikasi pembelajaran matriks modern untuk pelajar dan mahasiswa. Materi disajikan dengan bahasa sederhana, simulasi interaktif, dan kalkulator matriks lengkap.</p>
+    <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.75;margin-bottom:14px;">Aplikasi pembelajaran matriks modern untuk pelajar dan mahasiswa. Materi disajikan dengan bahasa sederhana, simulasi interaktif, dan kalkulator matriks lengkap dengan pembahasan langkah demi langkah.</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
       <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Materi pembelajaran interaktif</span></div>
       <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Konversi SPL ke matriks</span></div>
-      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Operasi matriks hingga 20x20</span></div>
-      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Simulasi perhitungan langkah</span></div>
-      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Mode gelap dan terang</span></div>
+      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Operasi matriks hingga 100x100</span></div>
+      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Pembahasan langkah demi langkah</span></div>
+      <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Pilihan metode penyelesaian SPL</span></div>
       <div style="display:flex;align-items:start;gap:8px;padding:7px 0;"><i class="fa-solid fa-check" style="color:var(--accent);margin-top:3px;font-size:12px;"></i><span style="font-size:12.5px;color:var(--text-secondary);">Responsif di semua perangkat</span></div>
     </div>
   </div>
@@ -733,10 +765,10 @@ textarea.input-field{resize:vertical;min-height:40px;font-family:'JetBrains Mono
 
 <script>
 /* ============================================================
-   MATRIXLAB — APLIKASI PEMBELAJARAN MATRIKS INTERAKTIF
+   MATRIXLAB v2.0 — APLIKASI PEMBELAJARAN MATRIKS INTERAKTIF
    ============================================================ */
 
-const App={currentPage:'home',darkMode:true,selectedOp:null,history:JSON.parse(localStorage.getItem('mxlab_hist')||'[]')};
+const App={currentPage:'home',darkMode:true,selectedOp:null,splMethod:'gauss',history:JSON.parse(localStorage.getItem('mxlab_hist')||'[]')};
 
 // ===== NAVIGASI =====
 function navigateTo(page){
@@ -787,11 +819,11 @@ function renderHistory(){
   list.innerHTML='';
   if(!App.history.length){empty.style.display='block';return}
   empty.style.display='none';
-  const labels={spl:'SPL ke Matriks',add:'Penjumlahan',sub:'Pengurangan',mul:'Perkalian',transpose:'Transpose',determinant:'Determinan',inverse:'Invers',cramer:'Cramer'};
-  const icons={spl:'fa-square-root-variable',add:'fa-plus',sub:'fa-minus',mul:'fa-xmark',transpose:'fa-rotate',determinant:'fa-d',inverse:'fa-arrow-turn-up',cramer:'fa-gavel'};
+  const labels={spl:'SPL ke Matriks',add:'Penjumlahan',sub:'Pengurangan',mul:'Perkalian',transpose:'Transpose',determinant:'Determinan',inverse:'Invers',cramer:'Cramer',gauss:'Gauss',gaussjordan:'Gauss-Jordan'};
+  const icons={spl:'fa-square-root-variable',add:'fa-plus',sub:'fa-minus',mul:'fa-xmark',transpose:'fa-rotate',determinant:'fa-d',inverse:'fa-arrow-turn-up',cramer:'fa-gavel',gauss:'fa-stairs',gaussjordan:'fa-stairs'};
   App.history.forEach(item=>{
     const d=document.createElement('div');d.className='history-item';
-    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;"><span class="h-type"><i class="fa-solid '+(icons[item.type]||'fa-calculator')+'"></i>'+(labels[item.type]||item.type)+'</span><span class="h-time">'+item.time+'</span></div><div class="h-desc">'+item.desc+'</div><div class="h-result">'+(item.res||'').substring(0,100)+'</div>';
+    d.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;"><span class="h-type"><i class="fa-solid '+(icons[item.type]||'fa-calculator')+'"></i>'+(labels[item.type]||item.type)+'</span><span class="h-time">'+item.time+'</span></div><div class="h-desc">'+item.desc+'</div><div class="h-result">'+(item.res||'').substring(0,120)+'</div>';
     list.appendChild(d);
   });
 }
@@ -811,14 +843,51 @@ function downloadResult(id,fn){
 // ===== FORMAT & RENDER =====
 function fmt(n){if(Number.isInteger(n))return String(n);const r=parseFloat(n.toFixed(6));return r===-0?'0':String(r)}
 function renderMx(m,cls){
-  let h='<div class="mx '+(cls||'')+'"><div class="bl"></div><table>';
+  if(!m||!m.length)return'';
+  const maxN=Math.max(m.length, m[0]?.length||0);
+  let szCls=cls||'';
+  if(!szCls.includes('xs')&&!szCls.includes('sm')){
+    if(maxN>20)szCls+=' xs';else if(maxN>10)szCls+=' sm';
+  }
+  let h='<div class="mx '+(szCls)+'"><div class="bl"></div><table>';
   m.forEach(row=>{h+='<tr>';row.forEach(v=>{h+='<td>'+fmt(v)+'</td>'});h+='</tr>'});
   return h+'</table><div class="br"></div></div>';
+}
+function renderAugMx(A,B,cls){
+  if(!A||!A.length)return'';
+  const maxN=Math.max(A.length, A[0]?.length||0);
+  let szCls=cls||'';
+  if(!szCls.includes('xs')&&!szCls.includes('sm')){
+    if(maxN>20)szCls+=' xs';else if(maxN>10)szCls+=' sm';
+  }
+  let h='<div class="mx amber '+(szCls)+'"><div class="bl"></div><table>';
+  A.forEach((row,i)=>{h+='<tr>';row.forEach(v=>{h+='<td>'+fmt(v)+'</td>'});h+='<td class="sep">'+fmt(B[i][0])+'</td>';h+='</tr>'});
+  return h+'</table><div class="br"></div></div>';
+}
+
+// Render Steps
+function renderSteps(steps){
+  if(!steps||!steps.length)return'';
+  let h='<div class="steps-container"><div class="steps-header"><i class="fa-solid fa-list-check"></i>Pembahasan Langkah demi Langkah</div>';
+  steps.forEach((s,i)=>{
+    h+='<div class="step-item"><div class="step-badge">'+(i+1)+'</div><div class="step-content">';
+    h+='<div class="step-title">'+s.title+'</div>';
+    if(s.desc)h+='<div class="step-desc">'+s.desc+'</div>';
+    if(s.matrix)h+='<div class="step-matrix">'+s.matrix+'</div>';
+    h+='</div></div>';
+  });
+  return h+'</div>';
 }
 
 // ============================================================
 // SPL KE MATRIKS
 // ============================================================
+function selectSPLMethod(btn){
+  App.splMethod=btn.dataset.method;
+  document.querySelectorAll('#spl-method-btns .method-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
 function generateSPLInputs(){
   const n=Math.max(1,Math.min(10,parseInt(document.getElementById('spl-count').value)||3));
   document.getElementById('spl-count').value=n;
@@ -862,6 +931,84 @@ function parseEq(eq,allVars){
   rt.forEach(t=>{if(t.t==='v')coef[t.n]=(coef[t.n]||0)-t.c;else rc+=t.v});
   return{coefficients:coef,constant:rc-lc};
 }
+
+// Gaussian Elimination with steps
+function gaussElimination(A,B,steps){
+  const n=A.length;const m=A.map((r,i)=>[...r,B[i][0]]);const eps=1e-12;
+  steps.push({title:'Matriks Augmented Awal',desc:'Matriks augmented [A|B] sebelum eliminasi.',matrix:renderAugMx(A,B)});
+  for(let i=0;i<n;i++){
+    let mr=i;for(let k=i+1;k<n;k++)if(Math.abs(m[k][i])>Math.abs(m[mr][i]))mr=k;
+    if(mr!==i){
+      [m[i],m[mr]]=[m[mr],m[i]];
+      steps.push({title:'Tukar Baris',desc:'B'+(i+1)+' ↔ B'+(mr+1)+' (pivoting parsial)',matrix:renderAugMx(m.map(r=>r.slice(0,-1)),m.map(r=>[r[n]]))});
+    }
+    if(Math.abs(m[i][i])<eps)continue;
+    for(let k=i+1;k<n;k++){
+      const f=m[k][i]/m[i][i];if(Math.abs(f)<eps)continue;
+      const rowOp='B'+(k+1)+' → B'+(k+1)+' - ('+fmt(f)+')B'+(i+1);
+      for(let j=i;j<=n;j++)m[k][j]-=f*m[i][j];
+      steps.push({title:rowOp,desc:'Eliminasi elemen di bawah pivot utama kolom '+(i+1),matrix:renderAugMx(m.map(r=>r.slice(0,-1)),m.map(r=>[r[n]]))});
+    }
+  }
+  steps.push({title:'Bentuk Eselon Baris Tercapai',desc:'Matriks sudah dalam bentuk segitiga atas.',matrix:renderAugMx(m.map(r=>r.slice(0,-1)),m.map(r=>[r[n]]))});
+  const x=new Array(n).fill(0);
+  for(let i=n-1;i>=0;i--){
+    x[i]=m[i][n];for(let j=i+1;j<n;j++)x[i]-=m[i][j]*x[j];
+    if(Math.abs(m[i][i])>eps)x[i]/=m[i][i];else x[i]=0;
+  }
+  return x;
+}
+
+// Gauss-Jordan Elimination with steps
+function gaussJordanElimination(A,B,steps){
+  const n=A.length;const m=A.map((r,i)=>[...r,B[i][0]]);const eps=1e-12;
+  steps.push({title:'Matriks Augmented Awal',desc:'Matriks augmented [A|B] sebelum eliminasi.',matrix:renderAugMx(A,B)});
+  for(let i=0;i<n;i++){
+    let mr=i;for(let k=i+1;k<n;k++)if(Math.abs(m[k][i])>Math.abs(m[mr][i]))mr=k;
+    if(mr!==i){[m[i],m[mr]]=[m[mr],m[i]];steps.push({title:'Tukar Baris',desc:'B'+(i+1)+' ↔ B'+(mr+1),matrix:renderAugMx(m.map(r=>r.slice(0,-1)),m.map(r=>[r[n]]))})}
+    if(Math.abs(m[i][i])<eps)continue;
+    const pv=m[i][i];
+    for(let j=i;j<=n;j++)m[i][j]/=pv;
+    steps.push({title:'Normalisasi Pivot',desc:'B'+(i+1)+' → B'+(i+1)+' / '+fmt(pv),matrix:renderAugMx(m.map(r=>r.slice(0,-1)),m.map(r=>[r[n]]))});
+    for(let k=0;k<n;k++){
+      if(k===i)continue;const f=m[k][i];if(Math.abs(f)<eps)continue;
+      const rowOp='B'+(k+1)+' → B'+(k+1)+' - ('+fmt(f)+')B'+(i+1);
+      for(let j=i;j<=n;j++)m[k][j]-=f*m[i][j];
+      steps.push({title:rowOp,desc:'Eliminasi elemen di atas/bawah pivot kolom '+(i+1),matrix:renderAugMx(m.map(r=>r.slice(0,-1)),m.map(r=>[r[n]]))});
+    }
+  }
+  const x=m.map(r=>r[n]);
+  steps.push({title:'Bentuk Eselon Baris Tereduksi',desc:'Matriks identitas tercapai di sisi kiri. Solusi langsung terbaca.',matrix:renderAugMx(m.map(r=>r.slice(0,-1)),m.map(r=>[r[n]]))});
+  return x;
+}
+
+// Inverse Method with steps
+function inverseMethod(A,B,steps){
+  const n=A.length;steps.push({title:'Bentuk Persamaan Matriks',desc:'AX = B, maka X = A⁻¹B',matrix:renderAugMx(A,B)});
+  steps.push({title:'Hitung Invers A',desc:'Melakukan eliminasi Gauss-Jordan pada [A|I] untuk mendapat A⁻¹'});
+  const invA=invM(A);
+  if(!invA){steps.push({title:'Gagal',desc:'Matriks koefisien tidak memiliki invers (det=0).'});return null;}
+  steps.push({title:'Invers A Ditemukan',matrix:renderMx(invA,'sm')});
+  const X=mulM(invA,B);
+  steps.push({title:'Kalikan A⁻¹ dengan B',desc:'X = A⁻¹B',matrix:renderMx(X,'sm')});
+  return X.map(r=>r[0]);
+}
+
+// Cramer's Rule with steps
+function cramerMethod(A,B,steps){
+  const n=A.length;const dA=detM(A);
+  steps.push({title:'Hitung det(A)',desc:'Determinan matriks koefisien utama.',matrix:'<div style="font-family:\'JetBrains Mono\',monospace;font-size:18px;font-weight:700;color:var(--accent);margin-top:4px;">det(A) = '+fmt(dA)+'</div>'});
+  if(Math.abs(dA)<1e-10){steps.push({title:'Gagal',desc:'det(A) = 0, sistem tidak bisa diselesaikan dengan Cramer.'});return null;}
+  const x=[];
+  for(let col=0;col<n;col++){
+    const Ai=A.map((row,i)=>row.map((v,j)=>j===col?B[i][0]:v));
+    const detAi=detM(Ai);
+    steps.push({title:'Hitung det(A'+(col+1)+')',desc:'Ganti kolom '+(col+1)+' dengan vektor konstanta B.',matrix:'<div style="margin-bottom:4px;">'+renderMx(Ai,'sm')+'</div><div style="font-family:\'JetBrains Mono\',monospace;font-weight:600;color:var(--accent);">det(A'+(col+1)+') = '+fmt(detAi)+'</div>'});
+    x.push(detAi/dA);
+  }
+  return x;
+}
+
 function convertSPL(){
   const inputs=document.querySelectorAll('.spl-eq-input'),eqs=[];
   inputs.forEach(i=>{if(i.value.trim())eqs.push(i.value.trim())});
@@ -871,29 +1018,51 @@ function convertSPL(){
     const vl=Array.from(vs).sort();if(!vl.length){showToast('Tidak ada variabel','warning');return}
     const matrix=[],consts=[];
     eqs.forEach(eq=>{const r=parseEq(eq,vl);matrix.push(vl.map(v=>r.coefficients[v]));consts.push(r.constant)});
+    
     let html='<div class="result-label">Matriks Augmented</div>';
-    html+='<div class="mx amber sm"><div class="bl"></div><table>';
-    matrix.forEach((row,i)=>{html+='<tr>';row.forEach(v=>{html+='<td>'+fmt(v)+'</td>'});html+='<td class="sep">'+fmt(consts[i])+'</td>';html+='</tr>'});
-    html+='</table><div class="br"></div></div>';
+    html+=renderAugMx(matrix,consts.map(c=>[c]));
     html+='<div style="margin-top:8px;font-size:11.5px;color:var(--text-muted);">Variabel: '+vl.map(v=>'<span style="color:var(--accent);font-weight:600;">'+v+'</span>').join(', ')+'</div>';
+    
+    const steps=[];let solution=null;
+    const method=App.splMethod;
+    const B=consts.map(c=>[c]);
+
+    if(method==='gauss') solution=gaussElimination(matrix,B,steps);
+    else if(method==='gaussjordan') solution=gaussJordanElimination(matrix,B,steps);
+    else if(method==='inverse') solution=inverseMethod(matrix,B,steps);
+    else if(method==='cramer') solution=cramerMethod(matrix,B,steps);
+
+    if(solution){
+      html+='<div style="margin-top:16px;padding:14px;background:var(--bg-tertiary);border:1px solid var(--accent);border-radius:10px;">';
+      html+='<div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;"><i class="fa-solid fa-check-circle" style="margin-right:5px;"></i>Solusi:</div>';
+      html+='<div style="display:flex;gap:16px;flex-wrap:wrap;">';
+      solution.forEach((val,i)=>{html+='<div style="font-family:\'JetBrains Mono\',monospace;font-size:15px;font-weight:600;">'+vl[i]+' = <span style="color:var(--amber);">'+fmt(val)+'</span></div>'});
+      html+='</div></div>';
+    } else {
+      html+='<div style="margin-top:16px;padding:14px;background:rgba(244,63,94,0.1);border:1px solid var(--rose);border-radius:10px;color:var(--rose);font-size:13px;font-weight:600;"><i class="fa-solid fa-triangle-exclamation" style="margin-right:5px;"></i>Sistem tidak memiliki solusi unik atau metode tidak bisa diterapkan.</div>';
+    }
+
+    html+=renderSteps(steps);
+
     document.getElementById('spl-result').innerHTML=html;
     document.getElementById('spl-result-actions').style.display='flex';
-    addHistory('spl',eqs.length+' persamaan, '+vl.length+' variabel',matrix.map((r,i)=>[...r,consts[i]].map(fmt).join('\t')).join('\n'));
+    addHistory(method,eqs.length+' persamaan, '+vl.length+' variabel','Solusi: '+(solution?solution.map((v,i)=>vl[i]+'='+fmt(v)).join(', '):'Gagal'));
     showToast('Konversi berhasil','success');
   }catch(err){showToast('Error: '+err.message,'error')}
 }
 
 // ============================================================
-// OPERASI MATRIKS
+// OPERASI MATRIKS (SUPPORT 100x100)
 // ============================================================
 function generateMatrixGrid(w){
   const ri=document.getElementById('mat-'+w.toLowerCase()+'-rows'),ci=document.getElementById('mat-'+w.toLowerCase()+'-cols');
-  const r=Math.max(1,Math.min(20,parseInt(ri.value)||3)),c=Math.max(1,Math.min(20,parseInt(ci.value)||3));
+  const r=Math.max(1,Math.min(100,parseInt(ri.value)||3)),c=Math.max(1,Math.min(100,parseInt(ci.value)||3));
   ri.value=r;ci.value=c;
   const con=document.getElementById('matrix-grid-'+w.toLowerCase()),old={};
   con.querySelectorAll('.mc').forEach(i=>{old[i.id]=i.value});
   con.innerHTML='';const tbl=document.createElement('table');
-  let cc='';const mx=Math.max(r,c);if(mx>10)cc='xs';else if(mx>6)cc='sm';
+  let cc='';const mx=Math.max(r,c);
+  if(mx>50)cc='tiny';else if(mx>30)cc='xxs';else if(mx>15)cc='xs';else if(mx>8)cc='sm';
   for(let i=0;i<r;i++){const tr=document.createElement('tr');for(let j=0;j<c;j++){
     const td=document.createElement('td'),inp=document.createElement('input');
     inp.type='number';inp.id='mat-'+w.toLowerCase()+'-'+i+'-'+j;inp.className='mc '+cc;
@@ -958,19 +1127,48 @@ function roundM(m,d=8){return m.map(r=>r.map(v=>{const x=parseFloat(v.toFixed(d)
 
 function executeOp(){
   if(!App.selectedOp){showToast('Pilih operasi terlebih dahulu','warning');return}
-  const A=readMatrix('A'),op=App.selectedOp;let result,desc,resText;
+  const A=readMatrix('A'),op=App.selectedOp;let result,desc,resText,steps=[];
   try{
     switch(op){
-      case'add':{const B=readMatrix('B');if(A.length!==B.length||A[0].length!==B[0].length){showToast('Ordo harus sama untuk penjumlahan','error');return}result=addM(A,B);desc='A+B ('+A.length+'x'+A[0].length+')';break}
-      case'sub':{const B=readMatrix('B');if(A.length!==B.length||A[0].length!==B[0].length){showToast('Ordo harus sama untuk pengurangan','error');return}result=subM(A,B);desc='A-B ('+A.length+'x'+A[0].length+')';break}
-      case'mul':{const B=readMatrix('B');if(A[0].length!==B.length){showToast('Kolom A ('+A[0].length+') harus sama dengan baris B ('+B.length+')','error');return}result=mulM(A,B);desc='A*B ('+A.length+'x'+A[0].length+'*'+B.length+'x'+B[0].length+')';break}
-      case'transpose':{result=transM(A);desc='Transpose A ('+A.length+'x'+A[0].length+')';break}
-      case'determinant':{if(A.length!==A[0].length){showToast('Determinan hanya untuk matriks persegi','error');return}const d=detM(A);result=d;desc='det(A) '+A.length+'x'+A.length;resText='det(A) = '+fmt(d);break}
-      case'inverse':{if(A.length!==A[0].length){showToast('Invers hanya untuk matriks persegi','error');return}const inv=invM(A);if(!inv){showToast('Matriks singular (det=0), invers tidak ada','error');return}result=inv;desc='Invers A ('+A.length+'x'+A.length+')';break}
+      case'add':{const B=readMatrix('B');if(A.length!==B.length||A[0].length!==B[0].length){showToast('Ordo harus sama untuk penjumlahan','error');return}result=addM(A,B);desc='A+B ('+A.length+'x'+A[0].length+')';
+        steps.push({title:'Matriks A',matrix:renderMx(A,'sm')});steps.push({title:'Matriks B',matrix:renderMx(B,'sm')});
+        steps.push({title:'Proses Penjumlahan',desc:'Jumlahkan elemen yang posisinya sama: c<sub>ij</sub> = a<sub>ij</sub> + b<sub>ij</sub>'});
+        break}
+      case'sub':{const B=readMatrix('B');if(A.length!==B.length||A[0].length!==B[0].length){showToast('Ordo harus sama untuk pengurangan','error');return}result=subM(A,B);desc='A-B ('+A.length+'x'+A[0].length+')';
+        steps.push({title:'Matriks A',matrix:renderMx(A,'sm')});steps.push({title:'Matriks B',matrix:renderMx(B,'sm')});
+        steps.push({title:'Proses Pengurangan',desc:'Kurangkan elemen yang posisinya sama: c<sub>ij</sub> = a<sub>ij</sub> - b<sub>ij</sub>'});
+        break}
+      case'mul':{const B=readMatrix('B');if(A[0].length!==B.length){showToast('Kolom A ('+A[0].length+') harus sama dengan baris B ('+B.length+')','error');return}result=mulM(A,B);desc='A*B ('+A.length+'x'+A[0].length+'*'+B.length+'x'+B[0].length+')';
+        steps.push({title:'Matriks A',matrix:renderMx(A,'sm')});steps.push({title:'Matriks B',matrix:renderMx(B,'sm')});
+        steps.push({title:'Proses Perkalian',desc:'Perkalian dot product baris A dengan kolom B: c<sub>ij</sub> = Σ (a<sub>ik</sub> · b<sub>kj</sub>)'});
+        break}
+      case'transpose':{result=transM(A);desc='Transpose A ('+A.length+'x'+A[0].length+')';
+        steps.push({title:'Matriks A Awal',matrix:renderMx(A,'sm')});
+        steps.push({title:'Proses Transpose',desc:'Tukar posisi baris dan kolom: (A<sup>T</sup>)<sub>ij</sub> = a<sub>ji</sub>'});
+        break}
+      case'determinant':{if(A.length!==A[0].length){showToast('Determinan hanya untuk matriks persegi','error');return}
+        const tempSteps=[];const tempB=A.map(r=>[0]);
+        gaussElimination(A.map(r=>[...r]),tempB,tempSteps);
+        tempSteps.forEach(s=>{if(s.title!=='Matriks Augmented Awal')s.title='[Determinan] '+s.title});
+        steps=tempSteps;
+        const d=detM(A);result=d;desc='det(A) '+A.length+'x'+A.length;resText='det(A) = '+fmt(d);
+        steps.push({title:'Hitung Determinan',desc:'Determinan = hasil kali elemen diagonal utama setelah eliminasi (dengan memperhitungkan tukar baris)',matrix:'<div style="font-family:\'JetBrains Mono\',monospace;font-size:18px;font-weight:700;color:var(--accent);">det(A) = '+fmt(d)+'</div>'});
+        break}
+      case'inverse':{if(A.length!==A[0].length){showToast('Invers hanya untuk matriks persegi','error');return}
+        const inv=invM(A);if(!inv){showToast('Matriks singular (det=0), invers tidak ada','error');return}
+        result=inv;desc='Invers A ('+A.length+'x'+A.length+')';
+        steps.push({title:'Matriks A Awal',matrix:renderMx(A,'sm')});
+        steps.push({title:'Buat Matriks Augmented [A|I]',desc:'Tempelkan matriks identitas di sebelah kanan A.'});
+        steps.push({title:'Eliminasi Gauss-Jordan',desc:'Lakukan operasi baris elementer hingga sisi kiri menjadi matriks identitas.'});
+        steps.push({title:'Hasil A⁻¹',desc:'Sisi kanan hasil eliminasi adalah invers matriks A.',matrix:renderMx(inv,'sm')});
+        break}
     }
     let html='';
     if(typeof result==='number'){html='<div class="result-label">Determinan</div><div style="font-family:\'JetBrains Mono\',monospace;font-size:26px;font-weight:700;color:var(--accent);">'+fmt(result)+'</div>';resText=fmt(result)}
-    else{html='<div class="result-label">Hasil ('+result.length+'x'+result[0].length+')</div>'+renderMx(result,'sm');resText=result.map(r=>r.map(fmt).join('\t')).join('\n')}
+    else{html='<div class="result-label">Hasil ('+result.length+'x'+result[0].length+')</div>'+renderMx(result);resText=result.map(r=>r.map(fmt).join('\t')).join('\n')}
+    
+    html+=renderSteps(steps);
+
     document.getElementById('matrix-result').innerHTML=html;
     document.getElementById('matrix-result-actions').style.display='flex';
     if(!resText&&result.map)resText=result.map(r=>r.map(fmt).join('\t')).join('\n');
@@ -992,7 +1190,6 @@ function switchTopic(topic){
   if(topic==='m-transpose')simTransInit();
   if(topic==='m-det')simDetInit();
   if(topic==='m-cramer')simCramerInit();
-  // Scroll ke atas konten materi
   document.getElementById('materi-content').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -1020,7 +1217,12 @@ function simAddition(){
   const r=parseInt(document.getElementById('sim-add-r').value)||2;
   const c=parseInt(document.getElementById('sim-add-c').value)||2;
   const A=simReadGrid('sa',r,c),B=simReadGrid('sb',r,c),C=addM(A,B);
-  document.getElementById('sim-add-result').innerHTML='<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">'+renderMx(A,'sm xs')+'<span style="color:var(--text-muted);">+</span>'+renderMx(B,'sm xs amber')+'<span style="color:var(--text-muted);">=</span>'+renderMx(C,'sm xs violet')+'</div>';
+  let h=renderSteps([
+    {title:'Matriks A',matrix:renderMx(A,'sm xs')},
+    {title:'Matriks B',matrix:renderMx(B,'sm xs')},
+    {title:'Hasil A + B',desc:'Jumlahkan elemen seposisi: c<sub>ij</sub> = a<sub>ij</sub> + b<sub>ij</sub>',matrix:renderMx(C,'sm xs violet')}
+  ]);
+  document.getElementById('sim-add-result').innerHTML=h;
 }
 
 // --- Simulasi Transpose ---
@@ -1033,7 +1235,12 @@ function simTransInit(){
 function simTransRandom(){simTransInit();document.getElementById('sim-trans-result').innerHTML=''}
 function simTranspose(){
   const A=simReadGrid('st',3,3),T=transM(A);
-  document.getElementById('sim-trans-result').innerHTML='<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">'+renderMx(A,'sm xs')+'<span style="font-size:13px;color:var(--text-muted);">-> A<sup>T</sup> =</span>'+renderMx(T,'sm xs amber')+'</div>';
+  let h=renderSteps([
+    {title:'Matriks A Awal',matrix:renderMx(A,'sm xs')},
+    {title:'Proses Transpose',desc:'Tukar posisi baris dan kolom: (A<sup>T</sup>)<sub>ij</sub> = a<sub>ji</sub>'},
+    {title:'Hasil A<sup>T</sup>',matrix:renderMx(T,'sm xs amber')}
+  ]);
+  document.getElementById('sim-trans-result').innerHTML=h;
 }
 
 // --- Simulasi Determinan ---
@@ -1046,8 +1253,13 @@ function simDetInit(){
 function simDetRandom(){simDetInit();document.getElementById('sim-det-result').innerHTML=''}
 function simDeterminant(){
   const n=parseInt(document.getElementById('sim-det-n').value)||2;
-  const A=simReadGrid('sd',n,n),d=detM(A);
-  document.getElementById('sim-det-result').innerHTML='<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">'+renderMx(A,'sm xs')+'<span style="font-size:13px;color:var(--text-muted);">-> det =</span><span style="font-family:\'JetBrains Mono\',monospace;font-size:22px;font-weight:700;color:var(--amber);">'+fmt(d)+'</span></div>';
+  const A=simReadGrid('sd',n,n);
+  const steps=[];
+  const d=detM(A);
+  steps.push({title:'Matriks A',matrix:renderMx(A,'sm xs')});
+  steps.push({title:'Proses Eliminasi Gauss',desc:'Ubah matriks menjadi segitiga atas untuk menghitung determinan.'});
+  steps.push({title:'Hasil Determinan',desc:'Determinan = hasil kali elemen diagonal utama (perhatikan tanda dari pertukaran baris).',matrix:'<div style="font-family:\'JetBrains Mono\',monospace;font-size:22px;font-weight:700;color:var(--amber);">det(A) = '+fmt(d)+'</div>'});
+  document.getElementById('sim-det-result').innerHTML=renderSteps(steps);
 }
 
 // --- Simulasi Cramer ---
@@ -1062,19 +1274,12 @@ function simCramerRandom(){simCramerInit();document.getElementById('sim-cramer-r
 function simCramer(){
   const n=parseInt(document.getElementById('sim-cramer-n').value)||2;
   const A=simReadGrid('sca',n,n),B=simReadGrid('scb',n,1);
-  const detA=detM(A);
-  if(Math.abs(detA)<1e-10){document.getElementById('sim-cramer-result').innerHTML='<p style="color:var(--error);font-size:13px;">det(A) = 0, sistem tidak bisa diselesaikan dengan Cramer.</p>';return}
-  let html='<div class="formula-box violet" style="margin-bottom:10px;">det(A) = '+fmt(detA)+'</div>';
-  const solutions=[];
-  for(let col=0;col<n;col++){
-    const Ai=A.map((row,i)=>row.map((v,j)=>j===col?B[i][0]:v));
-    const detAi=detM(Ai);
-    html+='<div style="margin:6px 0;font-size:12.5px;color:var(--text-secondary);">A'+( col+1)+': ganti kolom '+(col+1)+' dengan B -> det = '+fmt(detAi)+'</div>';
-    solutions.push(detAi/detA);
-  }
-  html+='<div style="margin-top:10px;font-weight:700;color:var(--accent);font-size:14px;">Solusi: '+solutions.map((s,i)=>'x'+(i+1)+' = '+fmt(s)).join(', ')+'</div>';
-  document.getElementById('sim-cramer-result').innerHTML=html;
-  addHistory('cramer','Cramer '+n+'x'+n,solutions.map((s,i)=>'x'+(i+1)+'='+fmt(s)).join(', '));
+  const steps=[];
+  const solution=cramerMethod(A,B,steps);
+  if(!solution){document.getElementById('sim-cramer-result').innerHTML='<p style="color:var(--error);font-size:13px;">det(A) = 0, sistem tidak bisa diselesaikan dengan Cramer.</p>';return}
+  steps.push({title:'Solusi Akhir',desc:solution.map((v,i)=>'x'+(i+1)+' = '+fmt(v)).join(', '),matrix:'<div style="font-weight:700;color:var(--accent);font-size:14px;">'+solution.map((v,i)=>'x<sub>'+(i+1)+'</sub> = <span style="color:var(--amber);">'+fmt(v)+'</span>').join('&nbsp;&nbsp;|&nbsp;&nbsp;')+'</div>'});
+  document.getElementById('sim-cramer-result').innerHTML=renderSteps(steps);
+  addHistory('cramer','Cramer '+n+'x'+n,solution.map((s,i)=>'x'+(i+1)+'='+fmt(s)).join(', '));
 }
 
 // ============================================================
@@ -1100,7 +1305,7 @@ function loadQuiz(){
   const pool=quizBank.filter((_,i)=>!quizUsed.includes(i));
   if(pool.length<3)quizUsed=[];
   const avail=quizBank.filter((_,i)=>!quizUsed.includes(i));
-  const chosen=[];const indices=[];
+  const indices=[];
   while(indices.length<3&&indices.length<avail.length){
     const ri=Math.floor(Math.random()*avail.length);
     if(!indices.includes(ri))indices.push(ri);
@@ -1137,7 +1342,7 @@ function adjustLayout(){
 // INISIALISASI
 // ============================================================
 document.addEventListener('DOMContentLoaded',()=>{
-  generateSPLInputs();generateMatrixGrid('A');generateMatrixGrid('B');renderHistory();adjustLayout();
+  generateSPLInputs();generateMatrixGrid('A');generateMatrixGrid('B');renderHistory();adjustLayout();loadQuiz();
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar()});
   window.addEventListener('resize',adjustLayout);
 
@@ -1159,7 +1364,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 window.addEventListener('beforeunload',()=>{try{localStorage.setItem('mxlab_hist',JSON.stringify(App.history))}catch(e){}});
 
 // Console branding
-console.log('%c MatriXLab %c v1.0.0 ','background:linear-gradient(135deg,#14B8A6,#F59E0B);color:#fff;font-size:16px;font-weight:700;padding:6px 10px;border-radius:6px 0 0 6px;','background:#1A2540;color:#8B9AB8;font-size:12px;padding:6px 10px;border-radius:0 6px 6px 0;');
+console.log('%c MatriXLab %c v2.0.0 ','background:linear-gradient(135deg,#14B8A6,#F59E0B);color:#fff;font-size:16px;font-weight:700;padding:6px 10px;border-radius:6px 0 0 6px;','background:#1A2540;color:#8B9AB8;font-size:12px;padding:6px 10px;border-radius:0 6px 6px 0;');
 console.log('%cPlatform Pembelajaran Matriks Interaktif','color:#14B8A6;font-size:11px;');
 </script>
 </body>
