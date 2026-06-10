@@ -122,7 +122,42 @@ body.quiz-active #main-content{margin-left:0!important;margin-top:0!important;ma
 .mx-ed-hint kbd{display:inline-block;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:600;font-family:'JetBrains Mono',monospace;background:var(--bg-tertiary);border:1px solid var(--border);color:var(--text-secondary)}
 .mx-btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 
-/* ===== VIRTUAL SPREADSHEET — OPTIMIZED ===== */
+.accordion{border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;background:var(--bg-card)}
+.acc-header{display:flex;align-items:center;gap:10px;padding:13px 18px;cursor:pointer;background:var(--bg-tertiary);transition:background .2s;user-select:none;font-size:14px;font-weight:600}
+.acc-header:hover{background:var(--accent-glow);color:var(--accent)}
+.acc-arrow{transition:transform .3s;margin-left:auto;font-size:12px;color:var(--text-muted)}
+.accordion.open .acc-arrow{transform:rotate(90deg);color:var(--accent)}
+.acc-icon{width:18px;text-align:center;color:var(--accent);flex-shrink:0}
+.acc-badge{font-size:11px;color:var(--text-muted);margin-left:6px;font-weight:400;font-family:'JetBrains Mono',monospace}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.accordion.open .acc-body{max-height:8000px}
+.acc-content{padding:16px 18px}
+
+.mx-grid{display:inline-flex;align-items:stretch;margin:8px 0;font-family:'JetBrains Mono',monospace;max-width:100%}
+.mx-grid-bl,.mx-grid-br{width:7px;border:2.5px solid var(--accent);flex-shrink:0}
+.mx-grid-bl{border-right:none;border-radius:5px 0 0 5px}
+.mx-grid-br{border-left:none;border-radius:0 5px 5px 0}
+.mx-grid.amber .mx-grid-bl,.mx-grid.amber .mx-grid-br{border-color:var(--amber)}
+.mx-grid.violet .mx-grid-bl,.mx-grid.violet .mx-grid-br{border-color:var(--violet)}
+.mx-grid.rose .mx-grid-bl,.mx-grid.rose .mx-grid-br{border-color:var(--rose)}
+.mx-grid-inner{overflow-x:auto;max-width:100%}
+.mx-grid-inner.scroll-v{max-height:420px;overflow-y:auto}
+.mx-grid-table{display:grid;gap:0}
+.mx-grid-cell{padding:6px 14px;text-align:center;font-size:13px;font-weight:500;color:var(--text-primary);min-width:40px;background:var(--bg-input);border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.mx-grid-cell.sep{border-left:2px dashed var(--amber);padding-left:12px}
+.mx-grid.sm .mx-grid-cell{padding:3px 8px;font-size:12px;min-width:28px}
+.mx-grid.sm .mx-grid-cell.sep{padding-left:10px}
+
+.sol-inline{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.sol-var{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;background:var(--bg-tertiary);font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;border:1px solid var(--border)}
+.sol-var .vn{color:var(--accent);font-weight:700}
+.sol-msg{padding:12px 16px;border-radius:10px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.sol-msg.err{background:rgba(239,68,68,0.1);color:var(--error);border:1px solid rgba(239,68,68,0.2)}
+.sol-msg.warn{background:rgba(245,158,11,0.1);color:var(--amber);border:1px solid rgba(245,158,11,0.2)}
+.sol-msg.ok{background:rgba(16,185,129,0.1);color:var(--success);border:1px solid rgba(16,185,129,0.2)}
+.sol-param{margin-top:8px;font-size:13px;color:var(--text-secondary);line-height:2;font-family:'JetBrains Mono',monospace}
+.sol-param strong{color:var(--accent)}
+
 .vs-container{position:relative;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg-input)}
 .vs-toolbar{display:flex;gap:6px;padding:8px 12px;background:var(--bg-tertiary);border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center}
 .vs-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:7px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-secondary);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap}
@@ -179,7 +214,7 @@ body.quiz-active #main-content{margin-left:0!important;margin-top:0!important;ma
 .feat-icon.teal{background:rgba(20,184,166,0.1);color:var(--accent)}.feat-icon.amber{background:rgba(245,158,11,0.1);color:var(--amber)}.feat-icon.rose{background:rgba(244,63,94,0.1);color:var(--rose)}.feat-icon.violet{background:rgba(139,92,246,0.1);color:var(--violet)}
 .feature-card h3{font-size:17px;font-weight:700;margin-bottom:8px;color:var(--text-primary)}
 .feature-card p{font-size:13px;color:var(--text-secondary);line-height:1.6}
-.result-area{background:var(--bg-input);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:20px;min-height:50px;position:relative;overflow-x:auto;overscroll-behavior-x:auto}
+.result-area{background:var(--bg-input);border:1px solid var(--border);border-radius:12px;padding:16px;margin-top:8px;overflow-x:auto}
 .result-label{font-size:11px;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
 .materi-layout{display:flex;gap:30px}
 .materi-sidebar{position:sticky;top:24px;min-width:220px;max-width:240px;display:flex;flex-direction:column;gap:4px}
@@ -197,8 +232,6 @@ body.quiz-active #main-content{margin-left:0!important;margin-top:0!important;ma
 .formula-box.amber{border-left-color:var(--amber)}
 .example-box{background:var(--bg-input);border:1px solid var(--border);border-radius:12px;padding:24px;margin:20px 0;border:none}
 .example-box .ex-label{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
-.try-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:8px;border:1px dashed var(--accent);background:transparent;color:var(--accent);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
-.try-btn:hover{background:var(--accent);color:#fff;border-style:solid}
 .quiz-option{display:flex;align-items:center;gap:14px;padding:16px 20px;border:1px solid var(--border);border-radius:12px;margin:10px 0;cursor:pointer;transition:all .2s;font-size:15px;background:var(--bg-tertiary);border:none}
 .quiz-option:hover{background:var(--bg-input);transform:scale(1.01);border-color:var(--accent)}
 .quiz-option.correct{border-color:var(--success);background:rgba(16,185,129,.1);color:var(--success)}
@@ -206,11 +239,6 @@ body.quiz-active #main-content{margin-left:0!important;margin-top:0!important;ma
 .quiz-option .opt-marker{width:28px;height:28px;border-radius:8px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;transition:all .2s;background:var(--bg-card)}
 .quiz-option.correct .opt-marker{border-color:var(--success);background:var(--success);color:#fff;border-radius:50%}
 .quiz-option.wrong .opt-marker{border-color:var(--error);background:var(--error);color:#fff;border-radius:50%}
-.history-item{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:12px;transition:all .2s;border:none}
-.history-item:hover{border-color:var(--accent);transform:translateX(4px)}
-.h-type{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--accent);background:rgba(20,184,166,0.1);padding:4px 12px;border-radius:6px;margin-bottom:8px}
-.h-time{font-size:11px;color:var(--text-muted);float:right}
-.h-desc{font-size:13px;color:var(--text-secondary);line-height:1.5}
 .quiz-card{border:1px solid var(--border);border-radius:20px;padding:32px;background:var(--bg-card);box-shadow:0 20px 40px -5px rgba(0,0,0,0.3);position:relative;overflow:hidden;width:100%;border:none}
 .quiz-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border);border-color:rgba(255,255,255,0.05)}
 .quiz-progress-track{height:6px;background:var(--bg-input);border-radius:4px;overflow:hidden;margin-bottom:28px}
@@ -236,10 +264,6 @@ body.quiz-active #main-content{margin-left:0!important;margin-top:0!important;ma
 .stat-card:hover{transform:translateY(-3px)}
 .stat-val{font-size:36px;font-weight:800;color:var(--text-primary);margin:10px 0}
 .stat-label{font-size:12px;color:var(--text-secondary);font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
-.skill-bar-container{margin-bottom:16px}
-.skill-info{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px;color:var(--text-secondary);font-weight:500}
-.skill-track{height:8px;background:var(--bg-input);border-radius:4px;overflow:hidden}
-.skill-fill{height:100%;border-radius:4px;transition:width 1s ease;box-shadow:0 0 8px currentColor}
 .calc-menu-card{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:32px 28px;cursor:pointer;transition:all .35s cubic-bezier(0.4,0,0.2,1);position:relative;overflow:hidden}
 .calc-menu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;opacity:0;transition:opacity .3s}
 .calc-menu-card:hover::before{opacity:1}
@@ -259,6 +283,21 @@ body.quiz-active #main-content{margin-left:0!important;margin-top:0!important;ma
 .calc-menu-card:hover .calc-menu-tags span{background:var(--accent-glow);color:var(--accent)}
 .calc-menu-card:nth-child(2):hover .calc-menu-tags span{background:var(--amber-glow);color:var(--amber)}
 .calc-menu-card:nth-child(3):hover .calc-menu-tags span{background:var(--violet-glow);color:var(--violet)}
+
+/* Override untuk kartu metode eliminasi */
+.elim-method-gauss:hover .calc-menu-tags span{background:var(--amber-glow)!important;color:var(--amber)!important}
+.elim-method-gauss:hover{border-color:rgba(245,158,11,0.3)!important}
+.elim-method-gauss::before{background:linear-gradient(90deg,var(--amber),#FBBF24)!important}
+.elim-method-gauss:hover::before{opacity:1!important}
+.elim-method-gauss:hover .calc-menu-icon{transform:scale(1.1) rotate(-3deg)}
+.elim-method-gauss:hover{transform:translateY(-8px)!important;box-shadow:0 25px 50px -12px rgba(245,158,11,0.2)!important}
+.elim-method-gj:hover .calc-menu-tags span{background:var(--accent-glow)!important;color:var(--accent)!important}
+.elim-method-gj:hover{border-color:rgba(20,184,166,0.3)!important}
+.elim-method-gj::before{background:linear-gradient(90deg,var(--accent),#2DD4BF)!important}
+.elim-method-gj:hover::before{opacity:1!important}
+.elim-method-gj:hover .calc-menu-icon{transform:scale(1.1) rotate(-3deg)}
+.elim-method-gj:hover{transform:translateY(-8px)!important;box-shadow:0 25px 50px -12px rgba(20,184,166,0.2)!important}
+
 .calc-back-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:10px;border:1px solid var(--border);background:var(--bg-tertiary);color:var(--text-secondary);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
 .calc-back-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-glow)}
 .calc-view{animation:fadeIn .35s ease}
@@ -275,15 +314,22 @@ body.quiz-active #main-content{margin-left:0!important;margin-top:0!important;ma
 .size-preset-btn{padding:8px 18px;border-radius:10px;border:2px solid var(--border);background:var(--bg-tertiary);color:var(--text-secondary);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
 .size-preset-btn:hover{border-color:var(--accent);color:var(--accent)}
 .size-preset-btn.active{border-color:var(--accent);background:var(--accent);color:#fff;box-shadow:0 4px 14px rgba(20,184,166,0.3)}
-.elim-step{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:12px;transition:all .2s}
-.elim-step:hover{border-color:var(--accent)}
-.elim-step-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;margin-right:10px;flex-shrink:0}
-.elim-step.amber .elim-step-num{background:var(--amber)}
-.elim-op{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--accent);margin-bottom:8px}
-.elim-step.amber .elim-op{color:var(--amber)}
-.rv-result-card{background:var(--bg-tertiary);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px}
-.rv-result-card h4{font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.rv-result-card .rv-dim{font-size:12px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;margin-top:8px}
+
+/* === PIVOT & ERO DISPLAY === */
+.phase-header{font-size:13px;font-weight:700;color:var(--amber);margin-bottom:14px;padding:9px 14px;background:var(--amber-glow);border-radius:8px;border-left:3px solid var(--amber);display:flex;align-items:center;gap:8px}
+.phase-header.phase-forward{color:var(--accent);background:var(--accent-glow);border-left-color:var(--accent)}
+.phase-header i{font-size:11px}
+.pivot-group{margin-bottom:16px}
+.pivot-title{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.5px}
+.pivot-title .pivot-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.pivot-ops{list-style:none;padding:0;margin:0}
+.pivot-ops li{padding:4px 0 4px 18px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--text-primary);position:relative;line-height:1.7}
+.pivot-ops li::before{content:'';position:absolute;left:2px;top:50%;transform:translateY(-50%);width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.5}
+.ero-swap{color:var(--amber)!important;font-weight:600!important}
+.ero-scale{color:var(--violet)!important;font-weight:600!important}
+.ero-elim{color:var(--text-primary)!important}
+.steps-empty{padding:20px;text-align:center;color:var(--text-muted);font-size:13px;font-style:italic}
+
 .calc-step-indicator{display:flex;align-items:center;gap:8px;margin-bottom:24px}
 .calc-step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;border:2px solid var(--border);color:var(--text-muted);transition:all .3s}
 .calc-step-dot.active{border-color:var(--accent);background:var(--accent);color:#fff;box-shadow:0 0 12px var(--accent-glow)}
@@ -293,22 +339,20 @@ body.quiz-active #main-content{margin-left:0!important;margin-top:0!important;ma
 .calc-loading{display:flex;align-items:center;justify-content:center;gap:12px;padding:40px;font-size:15px;color:var(--text-secondary)}
 .calc-loading i{animation:spin 1s linear infinite}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.solusi-box{background:var(--bg-input);border:1px solid var(--border);border-radius:14px;padding:22px;margin-top:20px;border-left:4px solid var(--success)}
-.solusi-box h4{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px;color:var(--success)}
-.solusi-box h4 i{font-size:15px}
-.solusi-var{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;background:var(--bg-tertiary);margin:4px;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;border:1px solid var(--border)}
-.solusi-var .var-name{color:var(--accent);font-weight:700}
-.solusi-var .var-val{color:var(--text-primary)}
-.solusi-box.inconsistent{border-left-color:var(--error)}
-.solusi-box.inconsistent h4{color:var(--error)}
-.solusi-box.infinite h4{color:var(--amber)}
-.solusi-box.infinite{border-left-color:var(--amber)}
-.param-list{margin-top:10px;font-size:13px;color:var(--text-secondary);line-height:1.8;font-family:'JetBrains Mono',monospace}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
 .modal-overlay.show{opacity:1;pointer-events:auto}
 .modal-content{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:36px;width:100%;max-width:420px;text-align:center;box-shadow:var(--shadow);transform:scale(0.95);transition:transform .3s;border:none}
 .modal-overlay.show .modal-content{transform:scale(1)}
 .auth-inputs{margin:24px 0;display:flex;flex-direction:column;gap:14px}
+.history-item{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:12px;transition:all .2s;border:none}
+.history-item:hover{border-color:var(--accent);transform:translateX(4px)}
+.h-type{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--accent);background:rgba(20,184,166,0.1);padding:4px 12px;border-radius:6px;margin-bottom:8px}
+.h-time{font-size:11px;color:var(--text-muted);float:right}
+.h-desc{font-size:13px;color:var(--text-secondary);line-height:1.5}
+
+/* Step label untuk eliminasi */
+.calc-step-label{font-size:10px;color:var(--text-muted);text-align:center;margin-top:4px;font-weight:600;letter-spacing:0.3px}
+
 @media(max-width:1100px){
   #sidebar{transform:translateX(-100%);width:280px}
   #sidebar.open{transform:translateX(0)}
@@ -443,7 +487,7 @@ body.quiz-active #main-content{margin-left:0!important;margin-top:0!important;ma
   <div style="margin-bottom:24px;"><h2 style="font-size:24px;font-weight:800;margin-bottom:6px;">SPL Solver</h2><p style="color:var(--text-secondary);font-size:14px;">Ketik persamaan linear dan selesaikan.</p></div>
   <div class="spl-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
     <div class="card"><div class="card-title"><i class="fa-solid fa-keyboard"></i>Input</div><div style="margin-bottom:14px;"><label style="font-size:13px;font-weight:600;">Jumlah Persamaan</label><input type="number" id="spl-count" class="input-field" value="2" min="1" max="5" style="width:80px;"></div><button class="btn btn-primary btn-sm" onclick="generateSPLInputs()">Buat Input</button><div id="spl-equations" style="display:grid;gap:12px;margin-top:16px;"></div><button class="btn btn-primary" style="margin-top:20px;width:100%" onclick="convertSPL()">Selesaikan</button></div>
-    <div class="card"><div class="card-title"><i class="fa-solid fa-table"></i>Hasil</div><div id="spl-result" class="result-area"><p style="color:var(--text-muted);">Hasil akan muncul di sini.</p></div></div>
+    <div class="card"><div class="card-title"><i class="fa-solid fa-table"></i>Hasil</div><div id="spl-result" class="result-area" style="min-height:60px;"><p style="color:var(--text-muted);">Hasil akan muncul di sini.</p></div></div>
   </div>
 </section>
 
@@ -475,12 +519,14 @@ body.quiz-active #main-content{margin-left:0!important;margin-top:0!important;ma
 
 <script>
 /* ============================================================
-   MatriXLab v2.5 — OPTIMIZED BUILD
+   MatriXLab v2.5 — Langkah Penyelesaian Ringan
+   Perubahan: Hanya menampilkan Operasi Baris Elementer (ERO),
+   tanpa menyimpan atau merender matriks per langkah.
    ============================================================ */
 
 const App = { currentPage: 'home', darkMode: true };
 
-// ===== USER (Lightweight) =====
+// ===== USER =====
 const User = {
   data: JSON.parse(localStorage.getItem('mxlab_user') || 'null'),
   init() {
@@ -533,16 +579,25 @@ const User = {
   }
 };
 
-// ===== NAVIGASI (Cached DOM, Delegated Events) =====
+// ===== NAVIGASI =====
 const _navLinks = document.querySelectorAll('#sidebar-nav a');
 const _pageSections = document.querySelectorAll('.page-section');
 
+function destroyAllMatrixEditors() {
+  const keys = Object.keys(matrixStore);
+  for (let i = 0; i < keys.length; i++) {
+    if (matrixStore[keys[i]]) matrixStore[keys[i]].destroy();
+  }
+}
+
 function navigateTo(page) {
+  if (App.currentPage === 'matrix' && page !== 'matrix') destroyAllMatrixEditors();
+  if (App.currentPage === 'matrix' && page === 'matrix') destroyAllMatrixEditors();
   App.currentPage = page;
   for (let i = 0; i < _pageSections.length; i++) {
     _pageSections[i].classList.toggle('active', _pageSections[i].id === 'page-' + page);
   }
-  for (let i= 0; i < _navLinks.length; i++) {
+  for (let i = 0; i < _navLinks.length; i++) {
     _navLinks[i].classList.toggle('active', _navLinks[i].dataset.page === page);
   }
   closeSidebar();
@@ -550,7 +605,6 @@ function navigateTo(page) {
   else { document.body.classList.remove('quiz-active'); QuizManager.stopTimer(); if (page === 'spl') generateSPLInputs(); if (page === 'history') User.updateUI(); if (page === 'matrix') calcInit(); }
 }
 
-// Delegated event for sidebar nav
 document.getElementById('sidebar-nav').addEventListener('click', function(e) {
   const a = e.target.closest('a[data-page]');
   if (a) navigateTo(a.dataset.page);
@@ -569,7 +623,7 @@ function toggleTheme() {
   _themeBtn.innerHTML = App.darkMode ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
 }
 
-// ===== TOAST (Optimized creation) =====
+// ===== TOAST =====
 const _toastContainer = document.getElementById('toast-container');
 const _toastIcons = { success: 'fa-check-circle', error: 'fa-circle-xmark', warning: 'fa-triangle-exclamation', info: 'fa-circle-info' };
 function showToast(msg, type) {
@@ -581,7 +635,7 @@ function showToast(msg, type) {
   setTimeout(() => { t.classList.add('removing'); setTimeout(() => t.remove(), 300); }, 3500);
 }
 
-// ===== FORMAT & RENDER MATRIX (Cached string building) =====
+// ===== FORMAT ANGKA =====
 function fmt(n) {
   if (n === undefined || n === null) return '0';
   if (Math.abs(n) < 1e-9) return '0';
@@ -589,13 +643,15 @@ function fmt(n) {
   return String(parseFloat(n.toFixed(4)));
 }
 
+// ===== RENDER MTRIKS (untuk materi) =====
 function renderMx(m, cls, sepCol) {
-  if (!m || !m.length) return '';
+  if (!m || !m.length) return '<span style="color:var(--text-muted);">—</span>';
   const sep = sepCol || 0;
   const clsStr = cls ? ' ' + cls : '';
   let h = '<div class="mx' + clsStr + '"><div class="bl"></div><table>';
   for (let i = 0; i < m.length; i++) {
-    const row = m[i]; h += '<tr>';
+    const row = m[i]; if (!row) continue;
+    h += '<tr>';
     for (let j = 0; j < row.length; j++) {
       h += '<td' + (sep > 0 && j === sep ? ' class="sep"' : '') + '>' + fmt(row[j]) + '</td>';
     }
@@ -604,7 +660,127 @@ function renderMx(m, cls, sepCol) {
   return h + '</table><div class="br"></div></div>';
 }
 
-// ===== WEB WORKER (Optimized Gauss-Jordan & Vector Space) =====
+// ===== RENDER MTRIKS GRID (untuk hasil kalkulasi) =====
+function renderMxGrid(m, cls, sepCol) {
+  if (!m || !m.length) return '<span style="color:var(--text-muted);">—</span>';
+  const sep = sepCol || 0;
+  const rows = m.length;
+  const cols = m[0] ? m[0].length : 0;
+  const clsStr = cls ? ' ' + cls : '';
+  const isLarge = rows > 8 || cols > 8;
+  const smCls = (rows > 12 || cols > 12) ? ' sm' : '';
+  const scrollCls = isLarge ? ' scroll-v' : '';
+  const parts = [];
+  for (let i = 0; i < rows; i++) {
+    const row = m[i]; if (!row) continue;
+    for (let j = 0; j < row.length; j++) {
+      const sepStyle = (sep > 0 && j === sep) ? ' sep' : '';
+      parts.push('<div class="mx-grid-cell' + sepStyle + '">' + fmt(row[j]) + '</div>');
+    }
+  }
+  return '<div class="mx-grid' + clsStr + smCls + '"><div class="mx-grid-bl"></div><div class="mx-grid-inner' + scrollCls + '"><div class="mx-grid-table" style="grid-template-columns:repeat(' + cols + ',minmax(40px,auto))">' + parts.join('') + '</div></div><div class="mx-grid-br"></div></div>';
+}
+
+// ===== ACCORDION (Lazy Rendering) =====
+function createAccordion(sections) {
+  let html = '';
+  for (let i = 0; i < sections.length; i++) {
+    const s = sections[i];
+    const badgeHtml = s.badge ? '<span class="acc-badge">' + s.badge + '</span>' : '';
+    html += '<div class="accordion" id="acc-' + s.id + '">';
+    html += '<div class="acc-header" data-acc-id="' + s.id + '"><span class="acc-icon"><i class="fa-solid ' + s.icon + '"></i></span>' + s.title + badgeHtml + '<span class="acc-arrow"><i class="fa-solid fa-chevron-right"></i></span></div>';
+    html += '<div class="acc-body"><div class="acc-content" id="acc-content-' + s.id + '"></div></div>';
+    html += '</div>';
+  }
+  return html;
+}
+
+const _accRendered = {};
+const _accRenderFns = {};
+
+function setupAccordion(container) {
+  if (!container) return;
+  const headers = container.querySelectorAll('.acc-header');
+  for (let i = 0; i < headers.length; i++) {
+    headers[i].addEventListener('click', function() {
+      const accId = this.dataset.accId;
+      const accEl = document.getElementById('acc-' + accId);
+      if (!accEl) return;
+      const isOpen = accEl.classList.contains('open');
+      if (isOpen) {
+        accEl.classList.remove('open');
+      } else {
+        accEl.classList.add('open');
+        if (!_accRendered[accId] && _accRenderFns[accId]) {
+          const contentEl = document.getElementById('acc-content-' + accId);
+          if (contentEl) {
+            contentEl.innerHTML = _accRenderFns[accId]();
+          }
+          _accRendered[accId] = true;
+        }
+      }
+    });
+  }
+}
+
+// ===== RENDER SOLUSI =====
+function renderSolution(sol) {
+  const varNames = 'xyzwuvstabcdefghijklmnopqr';
+  if (sol.type === 'inconsistent') {
+    return '<div class="sol-msg err"><i class="fa-solid fa-circle-xmark"></i> SPL Tidak Konsisten — tidak memiliki solusi.</div>';
+  }
+  if (sol.type === 'unique') {
+    let h = '<div class="sol-msg ok"><i class="fa-solid fa-check-circle"></i> Solusi:</div><div class="sol-inline">';
+    sol.values.forEach(function(val, idx) {
+      h += '<div class="sol-var"><span class="vn">' + (varNames[idx] || 'x' + (idx + 1)) + '</span> = <span>' + fmt(val) + '</span></div>';
+    });
+    return h + '</div>';
+  }
+  if (sol.type === 'infinite') {
+    let h = '<div class="sol-msg warn"><i class="fa-solid fa-infinity"></i> Tak Hingga Solusi — variabel bebas: ' + sol.freeCount + '</div>';
+    h += '<div class="sol-param">';
+    sol.exprs.forEach(function(e) {
+      h += '<div><strong>' + e.name + '</strong> = ' + e.expr + '</div>';
+    });
+    return h + '</div>';
+  }
+  return '';
+}
+
+// ===== RENDER ERO PHASES (Ringan — tanpa matriks) =====
+function renderElimPhases(phases) {
+  if (!phases || phases.length === 0) {
+    return '<div class="steps-empty">Tidak ada operasi baris elementer yang diperlukan.</div>';
+  }
+  let h = '';
+  for (let pi = 0; pi < phases.length; pi++) {
+    const phase = phases[pi];
+    if (!phase.pivots || phase.pivots.length === 0) continue;
+    const isForward = phase.name === 'Eliminasi Maju';
+    h += '<div class="phase-header ' + (isForward ? 'phase-forward' : '') + '">';
+    h += '<i class="fa-solid fa-' + (isForward ? 'arrow-down-long' : 'arrow-up-long') + '"></i>';
+    h += phase.name + '</div>';
+    for (let i = 0; i < phase.pivots.length; i++) {
+      const pivot = phase.pivots[i];
+      if (!pivot.ops || pivot.ops.length === 0) continue;
+      h += '<div class="pivot-group">';
+      h += '<div class="pivot-title"><span class="pivot-dot"></span>Pivot ' + pivot.pivotNum + '</div>';
+      h += '<ul class="pivot-ops">';
+      for (let j = 0; j < pivot.ops.length; j++) {
+        const op = pivot.ops[j];
+        let cls = 'ero-elim';
+        if (op.indexOf('\u2194') !== -1) cls = 'ero-swap';
+        else if (op.indexOf('\u2190') !== -1 && op.indexOf('R') !== -1 && op.indexOf('\u2212') === -1 && op.indexOf('+') === -1) cls = 'ero-scale';
+        else if (op.indexOf('\u00f7') !== -1 || (op.indexOf('\u2190') !== -1 && op.match(/\([^)]*\/[^)]*\)/))) cls = 'ero-scale';
+        h += '<li class="' + cls + '">' + op + '</li>';
+      }
+      h += '</ul></div>';
+    }
+  }
+  return h;
+}
+
+// ===== WEB WORKER =====
 const workerCode = `
 self.onmessage=function(e){
 var d=e.data;
@@ -621,16 +797,193 @@ case'vectorSpace':r=doVS(d.p);break;
 self.postMessage({id:d.id,ok:true,result:r});
 }catch(err){self.postMessage({id:d.id,ok:false,error:err.message});}
 };
+
 function cln(n){if(Math.abs(n)<1e-10)return 0;if(Math.abs(n-Math.round(n))<1e-10)return Math.round(n);return parseFloat(n.toFixed(6));}
-function fw(n){n=cln(n);if(n===0)return'0';if(Number.isInteger(n))return String(n);return String(parseFloat(n.toFixed(4)));}
-function doMul(p){var a=p.aData,b=p.bData,ar=p.ar,ac=p.ac,bc=p.bc;var res=new Float64Array(ar*bc);for(var i=0;i<ar;i++){for(var j=0;j<bc;j++){var s=0;for(var k=0;k<ac;k++)s+=a[i*ac+k]*b[k*bc+j];res[i*bc+j]=s;}}return{data:Array.from(res),rows:ar,cols:bc};}
-function doDet(p){var data=p.data,n=p.n;var m=new Array(n);for(var i=0;i<n;i++){m[i]=new Float64Array(n);for(var j=0;j<n;j++)m[i][j]=data[i*n+j];}var det=1;for(var i=0;i<n;i++){var mx=i;for(var k=i+1;k<n;k++)if(Math.abs(m[k][i])>Math.abs(m[mx][i]))mx=k;if(Math.abs(m[mx][i])<1e-12)return{value:0};if(mx!==i){var t=m[i];m[i]=m[mx];m[mx]=t;det*=-1;}det*=m[i][i];for(var k=i+1;k<n;k++){var f=m[k][i]/m[i][i];for(var j=i;j<n;j++)m[k][j]-=f*m[i][j];}}return{value:cln(det)};}
-function doInv(p){var data=p.data,n=p.n;var aug=new Array(n);for(var i=0;i<n;i++){aug[i]=new Float64Array(2*n);for(var j=0;j<n;j++)aug[i][j]=data[i*n+j];aug[i][n+j]=(i===j?1:0);}for(var i=0;i<n;i++){var mx=i;for(var k=i+1;k<n;k++)if(Math.abs(aug[k][i])>Math.abs(aug[mx][i]))mx=k;if(Math.abs(aug[mx][i])<1e-12)return{singular:true};if(mx!==i){var t=aug[i];aug[i]=aug[mx];aug[mx]=t;}var pv=aug[i][i];for(var j=i;j<2*n;j++)aug[i][j]/=pv;for(var k=0;k<n;k++){if(k!==i){var f=aug[k][i];for(var j=i;j<2*n;j++)aug[k][j]-=f*aug[i][j];}}}var inv=new Array(n);for(var i=0;i<n;i++){inv[i]=new Array(n);for(var j=0;j<n;j++)inv[i][j]=cln(aug[i][n+j]);}return{singular:false,data:inv,rows:n,cols:n};}
-function doGauss(p){var data=p.data,rows=p.rows,cols=p.cols;var m=new Array(rows);for(var i=0;i<rows;i++){m[i]=new Float64Array(cols);for(var j=0;j<cols;j++)m[i][j]=cln(data[i*cols+j]);}var steps=[{op:'Matriks Awal',matrix:cp(m)}];var pr=0;for(var c=0;c<cols-1&&pr<rows;c++){var mx=pr;for(var i=pr+1;i<rows;i++){if(Math.abs(m[i][c])>Math.abs(m[mx][c]))mx=i;}if(Math.abs(m[mx][c])<1e-10)continue;if(mx!==pr){var t=m[pr];m[pr]=m[mx];m[mx]=t;steps.push({op:'R'+(pr+1)+' ↔ R'+(mx+1),matrix:cp(m)});}for(var i=pr+1;i<rows;i++){if(Math.abs(m[i][c])>1e-10){var f=m[i][c]/m[pr][c];for(var j=c;j<cols;j++){m[i][j]-=f*m[pr][j];m[i][j]=cln(m[i][j]);}steps.push({op:'R'+(i+1)+' → R'+(i+1)+' - ('+fw(f)+')·R'+(pr+1),matrix:cp(m)});}}pr++;}return{steps:steps,finalMatrix:cp(m),rows:rows,cols:cols};}
-function doGaussJordan(p){var data=p.data,rows=p.rows,cols=p.cols;var m=new Array(rows);for(var i=0;i<rows;i++){m[i]=new Float64Array(cols);for(var j=0;j<cols;j++)m[i][j]=cln(data[i*cols+j]);}var steps=[{op:'Matriks Awal',matrix:cp(m)}];var pivotInfo=[];var pr=0;for(var c=0;c<cols-1&&pr<rows;c++){var mx=pr;for(var i=pr+1;i<rows;i++){if(Math.abs(m[i][c])>Math.abs(m[mx][c]))mx=i;}if(Math.abs(m[mx][c])<1e-10)continue;if(mx!==pr){var t=m[pr];m[pr]=m[mx];m[mx]=t;steps.push({op:'R'+(pr+1)+' ↔ R'+(mx+1),matrix:cp(m)});}for(var i=pr+1;i<rows;i++){if(Math.abs(m[i][c])>1e-10){var f=m[i][c]/m[pr][c];for(var j=c;j<cols;j++){m[i][j]-=f*m[pr][j];m[i][j]=cln(m[i][j]);}steps.push({op:'R'+(i+1)+' → R'+(i+1)+' - ('+fw(f)+')·R'+(pr+1),matrix:cp(m)});}}pivotInfo.push({row:pr,col:c});pr++;}for(var p=pivotInfo.length-1;p>=0;p--){var pi=pivotInfo[p];var r=pi.row,c=pi.col;if(Math.abs(m[r][c]-1)>1e-10){var pv=m[r][c];for(var j=c;j<cols;j++){m[r][j]/=pv;m[r][j]=cln(m[r][j]);}steps.push({op:'R'+(r+1)+' → R'+(r+1)+' ÷ ('+fw(pv)+')',matrix:cp(m)});}for(var i=r-1;i>=0;i--){if(Math.abs(m[i][c])>1e-10){var f=m[i][c];for(var j=c;j<cols;j++){m[i][j]-=f*m[r][j];m[i][j]=cln(m[i][j]);}steps.push({op:'R'+(i+1)+' → R'+(i+1)+' - ('+fw(f)+')·R'+(r+1),matrix:cp(m)});}}}return{steps:steps,finalMatrix:cp(m),rows:rows,cols:cols};}
-function doVS(p){var data=p.data,rows=p.rows,cols=p.cols;var m=new Array(rows);for(var i=0;i<rows;i++){m[i]=new Float64Array(cols);for(var j=0;j<cols;j++)m[i][j]=data[i*cols+j];}var pr=0,pivotCols=[];for(var c=0;c<cols&&pr<rows;c++){var mx=pr;for(var i=pr+1;i<rows;i++)if(Math.abs(m[i][c])>Math.abs(m[mx][c]))mx=i;if(Math.abs(m[mx][c])<1e-12)continue;pivotCols.push(c);if(mx!==pr){var t=m[pr];m[pr]=m[mx];m[mx]=t;}var pv=m[pr][c];for(var j=c;j<cols;j++)m[pr][j]/=pv;for(var i=0;i<rows;i++){if(i!==pr&&Math.abs(m[i][c])>1e-12){var f=m[i][c];for(var j=c;j<cols;j++)m[i][j]-=f*m[pr][j];}}pr++;}var rank=pr;var colBasis=[];for(var p=0;p<pivotCols.length;p++){var c=pivotCols[p];var v=new Array(rows);for(var i=0;i<rows;i++)v[i]=data[i*cols+c];colBasis.push(v);}var rowBasis=new Array(rank);for(var i=0;i<rank;i++)rowBasis[i]=Array.from(m[i]);var freeCols=[];for(var j=0;j<cols;j++)if(pivotCols.indexOf(j)===-1)freeCols.push(j);var nullBasis=[];for(var fc=0;fc<freeCols.length;fc++){var v=new Array(cols).fill(0);v[freeCols[fc]]=1;for(var i=0;i<rank;i++)v[pivotCols[i]]=-m[i][freeCols[fc]];nullBasis.push(v);}return{rank:rank,colBasis:colBasis,rowBasis:rowBasis,nullBasis:nullBasis,dimRow:rowBasis.length,dimCol:colBasis.length,dimNull:cols-rank};}
 function cp(m){var r=new Array(m.length);for(var i=0;i<m.length;i++)r[i]=Array.from(m[i]);return r;}
-`;
+
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;}
+
+function fracStr(n){
+  n=cln(n);
+  if(n===0)return'0';
+  if(Number.isInteger(n))return String(n);
+  for(var d=2;d<=1000;d++){
+    var num=n*d;
+    if (Math.abs(num - Math.round(num)) < 1e-9) {
+          var nr = Math.round(num);
+          var g = gcd(nr, d);
+          var fn = nr / g;
+          var fd = d / g;
+          if (fd === 1) return String(fn);
+          return fn + '/' + fd;
+        }
+      }
+      return parseFloat(n.toFixed(4)).toString();
+    }
+
+    function doMul(p){var a=p.aData,b=p.bData,ar=p.ar,ac=p.ac,bc=p.bc;var res=new Float64Array(ar*bc);for(var i=0;i<ar;i++){for(var j=0;j<bc;j++){var s=0;for(var k=0;k<ac;k++)s+=a[i*ac+k]*b[k*bc+j];res[i*bc+j]=s;}}return{data:Array.from(res),rows:ar,cols:bc};}
+    
+    function doDet(p){var data=p.data,n=p.n;var m=new Array(n);for(var i=0;i<n;i++){m[i]=new Float64Array(n);for(var j=0;j<n;j++)m[i][j]=data[i*n+j];}var det=1;for(var i=0;i<n;i++){var mx=i;for(var k=i+1;k<n;k++)if(Math.abs(m[k][i])>Math.abs(m[mx][i]))mx=k;if(Math.abs(m[mx][i])<1e-12)return{value:0};if(mx!==i){var t=m[i];m[i]=m[mx];m[mx]=t;det*=-1;}det*=m[i][i];for(var k=i+1;k<n;k++){var f=m[k][i]/m[i][i];for(var j=i;j<n;j++)m[k][j]-=f*m[i][j];}}return{value:cln(det)};}
+    
+    function doInv(p){var data=p.data,n=p.n;var aug=new Array(n);for(var i=0;i<n;i++){aug[i]=new Float64Array(2*n);for(var j=0;j<n;j++)aug[i][j]=data[i*n+j];aug[i][n+j]=(i===j?1:0);}for(var i=0;i<n;i++){var mx=i;for(var k=i+1;k<n;k++)if(Math.abs(aug[k][i])>Math.abs(aug[mx][i]))mx=k;if(Math.abs(aug[mx][i])<1e-12)return{singular:true};if(mx!==i){var t=aug[i];aug[i]=aug[mx];aug[mx]=t;}var pv=aug[i][i];for(var j=i;j<2*n;j++)aug[i][j]/=pv;for(var k=0;k<n;k++){if(k!==i){var f=aug[k][i];for(var j=i;j<2*n;j++)aug[k][j]-=f*aug[i][j];}}}var inv=new Array(n);for(var i=0;i<n;i++){inv[i]=new Array(n);for(var j=0;j<n;j++)inv[i][j]=cln(aug[i][n+j]);}return{singular:false,data:inv,rows:n,cols:n};}
+
+    function doGauss(p){
+      var data=p.data,rows=p.rows,cols=p.cols;
+      var m=new Array(rows);
+      for(var i=0;i<rows;i++){m[i]=new Float64Array(cols);for(var j=0;j<cols;j++)m[i][j]=cln(data[i*cols+j]);}
+      
+      var phases=[{name:'Eliminasi Maju',pivots:[]}];
+      var currentPhase=phases[0];
+      var pr=0;
+      var pivotCount=0;
+
+      for(var c=0;c<cols-1&&pr<rows;c++){
+        var mx=pr;
+        for(var i=pr+1;i<rows;i++){if(Math.abs(m[i][c])>Math.abs(m[mx][c]))mx=i;}
+        if(Math.abs(m[mx][c])<1e-10)continue;
+
+        pivotCount++;
+        var pivotOps={pivotNum:pivotCount,ops:[]};
+
+        if(mx!==pr){
+          var t=m[pr];m[pr]=m[mx];m[mx]=t;
+          pivotOps.ops.push('R'+(pr+1)+' \u2194 R'+(mx+1));
+        }
+
+        for(var i=pr+1;i<rows;i++){
+          if(Math.abs(m[i][c])>1e-10){
+            var f=m[i][c]/m[pr][c];
+            for(var j=c;j<cols;j++){m[i][j]-=f*m[pr][j];m[i][j]=cln(m[i][j]);}
+            var absF=Math.abs(f);
+            var multStr=fracStr(absF)+'R'+(pr+1);
+            if(absF===1) multStr='R'+(pr+1);
+            else if(fracStr(absF).indexOf('/')!==-1) multStr='('+fracStr(absF)+')R'+(pr+1);
+            pivotOps.ops.push('R'+(i+1)+' \u2190 R'+(i+1)+' \u2212 '+multStr);
+          }
+        }
+        currentPhase.pivots.push(pivotOps);
+        pr++;
+      }
+      return{phases:phases,finalMatrix:cp(m),rows:rows,cols:cols};
+    }
+
+    function doGaussJordan(p){
+      var data=p.data,rows=p.rows,cols=p.cols;
+      var m=new Array(rows);
+      for(var i=0;i<rows;i++){m[i]=new Float64Array(cols);for(var j=0;j<cols;j++)m[i][j]=cln(data[i*cols+j]);}
+      
+      var phases=[
+        {name:'Eliminasi Maju',pivots:[]},
+        {name:'Eliminasi Mundur',pivots:[]}
+      ];
+      var forwardPhase=phases[0];
+      var backwardPhase=phases[1];
+
+      var pivotInfo=[];
+      var pr=0;
+      var pivotCount=0;
+
+      for(var c=0;c<cols-1&&pr<rows;c++){
+        var mx=pr;
+        for(var i=pr+1;i<rows;i++){if(Math.abs(m[i][c])>Math.abs(m[mx][c]))mx=i;}
+        if(Math.abs(m[mx][c])<1e-10)continue;
+
+        pivotCount++;
+        var pivotOps={pivotNum:pivotCount,ops:[]};
+
+        if(mx!==pr){
+          var t=m[pr];m[pr]=m[mx];m[mx]=t;
+          pivotOps.ops.push('R'+(pr+1)+' \u2194 R'+(mx+1));
+        }
+
+        for(var i=pr+1;i<rows;i++){
+          if(Math.abs(m[i][c])>1e-10){
+            var f=m[i][c]/m[pr][c];
+            for(var j=c;j<cols;j++){m[i][j]-=f*m[pr][j];m[i][j]=cln(m[i][j]);}
+            var absF=Math.abs(f);
+            var multStr=fracStr(absF)+'R'+(pr+1);
+            if(absF===1) multStr='R'+(pr+1);
+            else if(fracStr(absF).indexOf('/')!==-1) multStr='('+fracStr(absF)+')R'+(pr+1);
+            pivotOps.ops.push('R'+(i+1)+' \u2190 R'+(i+1)+' \u2212 '+multStr);
+          }
+        }
+        forwardPhase.pivots.push(pivotOps);
+        pivotInfo.push({row:pr,col:c});
+        pr++;
+      }
+
+      for(var p=pivotInfo.length-1;p>=0;p--){
+        var pi=pivotInfo[p];
+        var r=pi.row,c=pi.col;
+        var backPivotOps={pivotNum:(p+1),ops:[]};
+
+        if(Math.abs(m[r][c]-1)>1e-10){
+          var pv=m[r][c];
+          for(var j=c;j<cols;j++){m[r][j]/=pv;m[r][j]=cln(m[r][j]);}
+          var fStr=fracStr(pv);
+          if(fStr.indexOf('/')!==-1) backPivotOps.ops.push('R'+(r+1)+' \u2190 ('+fStr+')R'+(r+1));
+          else backPivotOps.ops.push('R'+(r+1)+' \u2190 R'+(r+1)+' \u00f7 '+fStr);
+        }
+
+        for(var i=r-1;i>=0;i--){
+          if(Math.abs(m[i][c])>1e-10){
+            var f=m[i][c];
+            for(var j=c;j<cols;j++){m[i][j]-=f*m[r][j];m[i][j]=cln(m[i][j]);}
+            var absF=Math.abs(f);
+            var multStr=fracStr(absF)+'R'+(r+1);
+            if(absF===1) multStr='R'+(r+1);
+            else if(fracStr(absF).indexOf('/')!==-1) multStr='('+fracStr(absF)+')R'+(r+1);
+            backPivotOps.ops.push('R'+(i+1)+' \u2190 R'+(i+1)+' \u2212 '+multStr);
+          }
+        }
+        if(backPivotOps.ops.length>0) backwardPhase.pivots.push(backPivotOps);
+      }
+      return{phases:phases,finalMatrix:cp(m),rows:rows,cols:cols};
+    }
+
+    function doVS(p){
+      var data=p.data,rows=p.rows,cols=p.cols;
+      var m=new Array(rows);
+      for(var i=0;i<rows;i++){m[i]=new Float64Array(cols);for(var j=0;j<cols;j++)m[i][j]=data[i*cols+j];}
+      var pr=0,pivotCols=[];
+      for(var c=0;c<cols&&pr<rows;c++){
+        var mx=pr;
+        for(var i=pr+1;i<rows;i++)if(Math.abs(m[i][c])>Math.abs(m[mx][c]))mx=i;
+        if(Math.abs(m[mx][c])<1e-12)continue;
+        pivotCols.push(c);
+        if(mx!==pr){var t=m[pr];m[pr]=m[mx];m[mx]=t;}
+        var pv=m[pr][c];
+        for(var j=c;j<cols;j++)m[pr][j]/=pv;
+        for(var i=0;i<rows;i++){
+          if(i!==pr&&Math.abs(m[i][c])>1e-12){
+            var f=m[i][c];
+            for(var j=c;j<cols;j++)m[i][j]-=f*m[pr][j];
+          }
+        }
+        pr++;
+      }
+      var rank=pr;
+      var colBasis=[];
+      for(var p=0;p<pivotCols.length;p++){
+        var c=pivotCols[p];
+        var v=new Array(rows);
+        for(var i=0;i<rows;i++)v[i]=data[i*cols+c];
+        colBasis.push(v);
+      }
+      var rowBasis=new Array(rank);
+      for(var i=0;i<rank;i++)rowBasis[i]=Array.from(m[i]);
+      var freeCols=[];
+      for(var j=0;j<cols;j++)if(pivotCols.indexOf(j)===-1)freeCols.push(j);
+      var nullBasis=[];
+      for(var fc=0;fc<freeCols.length;fc++){
+        var v=new Array(cols).fill(0);
+        v[freeCols[fc]]=1;
+        for(var i=0;i<rank;i++)v[pivotCols[i]]=-m[i][freeCols[fc]];
+        nullBasis.push(v);
+      }
+      return{rank:rank,colBasis:colBasis,rowBasis:rowBasis,nullBasis:nullBasis,dimRow:rowBasis.length,dimCol:colBasis.length,dimNull:cols-rank};
+    }
+    `;
 
 let matrixWorker = null;
 const workerCallbacks = {};
@@ -644,6 +997,7 @@ function initWorker() {
     matrixWorker.onmessage = function(e) {
       const d = e.data;
       if (workerCallbacks[d.id]) {
+        clearTimeout(workerCallbacks[d.id].timeoutId);
         if (d.ok) workerCallbacks[d.id].resolve(d.result);
         else workerCallbacks[d.id].reject(d.error);
         delete workerCallbacks[d.id];
@@ -657,17 +1011,19 @@ function workerCompute(op, payload) {
     if (!matrixWorker) initWorker();
     if (!matrixWorker) { reject('Worker tidak tersedia'); return; }
     const id = ++workerId;
-    workerCallbacks[id] = { resolve, reject };
+    const timeoutId = setTimeout(function() {
+      if (workerCallbacks[id]) { delete workerCallbacks[id]; reject('Timeout'); }
+    }, 120000);
+    workerCallbacks[id] = { resolve, reject, timeoutId };
     const p = {};
     for (const k in payload) {
       p[k] = payload[k] instanceof Float64Array ? Array.from(payload[k]) : payload[k];
     }
     matrixWorker.postMessage({ id, op, p });
-    setTimeout(function() { if (workerCallbacks[id]) { delete workerCallbacks[id]; reject('Timeout'); } }, 120000);
   });
 }
 
-// ===== MATRIX STORE & VIRTUAL SPREADSHEET (Optimized) =====
+// ===== MATRIX STORE & VIRTUAL SPREADSHEET =====
 const matrixStore = {};
 
 class MatrixEditor {
@@ -677,19 +1033,21 @@ class MatrixEditor {
     this.data = new Float64Array(rows * cols);
     this.container = document.getElementById(containerId);
     if (!this.container) return;
+    if (matrixStore[storeKey] && matrixStore[storeKey] !== this) {
+      matrixStore[storeKey].destroy();
+    }
     matrixStore[storeKey] = this;
-
     this.CELL_W = 72; this.CELL_H = 32; this.BUFFER = 6;
     this.editingCell = null; this._rafId = null;
     this._lastStartRow = -1; this._lastEndRow = -1; this._lastStartCol = -1; this._lastEndCol = -1;
-
+    this._ac = new AbortController();
     if (rows <= 10 && cols <= 10) this.renderInline();
     else this.renderVirtualSpreadsheet();
   }
 
-  // --- INLINE EDITOR (Small Matrix) ---
   renderInline() {
     const me = this;
+    const signal = this._ac.signal;
     let html = '<div class="mx-editor' + (this.sepCol ? ' amber' : '') + '"><div class="bl"></div><table class="mx-ed-table">';
     for (let i = 0; i < this.rows; i++) {
       html += '<tr>';
@@ -703,10 +1061,9 @@ class MatrixEditor {
     html += '<div class="mx-ed-hint">Gunakan <kbd>Tab</kbd>, <kbd>Enter</kbd>, atau tombol panah untuk berpindah sel.</div>';
     this.container.innerHTML = html;
     this.inputs = this.container.querySelectorAll('.mx-ed-input');
-    // Delegated events for inline editor
-    this.container.addEventListener('focus', function(e) { if (e.target.classList.contains('mx-ed-input')) e.target.select(); }, true);
-    this.container.addEventListener('blur', function(e) { if (e.target.classList.contains('mx-ed-input')) me.saveInlineValue(e.target); }, true);
-    this.container.addEventListener('keydown', function(e) { if (e.target.classList.contains('mx-ed-input')) me.handleInlineKey(e); });
+    this.container.addEventListener('focus', function(e) { if (e.target.classList.contains('mx-ed-input')) e.target.select(); }, { capture: true, signal });
+    this.container.addEventListener('blur', function(e) { if (e.target.classList.contains('mx-ed-input')) me.saveInlineValue(e.target); }, { capture: true, signal });
+    this.container.addEventListener('keydown', function(e) { if (e.target.classList.contains('mx-ed-input')) me.handleInlineKey(e); }, { signal });
   }
 
   handleInlineKey(e) {
@@ -738,9 +1095,9 @@ class MatrixEditor {
     this.data[r * this.cols + c] = v; target.value = v;
   }
 
-  // --- VIRTUAL SPREADSHEET EDITOR (Optimized Large Matrix) ---
   renderVirtualSpreadsheet() {
     const me = this;
+    const signal = this._ac.signal;
     const totalW = this.cols * this.CELL_W;
     const totalH = this.rows * this.CELL_H;
 
@@ -763,7 +1120,7 @@ class MatrixEditor {
           </div>
         </div>
       </div>
-      <div class="vs-info-bar"><span>Ordo: ${this.rows} × ${this.cols}</span><span class="vs-status-text"></span></div>
+      <div class="vs-info-bar"><span>Ordo: ${this.rows} \u00d7 ${this.cols}</span><span class="vs-status-text"></span></div>
       <div class="vs-paste-overlay">
         <div class="vs-paste-dialog">
           <h4><i class="fa-solid fa-paste"></i> Paste Data</h4>
@@ -778,8 +1135,6 @@ class MatrixEditor {
     </div>`;
 
     this.container.innerHTML = html;
-
-    // Cache DOM refs
     this.vsContainer = this.container.querySelector('.vs-container');
     this.viewport = this.container.querySelector('.vs-viewport');
     this.cellContainer = this.container.querySelector('.vs-cell-container');
@@ -789,28 +1144,21 @@ class MatrixEditor {
     this.pasteOverlay = this.container.querySelector('.vs-paste-overlay');
     this.pasteTextarea = this.container.querySelector('.vs-paste-textarea');
     this.fileInput = this.container.querySelector('.vs-file-hidden');
-
     this.buildHeaders();
 
-    // Optimized scroll with requestAnimationFrame
     let scrolling = false;
     this.viewport.addEventListener('scroll', () => {
       if (!scrolling) {
         scrolling = true;
-        this._rafId = requestAnimationFrame(() => {
-          this.onVirtualScroll();
-          scrolling = false;
-        });
+        this._rafId = requestAnimationFrame(() => { this.onVirtualScroll(); scrolling = false; });
       }
-    });
+    }, { signal });
 
-    // Delegated click for cells
     this.viewport.addEventListener('click', (e) => {
       const cell = e.target.closest('.vs-cell');
       if (cell) this.startEditing(parseInt(cell.dataset.r), parseInt(cell.dataset.c));
-    });
+    }, { signal });
 
-    // Delegated toolbar events
     this.vsContainer.addEventListener('click', (e) => {
       const btn = e.target.closest('.vs-btn');
       if (!btn) return;
@@ -821,7 +1169,7 @@ class MatrixEditor {
       else if (action === 'paste-cancel') this.pasteOverlay.classList.remove('show');
       else if (action === 'paste-apply') this.applyPaste();
       else if (action === 'import') this.fileInput.click();
-    });
+    }, { signal });
 
     this.fileInput.addEventListener('change', (e) => this.handleImport(e));
     this.onVirtualScroll();
@@ -834,7 +1182,6 @@ class MatrixEditor {
       chHtml += '<div class="vs-ch' + cls + '" style="width:' + this.CELL_W + 'px">' + (j + 1) + '</div>';
     }
     this.chInner.innerHTML = chHtml;
-
     let rhHtml = '';
     for (let i = 0; i < this.rows; i++) {
       rhHtml += '<div class="vs-rh" style="height:' + this.CELL_H + 'px">' + (i + 1) + '</div>';
@@ -848,37 +1195,28 @@ class MatrixEditor {
     const scrollLeft = this.viewport.scrollLeft;
     const vpHeight = this.viewport.clientHeight;
     const vpWidth = this.viewport.clientWidth;
-
-    // Use transform for GPU-accelerated header sync
     this.chInner.style.transform = 'translateX(-' + scrollLeft + 'px)';
     this.rhInner.style.transform = 'translateY(-' + scrollTop + 'px)';
-
     const startRow = Math.max(0, Math.floor(scrollTop / this.CELL_H) - this.BUFFER);
     const endRow = Math.min(this.rows, Math.ceil((scrollTop + vpHeight) / this.CELL_H) + this.BUFFER);
     const startCol = Math.max(0, Math.floor(scrollLeft / this.CELL_W) - this.BUFFER);
     const endCol = Math.min(this.cols, Math.ceil((scrollLeft + vpWidth) / this.CELL_W) + this.BUFFER);
-
-    // Skip re-render if viewport hasn't changed
     if (startRow === this._lastStartRow && endRow === this._lastEndRow &&
         startCol === this._lastStartCol && endCol === this._lastEndCol) return;
-
     this._lastStartRow = startRow; this._lastEndRow = endRow;
     this._lastStartCol = startCol; this._lastEndCol = endCol;
-
     this.renderVisibleCells(startRow, endRow, startCol, endCol);
   }
 
   renderVisibleCells(sr, er, sc, ec) {
     const cw = this.CELL_W, ch = this.CELL_H, cols = this.cols;
     const frag = document.createDocumentFragment();
-
     for (let i = sr; i < er; i++) {
       const top = i * ch;
       for (let j = sc; j < ec; j++) {
         const left = j * cw;
         const val = this.data[i * cols + j];
         const sepClass = (this.sepCol > 0 && j === this.sepCol) ? ' vs-sep-cell' : '';
-
         const div = document.createElement('div');
         div.className = 'vs-cell' + sepClass;
         div.dataset.r = i; div.dataset.c = j;
@@ -887,11 +1225,8 @@ class MatrixEditor {
         frag.appendChild(div);
       }
     }
-
     this.cellContainer.innerHTML = '';
     this.cellContainer.appendChild(frag);
-
-    // Attach edit input if currently editing
     if (this.editingCell) {
       const ec2 = this.editingCell;
       const cell = this.cellContainer.querySelector('.vs-cell[data-r="' + ec2.r + '"][data-c="' + ec2.c + '"]');
@@ -905,8 +1240,10 @@ class MatrixEditor {
         cell.textContent = '';
         cell.appendChild(input);
         input.focus(); input.select();
-        input.addEventListener('blur', (e) => this.finishEditing(e.target));
-        input.addEventListener('keydown', (e) => this.handleEditKey(e));
+        const editAc = new AbortController();
+        this._editAc = editAc;
+        input.addEventListener('blur', (e) => this.finishEditing(e.target), { signal: editAc.signal });
+        input.addEventListener('keydown', (e) => this.handleEditKey(e), { signal: editAc.signal });
       }
     }
   }
@@ -919,7 +1256,6 @@ class MatrixEditor {
     }
     this.editingCell = { r, c };
     if (this.statusText) this.statusText.innerText = 'Editing [' + (r + 1) + ', ' + (c + 1) + ']';
-    // Reset cache to force re-render with edit cell
     this._lastStartRow = -1;
     this.onVirtualScroll();
   }
@@ -928,6 +1264,7 @@ class MatrixEditor {
     const r = parseInt(input.dataset.r), c = parseInt(input.dataset.c);
     let v = parseFloat(input.value); if (isNaN(v)) v = 0;
     this.data[r * this.cols + c] = v;
+    if (this._editAc) { this._editAc.abort(); this._editAc = null; }
     this.editingCell = null;
     if (this.statusText) this.statusText.innerText = '';
     this._lastStartRow = -1;
@@ -946,6 +1283,7 @@ class MatrixEditor {
       this.ensureVisible(nr, nc);
       this.startEditing(nr, nc);
     } else if (e.key === 'Escape') {
+      if (this._editAc) { this._editAc.abort(); this._editAc = null; }
       this.editingCell = null;
       if (this.statusText) this.statusText.innerText = '';
       this._lastStartRow = -1;
@@ -961,7 +1299,6 @@ class MatrixEditor {
     if (left + this.CELL_W > vp.scrollLeft + vp.clientWidth) vp.scrollLeft = left + this.CELL_W - vp.clientWidth;
   }
 
-  // --- Common Methods ---
   randomize() {
     const d = this.data, len = d.length;
     for (let i = 0; i < len; i++) d[i] = Math.floor(Math.random() * 19) - 9;
@@ -999,8 +1336,6 @@ class MatrixEditor {
     this.syncInputs(); showToast('Data berhasil dimuat!', 'success');
   }
 
-  loadPaste() { this.applyPaste(); }
-
   handleImport(e) {
     const file = e.target.files[0]; if (!file) return;
     const reader = new FileReader();
@@ -1009,14 +1344,24 @@ class MatrixEditor {
   }
 
   destroy() {
-    if (this._rafId) cancelAnimationFrame(this._rafId);
-    delete matrixStore[this.storeKey];
-    this.container.innerHTML = '';
+    if (this._rafId) { cancelAnimationFrame(this._rafId); this._rafId = null; }
+    if (this._ac) { this._ac.abort(); this._ac = null; }
+    if (this._editAc) { this._editAc.abort(); this._editAc = null; }
+    if (this.storeKey && matrixStore[this.storeKey] === this) {
+      delete matrixStore[this.storeKey];
+    }
+    this.editingCell = null; this.inputs = null; this.viewport = null;
+    this.cellContainer = null; this.chInner = null; this.rhInner = null;
+    this.statusText = null; this.pasteOverlay = null; this.pasteTextarea = null;
+    this.fileInput = null; this.vsContainer = null;
+    if (this.container) this.container.innerHTML = '';
   }
 }
 
-// ===== KALKULATOR (Optimized) =====
+// ===== KALKULATOR =====
 let calcCurrentOp = null;
+let elimSelectedMethod = null;
+
 function calcInit() { calcShowMainMenu(); }
 function calcHideAll() {
   document.getElementById('calc-menu-view').style.display = 'none';
@@ -1026,17 +1371,19 @@ function calcHideAll() {
 }
 
 function calcShowMainMenu() {
-  calcHideAll(); calcCurrentOp = null;
+  destroyAllMatrixEditors();
+  calcHideAll(); calcCurrentOp = null; elimSelectedMethod = null;
   const v = document.getElementById('calc-menu-view'); v.style.display = 'block';
   v.innerHTML = `
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
-      <div class="calc-menu-card" onclick="calcShowOperasi()"><div class="calc-menu-icon teal"><i class="fa-solid fa-calculator"></i></div><h3>Operasi Matriks</h3><p>Penjumlahan, pengurangan, perkalian, transpose, determinan, dan invers.</p><div class="calc-menu-tags"><span>A + B</span><span>A × B</span><span>det(A)</span></div></div>
+      <div class="calc-menu-card" onclick="calcShowOperasi()"><div class="calc-menu-icon teal"><i class="fa-solid fa-calculator"></i></div><h3>Operasi Matriks</h3><p>Penjumlahan, pengurangan, perkalian, transpose, determinan, dan invers.</p><div class="calc-menu-tags"><span>A + B</span><span>A \u00d7 B</span><span>det(A)</span></div></div>
       <div class="calc-menu-card" onclick="calcShowEliminasi()"><div class="calc-menu-icon amber"><i class="fa-solid fa-stairs"></i></div><h3>Eliminasi</h3><p>Eliminasi Gauss dan Gauss-Jordan.</p><div class="calc-menu-tags"><span>Gauss</span><span>Gauss-Jordan</span></div></div>
       <div class="calc-menu-card" onclick="calcShowRuangVektor()"><div class="calc-menu-icon violet"><i class="fa-solid fa-vector-square"></i></div><h3>Ruang Vektor</h3><p>Row Space, Column Space, dan Null Space.</p><div class="calc-menu-tags"><span>Row Space</span><span>Col Space</span></div></div>
     </div>`;
 }
 
 function calcShowOperasi() {
+  destroyAllMatrixEditors();
   calcHideAll(); calcCurrentOp = null;
   const v = document.getElementById('calc-operasi-view'); v.style.display = 'block';
   v.innerHTML = `
@@ -1047,7 +1394,7 @@ function calcShowOperasi() {
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:8px;">
       <div class="op-select-card" onclick="calcSelectOp('add')" id="opcard-add"><div class="op-icon teal"><i class="fa-solid fa-plus"></i></div><div><h4>Penjumlahan</h4><small>A + B</small></div></div>
       <div class="op-select-card" onclick="calcSelectOp('sub')" id="opcard-sub"><div class="op-icon teal"><i class="fa-solid fa-minus"></i></div><div><h4>Pengurangan</h4><small>A - B</small></div></div>
-      <div class="op-select-card" onclick="calcSelectOp('mul')" id="opcard-mul"><div class="op-icon amber"><i class="fa-solid fa-xmark"></i></div><div><h4>Perkalian</h4><small>A × B</small></div></div>
+      <div class="op-select-card" onclick="calcSelectOp('mul')" id="opcard-mul"><div class="op-icon amber"><i class="fa-solid fa-xmark"></i></div><div><h4>Perkalian</h4><small>A \u00d7 B</small></div></div>
       <div class="op-select-card" onclick="calcSelectOp('transpose')" id="opcard-transpose"><div class="op-icon violet"><i class="fa-solid fa-rotate"></i></div><div><h4>Transpose</h4><small>A<sup>T</sup></small></div></div>
       <div class="op-select-card" onclick="calcSelectOp('det')" id="opcard-det"><div class="op-icon rose"><i class="fa-solid fa-d"></i></div><div><h4>Determinan</h4><small>det(A)</small></div></div>
       <div class="op-select-card" onclick="calcSelectOp('inv')" id="opcard-inv"><div class="op-icon rose"><i class="fa-solid fa-arrow-turn-up"></i></div><div><h4>Invers</h4><small>A<sup>-1</sup></small></div></div>
@@ -1067,10 +1414,10 @@ function calcSelectOp(op) {
   ma.style.display = 'none'; ra.innerHTML = ''; sa.style.display = 'block';
   const isBinary = (op === 'add' || op === 'sub'), isMul = (op === 'mul'), isSquare = (op === 'det' || op === 'inv');
   let html = '<div class="card"><div class="card-title"><i class="fa-solid fa-ruler-combined"></i> Langkah 2: Atur Ukuran</div>';
-  if (isBinary) html += '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;"><label style="font-size:13px;font-weight:600;">Ordo:</label><input type="number" id="op-ar" class="input-field" value="12" min="1" max="100" style="width:70px;display:inline-block;"><span style="font-weight:700;color:var(--text-muted);">×</span><input type="number" id="op-ac" class="input-field" value="12" min="1" max="100" style="width:70px;display:inline-block;"></div>';
-  else if (isMul) html += '<div style="margin-bottom:16px;"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;"><label style="font-size:13px;font-weight:600;">A:</label><input type="number" id="op-ar" class="input-field" value="3" min="1" max="100" style="width:70px;display:inline-block;"><span style="font-weight:700;color:var(--text-muted);">×</span><input type="number" id="op-ac" class="input-field" value="4" min="1" max="100" style="width:70px;display:inline-block;"></div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;"><label style="font-size:13px;font-weight:600;">B:</label><span id="op-br-label" style="font-size:13px;color:var(--accent);font-weight:700;">4</span><span style="font-weight:700;color:var(--text-muted);">×</span><input type="number" id="op-bc" class="input-field" value="5" min="1" max="100" style="width:70px;display:inline-block;"></div></div>';
-  else if (isSquare) html += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;"><button class="size-preset-btn" onclick="calcSetSquare(2)">2×2</button><button class="size-preset-btn" onclick="calcSetSquare(3)">3×3</button><button class="size-preset-btn" onclick="calcSetSquare(5)">5×5</button><button class="size-preset-btn" onclick="calcSetSquare(10)">10×10</button><input type="number" id="op-n" class="input-field" value="4" min="1" max="100" style="width:70px;display:inline-block;"></div>';
-  else html += '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;"><label style="font-size:13px;font-weight:600;">Ordo:</label><input type="number" id="op-ar" class="input-field" value="3" min="1" max="100" style="width:70px;display:inline-block;"><span style="font-weight:700;color:var(--text-muted);">×</span><input type="number" id="op-ac" class="input-field" value="3" min="1" max="100" style="width:70px;display:inline-block;"></div>';
+  if (isBinary) html += '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;"><label style="font-size:13px;font-weight:600;">Ordo:</label><input type="number" id="op-ar" class="input-field" value="12" min="1" max="100" style="width:70px;display:inline-block;"><span style="font-weight:700;color:var(--text-muted);">\u00d7</span><input type="number" id="op-ac" class="input-field" value="12" min="1" max="100" style="width:70px;display:inline-block;"></div>';
+  else if (isMul) html += '<div style="margin-bottom:16px;"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;"><label style="font-size:13px;font-weight:600;">A:</label><input type="number" id="op-ar" class="input-field" value="3" min="1" max="100" style="width:70px;display:inline-block;"><span style="font-weight:700;color:var(--text-muted);">\u00d7</span><input type="number" id="op-ac" class="input-field" value="4" min="1" max="100" style="width:70px;display:inline-block;"></div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;"><label style="font-size:13px;font-weight:600;">B:</label><span id="op-br-label" style="font-size:13px;color:var(--accent);font-weight:700;">4</span><span style="font-weight:700;color:var(--text-muted);">\u00d7</span><input type="number" id="op-bc" class="input-field" value="5" min="1" max="100" style="width:70px;display:inline-block;"></div></div>';
+  else if (isSquare) html += '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;"><button class="size-preset-btn" onclick="calcSetSquare(2)">2\u00d72</button><button class="size-preset-btn" onclick="calcSetSquare(3)">3\u00d73</button><button class="size-preset-btn" onclick="calcSetSquare(5)">5\u00d75</button><button class="size-preset-btn" onclick="calcSetSquare(10)">10\u00d710</button><input type="number" id="op-n" class="input-field" value="4" min="1" max="100" style="width:70px;display:inline-block;"></div>';
+  else html += '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;"><label style="font-size:13px;font-weight:600;">Ordo:</label><input type="number" id="op-ar" class="input-field" value="3" min="1" max="100" style="width:70px;display:inline-block;"><span style="font-weight:700;color:var(--text-muted);">\u00d7</span><input type="number" id="op-ac" class="input-field" value="3" min="1" max="100" style="width:70px;display:inline-block;"></div>';
   html += '<button class="btn btn-primary" onclick="calcGenerateMatrices()"><i class="fa-solid fa-table-cells"></i> Generate Matriks</button></div>';
   sa.innerHTML = html;
   if (isMul) { const ac = document.getElementById('op-ac'); if (ac) ac.addEventListener('input', function() { document.getElementById('op-br-label').innerText = ac.value || 4; }); }
@@ -1084,6 +1431,7 @@ function calcSetSquare(n) {
 
 function calcGenerateMatrices() {
   const op = calcCurrentOp; if (!op) return;
+  destroyAllMatrixEditors();
   const ma = document.getElementById('op-matrix-area'); ma.style.display = 'block';
   const ra = document.getElementById('op-result-area'); ra.innerHTML = '';
   document.getElementById('sd2').classList.remove('active'); document.getElementById('sd2').classList.add('done');
@@ -1094,15 +1442,12 @@ function calcGenerateMatrices() {
   else if (isMul) { ar = parseInt(document.getElementById('op-ar').value) || 3; ac = parseInt(document.getElementById('op-ac').value) || 4; br = ac; bc = parseInt(document.getElementById('op-bc').value) || 5; needB = true; }
   else if (isSquare) { ar = parseInt(document.getElementById('op-n').value) || 4; ac = ar; br = ar; bc = ar; needB = false; }
   else { ar = parseInt(document.getElementById('op-ar').value) || 3; ac = parseInt(document.getElementById('op-ac').value) || 3; needB = false; }
-  if (ar > 100 || ac > 100 || br > 100 || bc > 100) { showToast('Maksimal ordo 100×100', 'warning'); return; }
-  // Destroy old editors to prevent memory leaks
-  if (matrixStore['opA']) matrixStore['opA'].destroy();
-  if (matrixStore['opB']) matrixStore['opB'].destroy();
+  if (ar > 100 || ac > 100 || br > 100 || bc > 100) { showToast('Maksimal ordo 100\u00d7100', 'warning'); return; }
   const opNames = { add: 'Penjumlahan', sub: 'Pengurangan', mul: 'Perkalian', transpose: 'Transpose', det: 'Determinan', inv: 'Invers' };
   let html = '<div class="card"><div class="card-title"><i class="fa-solid fa-pen-to-square"></i> Langkah 3: Isi Matriks</div>';
   html += '<p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">Operasi: <strong style="color:var(--accent);">' + opNames[op] + '</strong></p>';
-  if (needB) html += '<div class="mat-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;"><div><div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--accent);">Matriks A (' + ar + '×' + ac + ')</div><div id="op-grid-a"></div></div><div><div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--amber);">Matriks B (' + br + '×' + bc + ')</div><div id="op-grid-b"></div></div></div>';
-  else html += '<div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--accent);">Matriks A (' + ar + '×' + ac + ')</div><div id="op-grid-a"></div>';
+  if (needB) html += '<div class="mat-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;"><div><div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--accent);">Matriks A (' + ar + '\u00d7' + ac + ')</div><div id="op-grid-a"></div></div><div><div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--amber);">Matriks B (' + br + '\u00d7' + bc + ')</div><div id="op-grid-b"></div></div></div>';
+  else html += '<div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--accent);">Matriks A (' + ar + '\u00d7' + ac + ')</div><div id="op-grid-a"></div>';
   html += '<div style="margin-top:24px;text-align:center;"><button class="btn btn-primary" style="padding:14px 40px;font-size:15px;" onclick="calcExecuteOp()"><i class="fa-solid fa-play"></i> Hitung ' + opNames[op] + '</button></div></div>';
   ma.innerHTML = html;
   new MatrixEditor('op-grid-a', ar, ac, 'opA');
@@ -1118,174 +1463,262 @@ async function calcExecuteOp() {
   try {
     let result = null;
     const opNames = { add: 'Penjumlahan', sub: 'Pengurangan', mul: 'Perkalian', transpose: 'Transpose', det: 'Determinan', inv: 'Invers' };
+    let resultMatrix = null, resultRows = 0, resultCols = 0;
+
     if (op === 'add' || op === 'sub') {
       if (!mB || mA.rows !== mB.rows || mA.cols !== mB.cols) { showToast('Ordo A dan B harus sama!', 'error'); ra.innerHTML = ''; return; }
       const sign = op === 'add' ? 1 : -1;
       result = new Float64Array(mA.rows * mA.cols);
       for (let i = 0; i < result.length; i++) result[i] = mA.data[i] + sign * mB.data[i];
-      ra.innerHTML = buildResultHTML(opNames[op], result, mA.rows, mA.cols);
+      resultRows = mA.rows; resultCols = mA.cols; resultMatrix = result;
     } else if (op === 'mul') {
       if (!mB || mA.cols !== mB.rows) { showToast('Kolom A harus sama dengan Baris B!', 'error'); ra.innerHTML = ''; return; }
       const res = await workerCompute('mul', { aData: mA.data, bData: mB.data, ar: mA.rows, ac: mA.cols, bc: mB.cols });
-      result = new Float64Array(res.data);
-      ra.innerHTML = buildResultHTML(opNames[op], result, res.rows, res.cols);
+      resultRows = res.rows; resultCols = res.cols;
+      resultMatrix = new Float64Array(res.data);
     } else if (op === 'transpose') {
       result = new Float64Array(mA.cols * mA.rows);
       for (let i = 0; i < mA.rows; i++) for (let j = 0; j < mA.cols; j++) result[j * mA.rows + i] = mA.data[i * mA.cols + j];
-      ra.innerHTML = buildResultHTML(opNames[op], result, mA.cols, mA.rows);
+      resultRows = mA.cols; resultCols = mA.rows; resultMatrix = result;
     } else if (op === 'det') {
       if (mA.rows !== mA.cols) { showToast('Matriks harus persegi!', 'error'); ra.innerHTML = ''; return; }
       const res = await workerCompute('det', { data: mA.data, n: mA.rows });
-      ra.innerHTML = '<div class="card"><div class="card-title"><i class="fa-solid fa-sparkles"></i> Hasil ' + opNames[op] + '</div><div style="text-align:center;padding:20px;"><div style="font-size:14px;color:var(--text-secondary);margin-bottom:8px;">det(A) =</div><div style="font-size:42px;font-weight:800;color:var(--accent);">' + fmt(res.value) + '</div></div></div>';
+      ra.innerHTML = '<div class="card"><div class="card-title"><i class="fa-solid fa-sparkles"></i> Hasil Determinan</div><div style="text-align:center;padding:20px;"><div style="font-size:14px;color:var(--text-secondary);margin-bottom:8px;">det(A) =</div><div style="font-size:42px;font-weight:800;color:var(--accent);">' + fmt(res.value) + '</div></div></div>';
+      User.addXP(5); showToast('Determinan berhasil! +5 XP', 'success');
+      return;
     } else if (op === 'inv') {
       if (mA.rows !== mA.cols) { showToast('Matriks harus persegi!', 'error'); ra.innerHTML = ''; return; }
       const res = await workerCompute('inv', { data: mA.data, n: mA.rows });
       if (res.singular) { ra.innerHTML = '<div class="card"><div class="card-title"><i class="fa-solid fa-triangle-exclamation"></i> Matriks Singular</div><p style="color:var(--text-secondary);">Tidak memiliki invers.</p></div>'; return; }
-      result = new Float64Array(res.rows * res.cols);
-      for (let i = 0; i < res.rows; i++) for (let j = 0; j < res.cols; j++) result[i * res.cols + j] = res.data[i][j];
-      ra.innerHTML = buildResultHTML(opNames[op], result, res.rows, res.cols);
+      resultRows = res.rows; resultCols = res.cols;
+      resultMatrix = new Float64Array(res.rows * res.cols);
+      for (let i = 0; i < res.rows; i++) for (let j = 0; j < res.cols; j++) resultMatrix[i * res.cols + j] = res.data[i][j];
     }
+
+    let arr2D = [];
+    const rm = resultMatrix, rr2 = resultRows, rc2 = resultCols;
+    for (let i = 0; i < rr2; i++) { let row = []; for (let j = 0; j < rc2; j++) row.push(rm[i * rc2 + j]); arr2D.push(row); }
+
+    _accRendered['op-result'] = false;
+    _accRenderFns['op-result'] = function() {
+      return '<div class="result-area">' + renderMxGrid(arr2D, 'amber') + '</div>';
+    };
+
+    let accHtml = createAccordion([
+      { id: 'op-result', icon: 'fa-table-cells', title: 'Hasil ' + opNames[op], badge: rr2 + '\u00d7' + rc2 }
+    ]);
+    ra.innerHTML = '<div class="card"><div class="card-title"><i class="fa-solid fa-sparkles"></i> Hasil ' + opNames[op] + '</div>' + accHtml + '</div>';
+    setupAccordion(ra);
+
     User.addXP(5); showToast(opNames[op] + ' berhasil! +5 XP', 'success');
   } catch (e) { console.error(e); showToast('Error: ' + e, 'error'); ra.innerHTML = ''; }
 }
 
-function buildResultHTML(opName, data, rows, cols) {
-  let arr = [];
-  for (let i = 0; i < rows; i++) { let row = []; for (let j = 0; j < cols; j++) row.push(data[i * cols + j]); arr.push(row); }
-  return '<div class="card"><div class="card-title"><i class="fa-solid fa-sparkles"></i> Hasil ' + opName + '</div><div class="result-area">' + renderMx(arr, 'amber') + '</div></div>';
-}
-
-// ===== ELIMINASI =====
+// ===== ELIMINASI (ALUR BARU: Pilih Metode → Ukuran → Input → Hitung) =====
 function calcShowEliminasi() {
+  destroyAllMatrixEditors();
   calcHideAll();
+  elimSelectedMethod = null;
   const v = document.getElementById('calc-eliminasi-view'); v.style.display = 'block';
   v.innerHTML = `
     <button class="calc-back-btn" onclick="calcShowMainMenu()"><i class="fa-solid fa-arrow-left"></i> Menu Utama</button>
     <h3 style="font-size:22px;font-weight:800;margin:16px 0 6px;">Eliminasi</h3>
-    <p style="color:var(--text-secondary);font-size:14px;margin-bottom:24px;">Eliminasi Gauss & Gauss-Jordan.</p>
+    <p style="color:var(--text-secondary);font-size:14px;margin-bottom:24px;">Langkah 1: Pilih metode eliminasi yang ingin digunakan.</p>
+
+    <div class="calc-step-indicator">
+      <div class="calc-step-dot active" id="esd1">1</div>
+      <div class="calc-step-line" id="esl1"></div>
+      <div class="calc-step-dot" id="esd2">2</div>
+      <div class="calc-step-line" id="esl2"></div>
+      <div class="calc-step-dot" id="esd3">3</div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:24px;">
+      <div class="calc-step-label" style="flex:1;">Metode</div>
+      <div class="calc-step-label" style="flex:1;">Ukuran</div>
+      <div class="calc-step-label" style="flex:1;">Hitung</div>
+    </div>
+
+    <p style="font-size:16px;font-weight:700;margin-bottom:16px;color:var(--text-primary);">Pilih Metode Eliminasi</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+      <div class="calc-menu-card elim-method-gauss" onclick="calcElimSelectMethod('gauss')">
+        <div class="calc-menu-icon amber"><i class="fa-solid fa-stairs"></i></div>
+        <h3>Eliminasi Gauss</h3>
+        <p>Mengubah matriks augmented menjadi bentuk eselon baris (REF).</p>
+        <div class="calc-menu-tags"><span>REF</span><span>Forward Elimination</span></div>
+      </div>
+      <div class="calc-menu-card elim-method-gj" onclick="calcElimSelectMethod('gaussJordan')">
+        <div class="calc-menu-icon teal"><i class="fa-solid fa-layer-group"></i></div>
+        <h3>Eliminasi Gauss-Jordan</h3>
+        <p>Mengubah matriks augmented menjadi bentuk eselon baris tereduksi (RREF).</p>
+        <div class="calc-menu-tags"><span>RREF</span><span>Back Substitution</span></div>
+      </div>
+    </div>
+
+    <div id="elim-size-area" style="margin-top:28px;display:none;"></div>
+    <div id="elim-matrix-area" style="margin-top:24px;display:none;"></div>
+    <div id="elim-result-area" style="margin-top:24px;"></div>`;
+}
+
+function calcElimSelectMethod(method) {
+  elimSelectedMethod = method;
+
+  // Tandai step 1 selesai
+  document.getElementById('esd1').classList.remove('active');
+  document.getElementById('esd1').classList.add('done');
+  document.getElementById('esl1').classList.add('active');
+  document.getElementById('esd2').classList.add('active');
+
+  // Visual feedback pada kartu metode
+  document.querySelectorAll('.elim-method-gauss,.elim-method-gj').forEach(c => {
+    c.style.opacity = '0.5';
+    c.style.transform = 'scale(0.97)';
+    c.style.pointerEvents = 'none';
+  });
+  const selectedCard = method === 'gauss'
+    ? document.querySelector('.elim-method-gauss')
+    : document.querySelector('.elim-method-gj');
+  if (selectedCard) {
+    selectedCard.style.opacity = '1';
+    selectedCard.style.transform = 'scale(1)';
+    selectedCard.style.border = '2px solid ' + (method === 'gauss' ? 'var(--amber)' : 'var(--accent)');
+    selectedCard.style.boxShadow = '0 0 20px ' + (method === 'gauss' ? 'var(--amber-glow)' : 'var(--accent-glow)');
+  }
+
+  const methodName = method === 'gauss' ? 'Eliminasi Gauss' : 'Eliminasi Gauss-Jordan';
+  const methodTag = method === 'gauss' ? 'REF' : 'RREF';
+
+  const sa = document.getElementById('elim-size-area');
+  sa.style.display = 'block';
+  sa.innerHTML = `
     <div class="card">
-      <div class="card-title"><i class="fa-solid fa-table-cells"></i> Matriks Augmented (A|b)</div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+      <div class="card-title"><i class="fa-solid fa-ruler-combined"></i> Langkah 2: Atur Ukuran Matriks Augmented</div>
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">Metode: <strong style="color:var(--accent);">${methodName}</strong> — Matriks berbentuk (A|b)</p>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+        <span style="font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-right:4px;">Presets:</span>
+        <button class="size-preset-btn" onclick="calcElimSetSize(2,2)">2\u00d72</button>
+        <button class="size-preset-btn" onclick="calcElimSetSize(3,3)">3\u00d73</button>
+        <button class="size-preset-btn" onclick="calcElimSetSize(4,4)">4\u00d74</button>
+        <button class="size-preset-btn" onclick="calcElimSetSize(5,5)">5\u00d75</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
         <label style="font-size:13px;font-weight:600;">Jml Persamaan:</label>
         <input type="number" id="elim-rows" class="input-field" value="3" min="1" max="100" style="width:70px;display:inline-block;">
         <label style="font-size:13px;font-weight:600;">Jml Variabel:</label>
         <input type="number" id="elim-cols" class="input-field" value="3" min="1" max="100" style="width:70px;display:inline-block;">
-        <button class="btn btn-primary btn-sm" onclick="calcGenElim()">Generate</button>
       </div>
-      <div id="elim-grid"></div>
-      <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
-        <button class="btn btn-amber" onclick="calcExecElim('gauss')"><i class="fa-solid fa-stairs"></i> Gauss</button>
-        <button class="btn btn-primary" onclick="calcExecElim('gaussJordan')"><i class="fa-solid fa-layer-group"></i> Gauss-Jordan</button>
-      </div>
-      <div id="elim-result" style="margin-top:24px;"></div>
+      <button class="btn btn-primary" onclick="calcElimGenerateMatrix()"><i class="fa-solid fa-table-cells"></i> Generate Matriks</button>
     </div>`;
-  calcGenElim();
+
+  // Sembunyikan area matrix & result jika sebelumnya terbuka
+  document.getElementById('elim-matrix-area').style.display = 'none';
+  document.getElementById('elim-matrix-area').innerHTML = '';
+  document.getElementById('elim-result-area').innerHTML = '';
 }
 
-function calcGenElim() {
+function calcElimSetSize(r, c) {
+  document.querySelectorAll('#elim-size-area .size-preset-btn').forEach(b => b.classList.remove('active'));
+  if (event && event.target) event.target.classList.add('active');
+  const ri = document.getElementById('elim-rows'); if (ri) ri.value = r;
+  const ci = document.getElementById('elim-cols'); if (ci) ci.value = c;
+}
+
+function calcElimGenerateMatrix() {
+  if (!elimSelectedMethod) { showToast('Pilih metode eliminasi terlebih dahulu!', 'warning'); return; }
   const r = parseInt(document.getElementById('elim-rows').value) || 3;
   const c = parseInt(document.getElementById('elim-cols').value) || 3;
+  if (r > 100 || c > 100) { showToast('Maksimal ordo 100', 'warning'); return; }
+
+  // Tandai step 2 selesai
+  document.getElementById('esd2').classList.remove('active');
+  document.getElementById('esd2').classList.add('done');
+  document.getElementById('esl2').classList.add('active');
+  document.getElementById('esd3').classList.add('active');
+
+  const methodName = elimSelectedMethod === 'gauss' ? 'Eliminasi Gauss' : 'Eliminasi Gauss-Jordan';
+  const methodColor = elimSelectedMethod === 'gauss' ? 'var(--amber)' : 'var(--accent)';
+
+  // Hancurkan editor lama jika ada
   if (matrixStore['elimAug']) matrixStore['elimAug'].destroy();
+
+  const ma = document.getElementById('elim-matrix-area');
+  ma.style.display = 'block';
+  ma.innerHTML = `
+    <div class="card">
+      <div class="card-title"><i class="fa-solid fa-pen-to-square"></i> Langkah 3: Isi Matriks Augmented (A|b)</div>
+      <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;">
+        Metode: <strong style="color:${methodColor};">${methodName}</strong> | Ordo: ${r} \u00d7 ${c + 1}
+      </p>
+      <div id="elim-grid"></div>
+      <div style="margin-top:20px;text-align:center;">
+        <button class="btn btn-primary" style="padding:14px 40px;font-size:15px;" onclick="calcExecElim()">
+          <i class="fa-solid fa-play"></i> Hitung ${methodName}
+        </button>
+      </div>
+    </div>`;
+
+  document.getElementById('elim-result-area').innerHTML = '';
   new MatrixEditor('elim-grid', r, c + 1, 'elimAug', { separatorCol: c });
 }
 
-function calcRandomElim() {
-  if (!matrixStore['elimAug']) calcGenElim();
-  const m = matrixStore['elimAug']; if (!m) return;
-  const r = m.rows, cols = m.cols;
-  const sol = new Float64Array(r);
-  for (let i = 0; i < r; i++) sol[i] = Math.floor(Math.random() * 9) - 4;
-  for (let i = 0; i < r; i++) {
-    let b = 0;
-    for (let j = 0; j < cols - 1; j++) { const aij = Math.floor(Math.random() * 9) - 4; m.data[i * cols + j] = aij; b += aij * sol[j]; }
-    m.data[i * cols + (cols - 1)] = b;
-  }
-  m.syncInputs(); showToast('SPL acak dibuat!', 'success');
-}
-
-function extractSolutions(finalMatrix, rows, cols) {
-  const numVars = cols - 1, m = finalMatrix;
-  const pivotCols = [], pivotRowMap = {};
-  for (let i = 0; i < rows; i++) {
-    let pivotCol = -1;
-    for (let j = 0; j < numVars; j++) { if (Math.abs(m[i][j]) > 1e-9) { pivotCol = j; break; } }
-    if (pivotCol !== -1) { pivotCols.push(pivotCol); pivotRowMap[pivotCol] = i; }
-    else if (Math.abs(m[i][cols - 1]) > 1e-9) return { type: 'inconsistent' };
-  }
-  const rank = pivotCols.length;
-  if (rank === numVars) {
-    const vals = [];
-    for (let j = 0; j < numVars; j++) vals.push(m[pivotRowMap[j]][cols - 1]);
-    return { type: 'unique', values: vals };
-  }
-  const freeCols = [];
-  for (let j = 0; j < numVars; j++) if (pivotCols.indexOf(j) === -1) freeCols.push(j);
-  const varNames = 'xyzwuvstabcdefghijklmnopqr', paramNames = 'abcdefghijklmnopqr';
-  const exprs = [];
-  for (let j = 0; j < numVars; j++) {
-    if (pivotCols.indexOf(j) !== -1) {
-      const ri = pivotRowMap[j]; let expr = fmt(m[ri][cols - 1]);
-      for (let fc = 0; fc < freeCols.length; fc++) {
-        const coeff = -m[ri][freeCols[fc]];
-        if (Math.abs(coeff) > 1e-9) {
-          const pName = paramNames[fc] || ('t' + fc);
-          if (Math.abs(coeff - 1) < 1e-9) expr += ' + ' + pName;
-          else if (Math.abs(coeff + 1) < 1e-9) expr += ' - ' + pName;
-          else if (coeff > 0) expr += ' + ' + fmt(coeff) + pName;
-          else expr += ' - ' + fmt(Math.abs(coeff)) + pName;
-        }
-      }
-      exprs.push({ name: varNames[j] || ('x' + (j + 1)), expr });
-    } else {
-      const fcIdx = freeCols.indexOf(j);
-      exprs.push({ name: varNames[j] || ('x' + (j + 1)), expr: paramNames[fcIdx] || ('t' + fcIdx) });
-    }
-  }
-  return { type: 'infinite', exprs, freeCount: freeCols.length };
-}
-
-async function calcExecElim(method) {
+async function calcExecElim() {
+  const method = elimSelectedMethod;
+  if (!method) { showToast('Pilih metode eliminasi terlebih dahulu!', 'error'); return; }
   const m = matrixStore['elimAug'];
   if (!m) { showToast('Buat matriks terlebih dahulu!', 'error'); return; }
-  const rr = document.getElementById('elim-result');
+  const rr = document.getElementById('elim-result-area');
   rr.innerHTML = '<div class="calc-loading"><i class="fa-solid fa-spinner"></i> Menghitung...</div>';
   await new Promise(r => setTimeout(r, 20));
   try {
     const res = await workerCompute(method, { data: m.data, rows: m.rows, cols: m.cols });
     const isGJ = method === 'gaussJordan';
     const methodName = isGJ ? 'Eliminasi Gauss-Jordan (RREF)' : 'Eliminasi Gauss (REF)';
-    let html = '<div class="card"><div class="card-title"><i class="fa-solid fa-list-ol"></i> ' + methodName + '</div>';
-    const allSteps = res.steps, totalSteps = allSteps.length, MAX_DISPLAY = 30;
-    if (totalSteps > MAX_DISPLAY) {
-      const first2 = allSteps.slice(0, 2), last1 = allSteps.slice(-1);
-      first2.forEach((step, idx) => { html += '<div class="elim-step' + (idx > 0 ? ' amber' : '') + '"><div style="display:flex;align-items:center;margin-bottom:8px;gap:10px;"><span class="elim-step-num">' + (idx + 1) + '</span><span class="elim-op">' + step.op + '</span></div><div style="overflow-x:auto;">' + renderMx(step.matrix, 'sm', m.cols - 1) + '</div></div>'; });
-      html += '<div style="text-align:center;padding:14px;color:var(--text-muted);font-size:13px;border:1px dashed var(--border);border-radius:10px;margin-bottom:12px;"><i class="fa-solid fa-ellipsis"></i> ' + (totalSteps - 3) + ' langkah dilewati</div>';
-      last1.forEach((step) => { html += '<div class="elim-step amber"><div style="display:flex;align-items:center;margin-bottom:8px;gap:10px;"><span class="elim-step-num">' + totalSteps + '</span><span class="elim-op">' + step.op + '</span></div><div style="overflow-x:auto;">' + renderMx(step.matrix, 'sm', m.cols - 1) + '</div></div>'; });
-    } else {
-      allSteps.forEach((step, idx) => { html += '<div class="elim-step' + (idx > 0 ? ' amber' : '') + '"><div style="display:flex;align-items:center;margin-bottom:8px;gap:10px;"><span class="elim-step-num">' + (idx + 1) + '</span><span class="elim-op">' + step.op + '</span></div><div style="overflow-x:auto;">' + renderMx(step.matrix, 'sm', m.cols - 1) + '</div></div>'; });
+    const sepCol = m.cols - 1;
+
+    const fm = res.finalMatrix;
+    let sol = null;
+    if (res.finalMatrix) sol = extractSolutions(res.finalMatrix, m.rows, m.cols);
+
+    let totalOps = 0;
+    if (res.phases) res.phases.forEach(ph => ph.pivots.forEach(pv => totalOps += pv.ops.length));
+
+    _accRendered['elim-final'] = false;
+    _accRenderFns['elim-final'] = function() {
+      if (!fm) return '<span style="color:var(--text-muted);">Tidak ada</span>';
+      return '<div class="result-area">' + renderMxGrid(fm, 'amber', sepCol) + '</div>';
+    };
+
+    _accRendered['elim-steps'] = false;
+    _accRenderFns['elim-steps'] = function() {
+      return renderElimPhases(res.phases);
+    };
+
+    let solSection = null;
+    if (sol) {
+      _accRendered['elim-sol'] = false;
+      _accRenderFns['elim-sol'] = function() {
+        return renderSolution(sol);
+      };
+      const solBadge = sol.type === 'unique' ? 'Unik' : sol.type === 'inconsistent' ? 'Tidak Konsisten' : 'Tak Hingga';
+      solSection = { id: 'elim-sol', icon: 'fa-square-root-variable', title: 'Solusi SPL', badge: solBadge };
     }
-    html += '</div>';
-    if (res.finalMatrix) html += '<div class="card" style="margin-top:16px;"><div class="card-title"><i class="fa-solid fa-flag-checkered"></i> Matriks Akhir</div><div class="result-area">' + renderMx(res.finalMatrix, 'amber', m.cols - 1) + '</div></div>';
-    if (res.finalMatrix) {
-      const sol = extractSolutions(res.finalMatrix, m.rows, m.cols);
-      const varNames = 'xyzwuvstabcdefghijklmnopqr';
-      if (sol.type === 'inconsistent') html += '<div class="solusi-box inconsistent"><h4><i class="fa-solid fa-circle-xmark"></i> SPL Tidak Konsisten</h4><p style="color:var(--text-secondary);">Tidak memiliki solusi.</p></div>';
-      else if (sol.type === 'unique') {
-        html += '<div class="solusi-box"><h4><i class="fa-solid fa-check-circle"></i> Solusi Unik</h4><div style="display:flex;flex-wrap:wrap;gap:4px;">';
-        sol.values.forEach((val, idx) => { html += '<div class="solusi-var"><span class="var-name">' + (varNames[idx] || 'x' + (idx + 1)) + '</span> = <span class="var-val">' + fmt(val) + '</span></div>'; });
-        html += '</div></div>';
-      } else if (sol.type === 'infinite') {
-        html += '<div class="solusi-box infinite"><h4><i class="fa-solid fa-infinity"></i> Tak Hingga Solusi</h4><p style="color:var(--text-secondary);font-size:13px;margin-bottom:10px;">Variabel bebas: ' + sol.freeCount + '</p><div class="param-list">';
-        sol.exprs.forEach(e => { html += '<div><strong style="color:var(--accent);">' + e.name + '</strong> = ' + e.expr + '</div>'; });
-        html += '</div></div>';
-      }
-    }
-    rr.innerHTML = html; User.addXP(10); showToast(methodName + ' selesai! +10 XP', 'success');
+
+    const sections = [
+      { id: 'elim-final', icon: 'fa-flag-checkered', title: 'Matriks Akhir', badge: m.rows + '\u00d7' + m.cols },
+      { id: 'elim-steps', icon: 'fa-list-ol', title: 'Langkah Penyelesaian', badge: totalOps + ' operasi' }
+    ];
+    if (solSection) sections.push(solSection);
+
+    let accHtml = createAccordion(sections);
+    rr.innerHTML = '<div class="card"><div class="card-title"><i class="fa-solid fa-sparkles"></i> ' + methodName + '</div>' + accHtml + '</div>';
+    setupAccordion(rr);
+
+    User.addXP(10); showToast(methodName + ' selesai! +10 XP', 'success');
   } catch (e) { console.error(e); showToast('Error: ' + e, 'error'); rr.innerHTML = ''; }
 }
 
 // ===== RUANG VEKTOR =====
 function calcShowRuangVektor() {
+  destroyAllMatrixEditors();
   calcHideAll();
   const v = document.getElementById('calc-ruangvektor-view'); v.style.display = 'block';
   v.innerHTML = `
@@ -1295,7 +1728,7 @@ function calcShowRuangVektor() {
       <div class="card-title"><i class="fa-solid fa-vector-square"></i> Matriks Input (A)</div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
         <input type="number" id="rv-r" class="input-field" value="3" min="1" max="100" style="width:70px;display:inline-block;">
-        <span style="font-weight:700;color:var(--text-muted);">×</span>
+        <span style="font-weight:700;color:var(--text-muted);">\u00d7</span>
         <input type="number" id="rv-c" class="input-field" value="3" min="1" max="100" style="width:70px;display:inline-block;">
         <button class="btn btn-primary btn-sm" onclick="calcGenRV()">Generate</button>
       </div>
@@ -1309,7 +1742,10 @@ function calcShowRuangVektor() {
 function calcGenRV() {
   const r = parseInt(document.getElementById('rv-r').value) || 3;
   const c = parseInt(document.getElementById('rv-c').value) || 3;
-  if (matrixStore['rvMat']) matrixStore['rvMat'].destroy();
+  if (matrixStore['rvMat'] && matrixStore['rvMat'].container &&
+      matrixStore['rvMat'].container.id === 'rv-grid') {
+    matrixStore['rvMat'].destroy();
+  }
   new MatrixEditor('rv-grid', r, c, 'rvMat');
 }
 
@@ -1320,22 +1756,64 @@ async function calcExecRV() {
   rr.innerHTML = '<div class="calc-loading"><i class="fa-solid fa-spinner"></i> Menghitung...</div>';
   try {
     const res = await workerCompute('vectorSpace', { data: m.data, rows: m.rows, cols: m.cols });
-    let html = '';
-    html += '<div class="rv-result-card"><h4><i class="fa-solid fa-ruler-combined" style="color:var(--accent)"></i> Rank(A)</h4><div style="font-size:32px;font-weight:800;color:var(--accent);">' + res.rank + '</div></div>';
-    html += '<div class="rv-result-card"><h4><i class="fa-solid fa-arrows-left-right" style="color:var(--amber)"></i> Basis Row Space</h4><div style="overflow-x:auto;">';
-    if (res.rowBasis.length > 0) res.rowBasis.forEach(vec => html += renderMx([vec], 'sm amber')); else html += '<span style="color:var(--text-muted);">Tidak ada</span>';
-    html += '</div></div>';
-    html += '<div class="rv-result-card"><h4><i class="fa-solid fa-arrows-up-down" style="color:var(--violet)"></i> Basis Column Space</h4><div style="overflow-x:auto;">';
-    if (res.colBasis.length > 0) res.colBasis.forEach(vec => html += renderMx(vec.map(v => [v]), 'sm violet')); else html += '<span style="color:var(--text-muted);">Tidak ada</span>';
-    html += '</div></div>';
-    html += '<div class="rv-result-card"><h4><i class="fa-solid fa-ban" style="color:var(--rose)"></i> Basis Null Space</h4><div style="overflow-x:auto;">';
-    if (res.nullBasis.length > 0) res.nullBasis.forEach(vec => html += renderMx(vec.map(v => [v]), 'sm rose')); else html += '<span style="color:var(--text-muted);">Hanya vektor nol</span>';
-    html += '</div></div>';
-    rr.innerHTML = html; User.addXP(15); showToast('Analisis Ruang Vektor selesai! +15 XP', 'success');
+
+    _accRendered['rv-rank'] = false;
+    _accRenderFns['rv-rank'] = function() {
+      return '<div style="font-size:32px;font-weight:800;color:var(--accent);">' + res.rank + '</div>';
+    };
+
+    _accRendered['rv-row'] = false;
+    _accRenderFns['rv-row'] = function() {
+      if (res.rowBasis.length === 0) return '<span style="color:var(--text-muted);">Tidak ada</span>';
+      const parts = [];
+      for (let i = 0; i < res.rowBasis.length; i++) {
+        parts.push(renderMxGrid([res.rowBasis[i]], 'sm amber'));
+      }
+      return '<div style="overflow-x:auto;">' + parts.join('') + '</div>';
+    };
+
+    _accRendered['rv-col'] = false;
+    _accRenderFns['rv-col'] = function() {
+      if (res.colBasis.length === 0) return '<span style="color:var(--text-muted);">Tidak ada</span>';
+      const parts = [];
+      for (let i = 0; i < res.colBasis.length; i++) {
+        const vec = res.colBasis[i];
+        const col2D = [];
+        for (let j = 0; j < vec.length; j++) col2D.push([vec[j]]);
+        parts.push(renderMxGrid(col2D, 'sm violet'));
+      }
+      return '<div style="overflow-x:auto;">' + parts.join('') + '</div>';
+    };
+
+    _accRendered['rv-null'] = false;
+    _accRenderFns['rv-null'] = function() {
+      if (res.nullBasis.length === 0) return '<span style="color:var(--text-muted);">Hanya vektor nol</span>';
+      const parts = [];
+      for (let i = 0; i < res.nullBasis.length; i++) {
+        const vec = res.nullBasis[i];
+        const col2D = [];
+        for (let j = 0; j < vec.length; j++) col2D.push([vec[j]]);
+        parts.push(renderMxGrid(col2D, 'sm rose'));
+      }
+      return '<div style="overflow-x:auto;">' + parts.join('') + '</div>';
+    };
+
+    const sections = [
+      { id: 'rv-rank', icon: 'fa-ruler-combined', title: 'Rank(A)', badge: 'rank = ' + res.rank },
+      { id: 'rv-row', icon: 'fa-arrows-left-right', title: 'Basis Row Space', badge: 'dim = ' + res.dimRow },
+      { id: 'rv-col', icon: 'fa-arrows-up-down', title: 'Basis Column Space', badge: 'dim = ' + res.dimCol },
+      { id: 'rv-null', icon: 'fa-ban', title: 'Basis Null Space', badge: 'dim = ' + res.dimNull }
+    ];
+
+    let accHtml = createAccordion(sections);
+    rr.innerHTML = '<div class="card"><div class="card-title"><i class="fa-solid fa-sparkles"></i> Hasil Ruang Vektor</div>' + accHtml + '</div>';
+    setupAccordion(rr);
+
+    User.addXP(15); showToast('Analisis Ruang Vektor selesai! +15 XP', 'success');
   } catch (e) { showToast('Error: ' + e, 'error'); rr.innerHTML = ''; }
 }
 
-// ===== QUIZ SYSTEM (Optimized) =====
+// ===== QUIZ SYSTEM =====
 const QuizManager = {
   questions: [], currentIndex: 0, score: 0, totalQuestions: 10, isAnswered: false,
   timeLeft: 30, maxTime: 30, timerInterval: null,
@@ -1431,31 +1909,92 @@ function convertSPL() {
   for (let i = 0; i < rows; i++) { for (let j = 0; j < maxVars; j++) augData[i * cols + j] = equations[i].coeffs[j]; augData[i * cols + (cols - 1)] = equations[i].rhs; }
   const rr = document.getElementById('spl-result');
   let augMatrix = []; for (let i = 0; i < rows; i++) { let row = []; for (let j = 0; j < cols; j++) row.push(augData[i * cols + j]); augMatrix.push(row); }
-  let html = '<div style="margin-bottom:20px;"><div class="result-label">Matriks Augmented (A|b)</div>' + renderMx(augMatrix, 'amber', maxVars) + '</div>';
-  rr.innerHTML = html + '<div class="calc-loading"><i class="fa-solid fa-spinner"></i> Menyelesaikan SPL...</div>';
+
+  rr.innerHTML = '<div style="margin-bottom:12px;"><div class="result-label">Matriks Augmented (A|b)</div>' + renderMxGrid(augMatrix, 'amber', maxVars) + '</div><div class="calc-loading"><i class="fa-solid fa-spinner"></i> Menyelesaikan SPL...</div>';
+
   workerCompute('gaussJordan', { data: augData, rows, cols }).then(function(res) {
-    const allSteps = res.steps, totalSteps = allSteps.length, MAX_DISPLAY = 15;
-    if (totalSteps > MAX_DISPLAY) {
-      html += '<div class="elim-step"><span class="elim-step-num">1</span><span class="elim-op">' + allSteps[0].op + '</span>' + renderMx(allSteps[0].matrix, 'sm', maxVars) + '</div>';
-      html += '<div style="text-align:center;padding:10px;color:var(--text-muted);font-size:12px;"><i class="fa-solid fa-ellipsis"></i> ' + (totalSteps - 2) + ' langkah</div>';
-      html += '<div class="elim-step amber"><span class="elim-step-num">' + totalSteps + '</span><span class="elim-op">' + allSteps[totalSteps - 1].op + '</span>' + renderMx(allSteps[totalSteps - 1].matrix, 'sm', maxVars) + '</div>';
-    } else { allSteps.forEach((step, idx) => { html += '<div class="elim-step' + (idx > 0 ? ' amber' : '') + '"><span class="elim-step-num">' + (idx + 1) + '</span><span class="elim-op">' + step.op + '</span>' + renderMx(step.matrix, 'sm', maxVars) + '</div>'; }); }
-    if (res.finalMatrix) html += '<div style="margin-top:12px;"><div class="result-label">Matriks Akhir (RREF)</div>' + renderMx(res.finalMatrix, 'amber', maxVars) + '</div>';
-    if (res.finalMatrix) {
-      const sol = extractSolutions(res.finalMatrix, rows, cols);
-      if (sol.type === 'inconsistent') html += '<div class="solusi-box inconsistent"><h4><i class="fa-solid fa-circle-xmark"></i> SPL Tidak Konsisten</h4></div>';
-      else if (sol.type === 'unique') {
-        html += '<div class="solusi-box"><h4><i class="fa-solid fa-check-circle"></i> Solusi</h4><div style="display:flex;flex-wrap:wrap;gap:4px;">';
-        sol.values.forEach((val, idx) => { html += '<div class="solusi-var"><span class="var-name">' + ('xyzwuvstabcdefghijklmnopqr'[idx] || 'x' + (idx + 1)) + '</span> = <span class="var-val">' + fmt(val) + '</span></div>'; });
-        html += '</div></div>';
-      } else if (sol.type === 'infinite') {
-        html += '<div class="solusi-box infinite"><h4><i class="fa-solid fa-infinity"></i> Tak Hingga Solusi</h4><div class="param-list">';
-        sol.exprs.forEach(e => { html += '<div><strong style="color:var(--accent);">' + e.name + '</strong> = ' + e.expr + '</div>'; });
-        html += '</div></div>';
-      }
+    const sepCol = maxVars;
+    let sol = null;
+    if (res.finalMatrix) sol = extractSolutions(res.finalMatrix, rows, cols);
+
+    let totalOps = 0;
+    if (res.phases) res.phases.forEach(ph => ph.pivots.forEach(pv => totalOps += pv.ops.length));
+
+    const fm = res.finalMatrix;
+    _accRendered['spl-final'] = false;
+    _accRenderFns['spl-final'] = function() {
+      if (!fm) return '<span style="color:var(--text-muted);">Tidak ada</span>';
+      return '<div class="result-area">' + renderMxGrid(fm, 'amber', sepCol) + '</div>';
+    };
+
+    _accRendered['spl-steps'] = false;
+    _accRenderFns['spl-steps'] = function() {
+      return renderElimPhases(res.phases);
+    };
+
+    let solSection = null;
+    if (sol) {
+      _accRendered['spl-sol'] = false;
+      _accRenderFns['spl-sol'] = function() {
+        return renderSolution(sol);
+      };
+      const solBadge = sol.type === 'unique' ? 'Unik' : sol.type === 'inconsistent' ? 'Tidak Konsisten' : 'Tak Hingga';
+      solSection = { id: 'spl-sol', icon: 'fa-square-root-variable', title: 'Solusi SPL', badge: solBadge };
     }
-    rr.innerHTML = html; User.addXP(10); showToast('SPL berhasil diselesaikan! +10 XP', 'success');
+
+    const sections = [
+      { id: 'spl-final', icon: 'fa-flag-checkered', title: 'Matriks Akhir (RREF)', badge: rows + '\u00d7' + cols },
+      { id: 'spl-steps', icon: 'fa-list-ol', title: 'Langkah Penyelesaian', badge: totalOps + ' operasi' }
+    ];
+    if (solSection) sections.push(solSection);
+
+    let accHtml = createAccordion(sections);
+    rr.innerHTML = '<div style="margin-bottom:12px;"><div class="result-label">Matriks Augmented (A|b)</div>' + renderMxGrid(augMatrix, 'amber', maxVars) + '</div>' + accHtml;
+    setupAccordion(rr);
+
+    User.addXP(10); showToast('SPL berhasil diselesaikan! +10 XP', 'success');
   }).catch(function(e) { showToast('Error: ' + e, 'error'); rr.innerHTML = ''; });
+}
+
+function extractSolutions(finalMatrix, rows, cols) {
+  const numVars = cols - 1, m = finalMatrix;
+  const pivotCols = [], pivotRowMap = {};
+  for (let i = 0; i < rows; i++) {
+    let pivotCol = -1;
+    for (let j = 0; j < numVars; j++) { if (Math.abs(m[i][j]) > 1e-9) { pivotCol = j; break; } }
+    if (pivotCol !== -1) { pivotCols.push(pivotCol); pivotRowMap[pivotCol] = i; }
+    else if (Math.abs(m[i][cols - 1]) > 1e-9) return { type: 'inconsistent' };
+  }
+  const rank = pivotCols.length;
+  if (rank === numVars) {
+    const vals = [];
+    for (let j = 0; j < numVars; j++) vals.push(m[pivotRowMap[j]][cols - 1]);
+    return { type: 'unique', values: vals };
+  }
+  const freeCols = [];
+  for (let j = 0; j < numVars; j++) if (pivotCols.indexOf(j) === -1) freeCols.push(j);
+  const varNames = 'xyzwuvstabcdefghijklmnopqr', paramNames = 'abcdefghijklmnopqr';
+  const exprs = [];
+  for (let j = 0; j < numVars; j++) {
+    if (pivotCols.indexOf(j) !== -1) {
+      const ri = pivotRowMap[j]; let expr = fmt(m[ri][cols - 1]);
+      for (let fc = 0; fc < freeCols.length; fc++) {
+        const coeff = -m[ri][freeCols[fc]];
+        if (Math.abs(coeff) > 1e-9) {
+          const pName = paramNames[fc] || ('t' + fc);
+          if (Math.abs(coeff - 1) < 1e-9) expr += ' + ' + pName;
+          else if (Math.abs(coeff + 1) < 1e-9) expr += ' - ' + pName;
+          else if (coeff > 0) expr += ' + ' + fmt(coeff) + pName;
+          else expr += ' - ' + fmt(Math.abs(coeff)) + pName;
+        }
+      }
+      exprs.push({ name: varNames[j] || ('x' + (j + 1)), expr });
+    } else {
+      const fcIdx = freeCols.indexOf(j);
+      exprs.push({ name: varNames[j] || ('x' + (j + 1)), expr: paramNames[fcIdx] || ('t' + fcIdx) });
+    }
+  }
+  return { type: 'infinite', exprs, freeCount: freeCols.length };
 }
 
 function parseEquation(str) {
@@ -1492,11 +2031,9 @@ function parseExpression(expr) {
   return terms.length > 0 ? terms : null;
 }
 
-// ===== INIT (Delegated Materi Nav) =====
+// ===== INIT =====
 document.addEventListener('DOMContentLoaded', function() {
   User.init(); generateSPLInputs();
-
-  // Delegated event for materi nav
   document.querySelector('.materi-sidebar').addEventListener('click', function(e) {
     const item = e.target.closest('.materi-nav-item');
     if (!item) return;
